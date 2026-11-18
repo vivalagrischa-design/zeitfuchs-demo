@@ -28,7 +28,7 @@
   8000:"826C34",8001:"955F20",8002:"6C3B2A",8003:"734222",8004:"8E402A",8007:"59351F",8008:"6F4F28",8011:"5B3A29",8012:"592321",8014:"382C1E",8015:"633A34",8016:"4C2F27",8017:"45322E",8019:"403A3A",8022:"212121",8023:"A65E2E",8024:"79553D",8025:"755C48",8028:"4E3B31",
   9001:"FDF4E3",9002:"E7EBDA",9003:"F4F4F4",9004:"282828",9005:"0A0A0A",9006:"A5A5A5",9007:"8F8F8F",9010:"FFFFFF",9011:"1C1C1C",9016:"F6F6F6",9017:"1E1E1E",9018:"D7D7D7"};
 
-  const SURFACES = [["ral", "RAL lackiert"], ["gold", "Blattgold"], ["kupfer", "Blattkupfer"], ["silber", "Blattsilber"], ["spiegel", "Spiegel silber"], ["patina", "Kupferpatina"], ["rost", "Rost (auf Anfrage)"]];
+  const SURFACES = [["ral", "Lackiert (RAL / NCS)"], ["gold", "Blattgold"], ["kupfer", "Blattkupfer"], ["silber", "Blattsilber"], ["spiegel", "Spiegel silber"], ["patina", "Kupferpatina"], ["rost", "Rost (auf Anfrage)"]];
   const LEAF = { gold: ["a7843a", "eed890", "7d6125", "fff3c6"], kupfer: ["8a4526", "e39a6c", "5e2c16", "ffd2b0"], silber: ["8e9192", "eceeec", "6a6d6e", "ffffff"] };
   const LEDS = [["weiss", "Weiss", "#fff3e2"], ["mint", "Mint", "#5ff2c0"], ["gruen", "Grün", "#3ee05a"], ["gelb", "Gelb", "#ffd23a"], ["rot", "Rot", "#ff3b30"]];
   const BRIGHT = [["gedimmt", "Gedimmt", .45], ["mittel", "Mittel", .75], ["hell", "Hell", 1]];
