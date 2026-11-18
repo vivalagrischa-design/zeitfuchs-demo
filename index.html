@@ -6,10 +6,15 @@
 <title>Zeitfuchs – Die Zeit in Ihren Worten</title>
 <meta name="description" content="Jede Uhr spricht den Dialekt ihres Besitzers. Der Zeitfuchs fertigt Wortuhren in Fideris, Graubünden, als Einzelstück: Ihr Wortlaut, Ihre Front in RAL, NCS oder Blattmetall, Licht per Handy steuerbar.">
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500&family=Barlow+Condensed:wght@400;500;600&family=Inter:wght@400;500;600&display=swap">
 <style>
+/* Schriften lokal, keine Verbindung zu Google */
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/barlow-condensed-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/barlow-condensed-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/barlow-condensed-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/barlow-latin-500-normal.woff2) format("woff2")}
 /* Layout: weisse Galerie. Grosse echte Fotos, schmale Typografie, viel Luft. Hero, Einzigartig, Worte, Fronten, Gestalten, Ablauf, Kontakt. */
 :root{
   --bg:#ffffff; --bg2:#f6f5f2; --fg:#17222d; --muted:#5c6772; --line:#e4e2dd;
@@ -109,6 +114,13 @@ nav a:hover{color:var(--fg)}
 .gallery figure{margin:0;min-width:0}
 .gallery img{width:100%;aspect-ratio:1/1;object-fit:cover}
 .gallery figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+/* Rechtliches */
+.legal{padding-block:36px;border-top:1px solid var(--line)}
+.legal details{border-bottom:1px solid var(--line);padding-block:14px}
+.legal summary{cursor:pointer;font-family:var(--f-display);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:16px}
+.legal .prose{padding-top:12px}
+.legal h3{font-size:18px;letter-spacing:.06em;margin:18px 0 6px}
+.legal .prose p{font-size:15px}
 /* Konfigurator */
 .cfgsec{background:var(--bg2)}
 .cfg{display:grid;grid-template-columns:1fr;gap:24px}
@@ -408,6 +420,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
               <a class="btn ghost" id="mailBtn" href="mailto:kontakt@zeitfuchs.ch">Anfrage per E-Mail</a>
               <button class="btn ghost" id="copyBtn" type="button">Kopieren</button>
             </div>
+            <p class="hint" style="margin-top:12px">Auf dieser Seite wird nichts gespeichert. Ihre Angaben verlassen Ihr Gerät erst, wenn Sie auf WhatsApp oder E-Mail tippen. Mehr dazu in der <a href="#datenschutz">Datenschutzerklärung</a>.</p>
             <div class="note"><strong>Musterbild, keine Farbvorlage.</strong> Bildschirme und Drucker zeigen Farben unterschiedlich. Massgebend ist der RAL- oder NCS-Code: RAL 7016 bleibt RAL 7016, auch wenn er hier heller oder dunkler wirkt. Handveredelte Fronten sind Unikate.</div>
           </div>
         </div>
@@ -444,9 +457,45 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
       </dl>
     </div>
   </section>
+  <section id="rechtliches" class="legal">
+    <div class="w">
+      <details id="impressum">
+        <summary>Impressum</summary>
+        <div class="prose">
+          <p><strong>Zeitfuchs</strong><br>[Vor- und Nachname bzw. Firmenname gemäss Handelsregister]<br>[Strasse Nr.]<br>[PLZ] Fideris<br>Schweiz</p>
+          <p>E-Mail: kontakt@zeitfuchs.ch<br>WhatsApp: 079 561 14 53</p>
+          <p>[Falls im Handelsregister eingetragen: UID CHE-xxx.xxx.xxx]<br>[Falls mehrwertsteuerpflichtig: MWST-Nr.]</p>
+          <p>Verantwortlich für den Inhalt: [Vor- und Nachname]</p>
+        </div>
+      </details>
+      <details id="datenschutz">
+        <summary>Datenschutzerklärung</summary>
+        <div class="prose">
+          <p>Stand: [Datum]. Diese Erklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG). Soweit Personen in der EU betroffen sind, gelten die Grundsätze der DSGVO sinngemäss.</p>
+          <h3>Verantwortlich</h3>
+          <p>[Vor- und Nachname], Zeitfuchs, [Strasse Nr.], [PLZ] Fideris, kontakt@zeitfuchs.ch. An diese Adresse richten Sie auch alle Fragen und Anliegen zum Datenschutz.</p>
+          <h3>Besuch der Website</h3>
+          <p>Die Website setzt keine Cookies, verwendet keine Analyse- oder Werbedienste und lädt keine Inhalte von Drittanbietern wie Google Fonts. Schriften und Bilder liegen auf unserem eigenen Server.</p>
+          <p>Unser Hosting-Anbieter [GitHub Inc., USA / Render Services Inc., USA] speichert beim Aufruf technisch notwendige Daten wie IP-Adresse, Datum, Uhrzeit und aufgerufene Seite in Server-Protokollen. Diese dienen dem sicheren Betrieb der Website und werden vom Anbieter nach kurzer Zeit gelöscht. Dabei können Daten in die USA übermittelt werden.</p>
+          <h3>Konfigurator</h3>
+          <p>Der Konfigurator läuft vollständig in Ihrem Browser. Ihr Wortlaut, Ihre Farbwahl und Ihre Kontaktangaben werden dabei weder gespeichert noch an uns übertragen.</p>
+          <h3>Anfrage per WhatsApp oder E-Mail</h3>
+          <p>Erst wenn Sie auf «Anfrage per WhatsApp» oder «Anfrage per E-Mail» tippen, öffnet sich die jeweilige App mit Ihrer Anfrage. Sie entscheiden, ob Sie diese senden. Wir erhalten dann die Angaben, die Sie uns schicken: Name, Telefon, E-Mail, Ort, Wortlaut und Ausstattung Ihrer Uhr.</p>
+          <p>Wir verwenden diese Daten nur, um Ihre Anfrage zu beantworten, ein Angebot zu erstellen und eine Bestellung abzuwickeln. Wir geben sie nicht an Dritte weiter, ausser soweit für Lieferung oder Zahlung nötig. Die Lackierung erfolgt durch einen Partnerbetrieb, der dafür nur die Farbangabe erhält.</p>
+          <p>WhatsApp wird von WhatsApp Ireland Ltd. (Meta) betrieben. Dabei können Daten in die USA übermittelt werden. Wenn Sie das nicht möchten, wählen Sie die E-Mail. Unsere E-Mails werden über [E-Mail-Anbieter, Land] verarbeitet.</p>
+          <h3>Aufbewahrung</h3>
+          <p>Anfragen ohne Bestellung löschen wir spätestens nach 12 Monaten. Bestell- und Rechnungsdaten bewahren wir so lange auf, wie es das Gesetz verlangt (in der Schweiz in der Regel 10 Jahre).</p>
+          <h3>Ihre Rechte</h3>
+          <p>Sie können jederzeit Auskunft über Ihre bei uns gespeicherten Daten verlangen sowie deren Berichtigung oder Löschung fordern und der Bearbeitung widersprechen. Schreiben Sie dazu an kontakt@zeitfuchs.ch. Sie haben zudem das Recht, sich beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) zu beschweren.</p>
+          <h3>Sicherheit</h3>
+          <p>Die Website wird verschlüsselt über HTTPS ausgeliefert. Anfragen bearbeitet nur der Zeitfuchs persönlich.</p>
+        </div>
+      </details>
+    </div>
+  </section>
 </main>
 
-<footer><div class="w"><span>© Zeitfuchs · Wortuhren aus Fideris</span><span>Verkauf und Lieferung nur innerhalb der Schweiz</span></div></footer>
+<footer><div class="w"><span>© Zeitfuchs · Wortuhren aus Fideris</span><span>Verkauf und Lieferung nur innerhalb der Schweiz</span><span><a href="#impressum" data-open="impressum">Impressum</a> · <a href="#datenschutz" data-open="datenschutz">Datenschutz</a></span></div></footer>
 
 <script src="uhr.js"></script>
 <script>
@@ -601,6 +650,9 @@ $("copyBtn").addEventListener("click",()=>{const b=$("copyBtn");
   const sel=()=>{const r=document.createRange();r.selectNodeContents($("orderText"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Markiert"};
   try{navigator.clipboard.writeText(orderText()).then(done,sel)}catch(e){sel()}});
 
+function openLegal(){const id=location.hash.slice(1);const d=document.getElementById(id);if(d&&d.tagName==="DETAILS"){d.open=true;d.scrollIntoView()}}
+window.addEventListener("hashchange",openLegal);openLegal();
+document.querySelectorAll("a[href='#datenschutz'],a[href='#impressum']").forEach(a=>a.addEventListener("click",()=>{const d=document.getElementById(a.getAttribute("href").slice(1));if(d)d.open=true}));
 const start=()=>{speak("Bündnerdeutsch");update()};
 if(document.fonts&&document.fonts.load)document.fonts.load("500 40px Barlow").then(start,start);else start();
 })();
