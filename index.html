@@ -4,158 +4,161 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Zeitfuchs – Wortuhren aus Fideris</title>
-<meta name="description" content="Jede Uhr spricht den Dialekt ihres Besitzers. Wortuhren als Einzelanfertigung aus Fideris, Graubünden: Ihr Wortlaut, Ihre Front, Ihr Licht.">
+<meta name="description" content="Jede Uhr spricht den Dialekt ihres Besitzers. Der Zeitfuchs fertigt Wortuhren in Fideris, Graubünden, als Einzelstück: Ihr Wortlaut, Ihre Front, Licht per Handy steuerbar.">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500&family=Barlow+Condensed:wght@400;500;600&family=Inter:wght@400;500;600&display=swap">
 <style>
-/* Layout: dunkle Bühne wie ein abends beleuchteter Raum. Hero mit sprechender Uhr, dann Worte, Fronten, Räume, Gestalten, Ablauf, Kontakt. */
+/* Layout: weisse Galerie. Grosse echte Fotos, schmale Typografie, viel Luft. Hero, Einzigartig, Worte, Fronten, Gestalten, Ablauf, Kontakt. */
 :root{
-  --bg:#0e1213; --bg2:#141a1b; --surface:#1a2123; --fg:#f1eee7; --muted:#a0aaa8; --line:#2c3637;
-  --accent:#8fe3d6; --warm:#e3b86c; --warn:#f0a070; --warn-soft:#3a2518;
+  --bg:#ffffff; --bg2:#f6f5f2; --fg:#17222d; --muted:#5c6772; --line:#e4e2dd;
+  --accent:#2b6d8c; --accent-soft:#e6f0f4; --warn:#a4501c; --warn-soft:#f8ebe1;
   --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-clock:"Barlow","Arial",sans-serif;
-  color-scheme:dark;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6}
-img{max-width:100%;display:block}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.65}
+img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 .w{max-width:1200px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
-h1,h2,h3{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.01em;line-height:1;margin:0;text-wrap:balance}
-h2{font-size:clamp(36px,6vw,64px)}
-.eyebrow{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.02em;line-height:1.02;margin:0;text-wrap:balance}
+h2{font-size:clamp(34px,5.4vw,58px)}
+.eyebrow{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent)}
 .lead{color:var(--muted);max-width:58ch;font-size:17px;margin:18px 0 0}
-section{padding-block:clamp(64px,10vw,120px)}
-.sec-head{display:grid;gap:12px;margin-bottom:clamp(28px,5vw,48px)}
+.lead strong,.prose strong{color:var(--fg);font-weight:600}
+section{padding-block:clamp(60px,9vw,112px)}
+.sec-head{display:grid;gap:12px;margin-bottom:clamp(28px,5vw,46px)}
 
-/* Kopfzeile */
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:rgba(14,18,19,.92)}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(14,18,19,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#fff}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 header.top .w{display:flex;align-items:center;gap:20px;height:62px}
-.brand{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:.3em;text-decoration:none}
+.brand{font-family:var(--f-display);font-weight:600;font-size:21px;letter-spacing:.3em;text-decoration:none}
 .brand small{font-weight:500;letter-spacing:.2em;color:var(--muted);font-size:12px;margin-left:10px}
 nav{margin-left:auto;display:flex;gap:22px}
 nav a{text-decoration:none;font-size:14px;color:var(--muted)}
 nav a:hover{color:var(--fg)}
-.cta{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:10px 16px;border-radius:4px;background:var(--fg);color:var(--bg);border:1px solid var(--fg);display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-.cta.ghost{background:transparent;color:var(--fg);border-color:#4a5657}
+.cta{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:11px 18px;border-radius:2px;background:var(--fg);color:#fff;border:1px solid var(--fg);display:inline-flex;align-items:center;cursor:pointer}
+.cta.ghost{background:transparent;color:var(--fg)}
 @media (max-width:820px){nav{display:none}header .cta{margin-left:auto}}
 @media (max-width:520px){.brand small{display:none}.brand{letter-spacing:.2em;font-size:19px}}
 
 /* Hero */
-.hero{padding-block:clamp(36px,7vw,90px) clamp(56px,8vw,100px);background:radial-gradient(ellipse at 75% 40%,#17393a 0%,#0e1213 62%)}
-.hero .w{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
-@media (min-width:900px){.hero .w{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
-.hero h1{font-size:clamp(46px,8.4vw,96px);line-height:.94;margin-top:16px}
+.hero{padding-block:clamp(28px,5vw,64px) clamp(56px,8vw,96px)}
+.hero .w{display:grid;grid-template-columns:1fr;gap:34px;align-items:center}
+@media (min-width:900px){.hero .w{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px}}
+.hero h1{font-size:clamp(44px,7.6vw,88px);line-height:.98;margin-top:16px}
 .hero h1 em{font-style:normal;color:var(--accent)}
-.hero .lead{font-size:18px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:34px;font-size:13px;color:var(--muted);letter-spacing:.04em}
+.hero-photo{margin:0;min-width:0}
+.hero-photo img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.hero-photo figcaption{font-size:13px;color:var(--muted);margin-top:10px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:30px;font-size:13.5px;color:var(--muted)}
 .facts span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle}
-.hero-clock{min-width:0}
-.hero-clock canvas{width:100%;max-width:560px;height:auto;aspect-ratio:1/1;margin:0 auto;display:block;border-radius:2px;box-shadow:0 0 0 4px #0b0b0b,0 40px 90px rgba(0,0,0,.6)}
-.speak{max-width:560px;margin:18px auto 0;display:grid;gap:12px}
-.speak .said{font-family:var(--f-clock);letter-spacing:.16em;font-size:16px;min-height:1.6em}
-.speak .said b{font-weight:500;color:var(--accent)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font:inherit;font-size:13.5px;padding:7px 13px;border-radius:999px;border:1px solid #3a4546;background:transparent;color:var(--fg);cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.chip:focus-visible,.cta:focus-visible,.sw:focus-visible,.front:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Einzigartig */
+.unique{background:var(--bg2)}
+.unique .w{display:grid;grid-template-columns:1fr;gap:36px;align-items:center}
+@media (min-width:880px){.unique .w{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:64px}}
+.prose p{margin:0 0 16px;color:var(--muted);font-size:17px;max-width:56ch}
+.prose .claim{color:var(--fg);font-weight:600;font-size:18px}
+.unique img{width:100%;aspect-ratio:1/1;object-fit:cover}
 
 /* Worte */
-.words{background:var(--bg2)}
-.dialects{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.dialect{border:1px solid var(--line);border-radius:6px;padding:20px;display:grid;gap:10px;background:var(--surface)}
-.dialect h3{font-size:20px;letter-spacing:.06em;color:var(--muted)}
-.dialect p{margin:0;font-family:var(--f-clock);letter-spacing:.14em;font-size:19px;line-height:1.4}
-.dialect.own{border-style:dashed;background:transparent}
+.speak-wrap{display:grid;grid-template-columns:1fr;gap:28px;align-items:start}
+@media (min-width:900px){.speak-wrap{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px}}
+.speak-clock canvas{width:100%;max-width:520px;height:auto;aspect-ratio:1/1;display:block;box-shadow:0 0 0 4px #111,0 30px 60px rgba(20,30,40,.25)}
+.said{font-family:var(--f-clock);letter-spacing:.16em;font-size:15px;margin-top:16px;min-height:1.6em}
+.said b{font-weight:500;color:var(--accent)}
+.dialects{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.dialect{font:inherit;color:inherit;text-align:left;border:1px solid var(--line);border-radius:3px;padding:18px;display:grid;gap:8px;background:#fff;cursor:pointer}
+.dialect[aria-pressed="true"]{border-color:var(--fg);box-shadow:inset 0 0 0 1px var(--fg)}
+.dialect h3{font-size:18px;letter-spacing:.08em;color:var(--muted)}
+.dialect p{margin:0;font-family:var(--f-clock);letter-spacing:.13em;font-size:17px;line-height:1.45}
+.dialect.own{border-style:dashed;cursor:default}
 .dialect.own p{font-family:var(--f-body);letter-spacing:0;font-size:15px;color:var(--muted)}
 
 /* Fronten */
-.fronts{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:14px}
-.front{font:inherit;color:inherit;text-align:left;background:none;border:0;padding:0;cursor:pointer;display:grid;gap:10px}
-.front canvas{width:100%;height:auto;aspect-ratio:1/1;border-radius:2px;box-shadow:0 14px 30px rgba(0,0,0,.45);transition:transform .25s}
-.front:hover canvas{transform:translateY(-3px)}
-.front b{font-family:var(--f-display);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:17px}
-.front span{font-size:13px;color:var(--muted);display:block;margin-top:-6px}
-.real{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:clamp(36px,6vw,60px)}
-.real figure{margin:0;min-width:0}
-.real img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 52%;border-radius:2px}
-.real figcaption{font-size:13px;color:var(--muted);margin-top:8px}
-
-/* Räume */
-.rooms{background:var(--bg2)}
-.room-grid{display:grid;grid-template-columns:1fr;gap:16px}
-@media (min-width:760px){.room-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.room{margin:0;position:relative;min-width:0}
-.room canvas{width:100%;height:auto;aspect-ratio:3/2;display:block;border-radius:3px}
-.room figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.72));border-radius:0 0 3px 3px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:end}
-.room figcaption b{font-family:var(--f-display);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:18px}
-.room figcaption span{font-family:var(--f-clock);letter-spacing:.12em;font-size:12.5px;color:#d9e3e1}
-.small-note{font-size:13px;color:var(--muted);margin-top:14px}
+.front-grid{display:grid;grid-template-columns:1fr;gap:22px}
+@media (min-width:760px){.front-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.front-card{margin:0;display:grid;gap:12px;align-content:start;min-width:0}
+.front-card img,.front-card .ralbox{width:100%;aspect-ratio:1/1;object-fit:cover}
+.front-card .ralbox{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.front-card .ralbox canvas{width:100%;height:auto;aspect-ratio:1/1;display:block}
+.front-card h3{font-size:24px;letter-spacing:.05em}
+.front-card p{margin:0;color:var(--muted);font-size:15px}
+.more{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;color:var(--muted);font-size:14.5px}
+.tag{border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--fg);font-size:13.5px}
 
 /* Konfigurator */
+.cfgsec{background:var(--bg2)}
 .cfg{display:grid;grid-template-columns:1fr;gap:24px}
 @media (min-width:960px){.cfg{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}.preview{position:sticky;top:calc(env(safe-area-inset-top,0px) + 78px)}}
 .preview{min-width:0}
-.stage{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:1/1;max-width:100%;
-  background:radial-gradient(circle at 18% 22%,rgba(255,255,255,.10) 0 2px,transparent 3px),radial-gradient(circle at 72% 64%,rgba(0,0,0,.18) 0 3px,transparent 4px),radial-gradient(ellipse at 30% 20%,#a3a4a1,transparent 60%),radial-gradient(ellipse at 80% 90%,#6f706e,transparent 55%),#8b8c8a;
-  display:flex;align-items:center;justify-content:center}
-.clock{position:relative;width:76%;z-index:1}
-.clock canvas{display:block;width:100%;height:auto;aspect-ratio:1/1;border-radius:2px;box-shadow:0 0 0 var(--frame-w,5px) var(--frame,#111),0 22px 40px rgba(0,0,0,.45),0 4px 10px rgba(0,0,0,.3)}
-.cable{position:absolute;left:50%;top:100%;width:5px;height:200px;transform:translateX(-50%);background:var(--cable,#141414);border-radius:3px;z-index:-1}
+.stage{position:relative;aspect-ratio:1/1;max-width:100%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.clock{position:relative;width:76%}
+.clock canvas,.clock img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;box-shadow:0 0 0 var(--frame-w,5px) var(--frame,#111),0 22px 40px rgba(20,30,40,.28)}
+.cable{position:absolute;left:50%;top:100%;width:4px;height:60px;transform:translateX(-50%);background:var(--cable,#141414);border-radius:3px;z-index:-1}
+.photo-note{position:absolute;left:12px;right:12px;bottom:10px;font-size:12.5px;color:var(--muted);text-align:center}
+.raster{margin-top:14px;display:grid;grid-template-columns:repeat(11,1fr);gap:2px;max-width:420px;font-family:var(--f-clock);font-size:14px;text-align:center;letter-spacing:0}
+.raster span{padding:2px 0;color:#9aa2a9}
+.raster span.on{color:var(--fg);font-weight:500;background:var(--accent-soft)}
 .readout{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
 .phrase{font-family:var(--f-clock);letter-spacing:.14em;font-size:15px;flex:1 1 220px;min-width:0}
 .timebox{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
-.timebox input{font:inherit;font-size:15px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
-.status{margin-top:10px;font-size:13.5px;padding:9px 12px;border-radius:6px;background:#173033}
+.timebox input{font:inherit;font-size:15px;color:var(--fg);background:#fff;border:1px solid var(--line);border-radius:4px;padding:6px 8px}
+.status{margin-top:10px;font-size:13.5px;padding:9px 12px;border-radius:4px;background:var(--accent-soft)}
 .status.bad{background:var(--warn-soft);color:var(--warn);font-weight:500}
-.steps{display:grid;gap:16px;min-width:0}
-.step{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px 18px 22px;min-width:0}
-.step h3{font-size:22px;letter-spacing:.04em;margin:0 0 4px;display:flex;gap:10px;align-items:baseline}
+.steps{display:grid;gap:14px;min-width:0}
+.step{background:#fff;border:1px solid var(--line);border-radius:4px;padding:20px 18px 22px;min-width:0}
+.step h3{font-size:22px;letter-spacing:.05em;margin:0 0 4px;display:flex;gap:10px;align-items:baseline}
 .step h3 .n{font-size:14px;color:var(--accent);letter-spacing:.12em}
 .step .sub{margin:0 0 12px;color:var(--muted);font-size:14px}
 .group{margin-top:16px}
 .group h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13.5px;padding:7px 13px;border-radius:999px;border:1px solid #d3d0ca;background:#fff;color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:#fff;border-color:var(--fg)}
+.chip:focus-visible,.cta:focus-visible,.sw:focus-visible,.dialect:focus-visible,.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 @media (min-width:560px){.grid3{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .field{display:flex;flex-direction:column;gap:4px;min-width:0}
 .field label{font-size:12px;color:var(--muted)}
-.field input,.field textarea{font:inherit;font-size:15px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%;min-width:0}
+.field input,.field textarea{font:inherit;font-size:15px;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:8px 10px;width:100%;min-width:0}
 .word input{font-family:var(--f-clock);letter-spacing:.12em;text-transform:uppercase}
 .field textarea{resize:vertical;min-height:70px}
 .swatches{display:grid;gap:6px}
 .swgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:7px}
 .swh{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
-.sw{font:inherit;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:5px;cursor:pointer;color:var(--fg);text-align:left}
-.sw i{display:block;height:32px;border-radius:3px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.sw{font:inherit;border:1px solid var(--line);border-radius:4px;background:#fff;padding:5px;cursor:pointer;color:var(--fg);text-align:left}
+.sw i{display:block;height:32px;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
 .sw span{display:block;font-size:11px;margin-top:4px;font-variant-numeric:tabular-nums}
 .sw[aria-pressed="true"]{border-color:var(--fg);box-shadow:0 0 0 1px var(--fg)}
 .ralpick{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-top:12px}
 .ralpick .field{flex:1 1 160px}
 .hint{font-size:12.5px;color:var(--muted);margin:6px 0 0}
 .hint.bad{color:var(--warn)}
-.btn{font:inherit;font-weight:600;font-size:14.5px;border-radius:6px;padding:11px 16px;border:1px solid var(--fg);background:var(--fg);color:var(--bg);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn{font:inherit;font-weight:600;font-size:14.5px;border-radius:3px;padding:11px 16px;border:1px solid var(--fg);background:var(--fg);color:#fff;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 .btn.ghost{background:transparent;color:var(--fg)}
 .btn.small{padding:6px 12px;font-size:13px;font-weight:500}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .summary{margin-top:16px;display:grid;gap:12px}
-.summary pre{margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.55;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px;white-space:pre-wrap;word-break:break-word}
+.summary pre{margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.55;background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:12px;white-space:pre-wrap;word-break:break-word}
 .sample{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
-.sample img{width:150px;border-radius:3px}
+.sample img{width:150px}
 .sample p{margin:0;font-size:13px;color:var(--muted);flex:1 1 200px;min-width:0}
 .note{margin-top:16px;border-left:3px solid var(--accent);padding:4px 0 4px 12px;font-size:13.5px}
 
 /* Ablauf */
-.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;list-style:none;margin:0;padding:0;counter-reset:s}
-.flow li{border-top:2px solid var(--accent);padding-top:16px;counter-increment:s}
-.flow li::before{content:counter(s);font-family:var(--f-display);font-weight:700;font-size:38px;color:var(--accent);display:block;line-height:1}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;list-style:none;margin:0;padding:0;counter-reset:s}
+.flow li{border-top:1px solid var(--fg);padding-top:16px;counter-increment:s}
+.flow li::before{content:counter(s);font-family:var(--f-display);font-weight:500;font-size:40px;color:var(--accent);display:block;line-height:1}
 .flow b{display:block;font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:20px;margin:8px 0 6px}
 .flow p{margin:0;color:var(--muted);font-size:15px}
 
@@ -163,11 +166,11 @@ nav a:hover{color:var(--fg)}
 .contact{background:var(--bg2)}
 .contact .w{display:grid;grid-template-columns:1fr;gap:28px}
 @media (min-width:860px){.contact .w{grid-template-columns:1.2fr 1fr;align-items:end}}
-.contact-list{display:grid;gap:0;border-top:1px solid var(--line)}
+.contact-list{margin:0;border-top:1px solid var(--line)}
 .contact-list div{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line)}
 .contact-list dt{color:var(--muted);font-size:14px}
 .contact-list dd{margin:0;font-weight:500;user-select:all}
-footer{padding-block:28px;font-size:13px;color:var(--muted)}
+footer{padding-block:28px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
 footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-between}
 </style>
 </head>
@@ -177,7 +180,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
   <div class="w">
     <a class="brand" href="#start">ZEITFUCHS<small>FIDERIS</small></a>
     <nav aria-label="Seitenbereiche">
-      <a href="#worte">Ihre Worte</a><a href="#fronten">Fronten</a><a href="#raeume">Räume</a><a href="#ablauf">Ablauf</a><a href="#kontakt">Kontakt</a>
+      <a href="#einzigartig">Einzigartig</a><a href="#worte">Ihre Worte</a><a href="#fronten">Fronten</a><a href="#ablauf">Ablauf</a><a href="#kontakt">Kontakt</a>
     </nav>
     <a class="cta" href="#gestalten">Gestalten</a>
   </div>
@@ -189,81 +192,102 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
       <div>
         <div class="eyebrow">Wortuhren aus Fideris · Graubünden</div>
         <h1>Jede Uhr spricht den <em>Dialekt</em> ihres Besitzers.</h1>
-        <p class="lead">Sie bestimmen die Worte, die Front und das Licht. Wir fertigen Ihre Zeitfuchs in Fideris als Einzelstück, Buchstabe für Buchstabe.</p>
+        <p class="lead">Sie bestimmen die Worte und die Front. Lichtfarbe und Helligkeit steuern Sie danach bequem <strong>per Handy</strong>. Der Zeitfuchs fertigt jede Uhr von Hand in Fideris, als Einzelstück.</p>
         <div class="hero-actions">
           <a class="cta" href="#gestalten">Eigene Uhr gestalten</a>
           <a class="cta ghost" href="#fronten">Fronten ansehen</a>
         </div>
-        <div class="facts"><span>Ihr eigener Wortlaut</span><span>Jeder RAL-Farbton</span><span>Blattgold bis Kupferpatina</span><span>Einzelanfertigung</span></div>
+        <div class="facts"><span>Ihr eigener Wortlaut</span><span>Autolack in jedem RAL-Farbton</span><span>Licht per Handy</span><span>Handarbeit aus Fideris</span></div>
       </div>
-      <div class="hero-clock">
-        <canvas id="heroCv" width="900" height="900" role="img" aria-label="Wortuhr, die dieselbe Uhrzeit in verschiedenen Dialekten zeigt"></canvas>
-        <div class="speak">
-          <div class="said" id="heroSaid" aria-live="polite"></div>
-          <div class="chips" id="heroChips"></div>
-        </div>
-      </div>
+      <figure class="hero-photo">
+        <img src="bilder/hero-kupferpatina.jpg" alt="Zeitfuchs Wortuhr mit Kupferpatina, blau leuchtend: AS ISCH VIARTEL VOR ACHTI" width="1100" height="1100">
+        <figcaption>Kupferpatina · «As isch viartel vor achti»</figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="words" id="worte">
+  <section class="unique" id="einzigartig">
+    <div class="w">
+      <div>
+        <div class="sec-head" style="margin-bottom:20px"><div class="eyebrow">Einzigartig</div><h2>Einzigartig, wie Sie.</h2></div>
+        <div class="prose">
+          <p>Jede Zeitfuchs <strong>spricht Ihre Sprache</strong>, im wahrsten Sinne. Ob Dialekt, Akzent oder Redewendung: Der Zeitfuchs fertigt sie so, dass sie <strong>genau klingt wie Sie</strong>.</p>
+          <p class="claim">Die ersten und einzigen Wortuhren der Schweiz, die in der Sprache ihrer Besitzer sprechen. In jedem Dialekt, mit jedem Wort ganz persönlich.</p>
+          <p>Die Frontplatten aus <strong>Rost, Gold oder Kupferpatina</strong> sind echte Naturwunder. Kein Muster gleicht dem anderen, und einmal entstanden, bleibt jede Front unverwechselbar.</p>
+          <p><strong>Kein Exemplar gleicht dem anderen, weil auch Sie kein zweites sind.</strong></p>
+        </div>
+      </div>
+      <img src="bilder/detail-kupferpatina.jpg" alt="Nahaufnahme einer Kupferpatina-Front mit ausgeschnittenen Buchstaben" loading="lazy" width="777" height="777">
+    </div>
+  </section>
+
+  <section id="worte">
     <div class="w">
       <div class="sec-head">
         <div class="eyebrow">Ihre Worte</div>
         <h2>Viertel vor acht. Wie sagen Sie es?</h2>
-        <p class="lead">Dieselbe Zeit klingt in Chur anders als in Bern. Ihre Zeitfuchs sagt sie so, wie Sie es zu Hause sagen. Wir setzen jedes Wort ins Raster der Front.</p>
+        <p class="lead">Dieselbe Zeit klingt in Chur anders als in Bern. Tippen Sie einen Dialekt an und sehen Sie, wie sich die Front verändert.</p>
       </div>
-      <div class="dialects" id="dialects"></div>
+      <div class="speak-wrap">
+        <div class="speak-clock">
+          <canvas id="speakCv" width="900" height="900" role="img" aria-label="Wortuhr in Autolack, zeigt Viertel vor acht im gewählten Dialekt"></canvas>
+          <div class="said" id="said" aria-live="polite"></div>
+        </div>
+        <div class="dialects" id="dialects"></div>
+      </div>
     </div>
   </section>
 
-  <section id="fronten">
-    <div class="w">
+  <section class="unique" id="fronten">
+    <div class="w" style="display:block">
       <div class="sec-head">
         <div class="eyebrow">Fronten</div>
-        <h2>Lack, Blattmetall, Patina.</h2>
-        <p class="lead">Die RAL-Fronten lackiert ein Karosseriewerk, im exakten Farbton Ihrer Wahl. Blattgold, Blattkupfer, Blattsilber und Patina entstehen in Handarbeit. Keine Front gleicht der anderen.</p>
+        <h2>Autolack, Blattgold, Patina.</h2>
       </div>
-      <div class="fronts" id="fronts"></div>
-      <div class="real">
-        <figure><img src="bilder/kupferpatina-viartel-vor-achti.jpg" alt="Zeitfuchs mit Kupferpatina, leuchtend in Blau: AS ISCH VIARTEL VOR ACHTI" loading="lazy" width="1050" height="1400"><figcaption>Kupferpatina · «As isch viartel vor achti»</figcaption></figure>
-        <figure><img src="bilder/blattgold-halbi-achti.jpg" alt="Zeitfuchs in Blattgold an einer Betonwand: AS ISCH HALBI ACHTI" loading="lazy" width="1050" height="1400"><figcaption>Blattgold · «As isch halbi achti»</figcaption></figure>
+      <div class="front-grid">
+        <figure class="front-card">
+          <div class="ralbox" id="ralbox"></div>
+          <h3>Autolack in RAL</h3>
+          <p>Jede RAL-Front wird in einer Autolackiererei lackiert, mit der Sorgfalt einer Karosserie. Tiefer Glanz, robuste Oberfläche und exakt der Farbton, den Sie wählen.</p>
+        </figure>
+        <figure class="front-card">
+          <img src="bilder/blattgold-wand.jpg" alt="Zeitfuchs in Blattgold an einer Betonwand" loading="lazy" width="1100" height="1100">
+          <h3>Blattgold</h3>
+          <p>Echtes Blattgold, Blatt für Blatt von Hand aufgelegt. Falten und Kanten bleiben sichtbar und machen jede Front zum Original.</p>
+        </figure>
+        <figure class="front-card">
+          <img src="bilder/front-patina.jpg" alt="Kupferpatina-Front mit Blau, Türkis und Rostinseln" loading="lazy" width="900" height="900">
+          <h3>Kupferpatina</h3>
+          <p>Kupfer, von Hand patiniert. Blau, Türkis und Rostinseln wachsen bei jeder Front anders. Ein Naturwunder an der Wand.</p>
+        </figure>
       </div>
+      <div class="more">Ausserdem möglich: <span class="tag">Blattkupfer</span><span class="tag">Blattsilber</span><span class="tag">Spiegel silber</span><span class="tag">Rost auf Anfrage</span></div>
     </div>
   </section>
 
-  <section class="rooms" id="raeume">
-    <div class="w">
-      <div class="sec-head">
-        <div class="eyebrow">Räume</div>
-        <h2>Wo sie hängt, wird sie zum Mittelpunkt.</h2>
-        <p class="lead">Im Wohnzimmer, an der Bar, im Entrée oder hinter dem Empfang: Die Uhr nimmt den Ton des Raums auf und spricht die Sprache der Leute, die dort ein und aus gehen.</p>
-      </div>
-      <div class="room-grid" id="rooms"></div>
-      <p class="small-note">Visualisierungen. Die Uhren darin sind mit dem Konfigurator weiter unten erzeugt.</p>
-    </div>
-  </section>
-
-  <section id="gestalten">
+  <section class="cfgsec" id="gestalten" style="background:#fff">
     <div class="w">
       <div class="sec-head">
         <div class="eyebrow">Gestalten</div>
         <h2>Ihre Zeitfuchs, Wort für Wort.</h2>
-        <p class="lead">Schreiben Sie Ihren Wortlaut, wählen Sie Front und Licht. Die Vorschau verteilt die Buchstaben auf das Raster von 11 × 10 Feldern.</p>
+        <p class="lead">Schreiben Sie Ihren Wortlaut und wählen Sie die Front. Die Vorschau verteilt die Buchstaben auf das Raster von 11 × 10 Feldern.</p>
       </div>
       <div class="cfg">
         <div class="preview">
           <div class="stage">
             <div class="clock" id="clock">
               <canvas id="cv" width="1000" height="1000" role="img" aria-label="Musterbild Ihrer Wortuhr"></canvas>
+              <img id="photoFront" alt="" hidden>
               <div class="cable"></div>
             </div>
+            <div class="photo-note" id="photoNote" hidden></div>
           </div>
           <div class="readout">
             <div class="phrase" id="phrase"></div>
             <label class="timebox" for="time">Musterzeit <input type="time" id="time" value="07:45"></label>
             <button class="btn ghost small" id="shuffle" type="button">Neu verteilen</button>
           </div>
+          <div class="raster" id="raster" aria-label="Ihr Buchstabenraster"></div>
           <div class="status" id="status" role="status"></div>
         </div>
 
@@ -282,7 +306,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
             <h3><span class="n">2</span>Front</h3>
             <div class="chips" id="surfaces"></div>
             <div id="ralBox" class="group">
-              <h4>RAL-Farbton</h4>
+              <h4>RAL-Farbton, Autolack</h4>
               <div class="swatches" id="swatches"></div>
               <div class="ralpick">
                 <div class="field"><label for="ralIn">Anderer RAL-Farbton</label><input id="ralIn" inputmode="numeric" placeholder="z.B. 7016" maxlength="9" autocomplete="off"></div>
@@ -290,11 +314,12 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
               </div>
               <p class="hint" id="ralHint"></p>
             </div>
-            <p class="hint" id="surfHint" hidden></p>
+            <p class="hint" id="surfHint"></p>
           </div>
 
           <div class="step">
             <h3><span class="n">3</span>Licht und Details</h3>
+            <p class="sub">Lichtfarbe und Helligkeit ändern Sie jederzeit per Handy. Hier wählen Sie die Einstellung ab Werkstatt.</p>
             <div class="group"><h4>Lichtfarbe</h4><div class="chips" id="leds"></div></div>
             <div class="group"><h4>Helligkeit</h4><div class="chips" id="brights"></div></div>
             <div class="group"><h4>Rahmen</h4><div class="chips" id="frames"></div></div>
@@ -315,7 +340,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
             </div>
             <div class="field" style="margin-top:10px"><label for="o-note">Bemerkungen</label><textarea id="o-note"></textarea></div>
             <div class="summary">
-              <div class="sample"><img id="sampleImg" alt="Musterbild Ihrer Wortuhr"><p>Musterbild Ihrer Uhr. Gedrückt halten zum Speichern und der Nachricht anhängen.</p></div>
+              <div class="sample"><img id="sampleImg" alt="Musterbild Ihrer Wortuhr"><p>Musterbild mit Ihrem Buchstabenraster. Gedrückt halten zum Speichern und der Nachricht anhängen.</p></div>
               <pre id="orderText"></pre>
             </div>
             <div class="actions">
@@ -330,27 +355,27 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
     </div>
   </section>
 
-  <section id="ablauf">
-    <div class="w">
+  <section class="unique" id="ablauf">
+    <div class="w" style="display:block">
       <div class="sec-head">
         <div class="eyebrow">Ablauf</div>
         <h2>Von der Anfrage an die Wand.</h2>
       </div>
       <ol class="flow">
-        <li><b>Anfrage</b><p>Sie gestalten Ihre Uhr und senden uns Wortlaut, Front und Musterbild.</p></li>
+        <li><b>Anfrage</b><p>Sie gestalten Ihre Uhr und senden dem Zeitfuchs Wortlaut, Front und Musterbild.</p></li>
         <li><b>Bestellschein</b><p>Sie erhalten ihn per E-Mail mit Preis und Liefertermin. Von Hand unterschreiben, Foto oder Scan zurückschicken.</p></li>
-        <li><b>Anzahlung 30 %</b><p>Mit dem Eingang der Anzahlung reservieren wir Ihren Platz in der Werkstatt.</p></li>
+        <li><b>Anzahlung 30 %</b><p>Mit dem Eingang der Anzahlung reserviert der Zeitfuchs Ihren Platz in der Werkstatt.</p></li>
         <li><b>Fertigung in Fideris</b><p>Front, Raster und Licht entstehen als Einzelstück. Lieferung innerhalb der Schweiz.</p></li>
       </ol>
     </div>
   </section>
 
-  <section class="contact" id="kontakt">
-    <div class="w">
+  <section id="kontakt">
+    <div class="w" style="display:grid;gap:28px">
       <div class="sec-head" style="margin:0">
         <div class="eyebrow">Kontakt</div>
-        <h2>Fragen zu Ihrer Uhr?</h2>
-        <p class="lead">Ein besonderer Dialekt, ein Firmenspruch oder eine Farbe, die es nicht im Fächer gibt: Schreiben Sie uns.</p>
+        <h2>Fragen an den Zeitfuchs?</h2>
+        <p class="lead">Ein besonderer Dialekt, ein Firmenspruch oder eine Farbe, die es nicht im Fächer gibt: Schreiben Sie direkt in die Werkstatt.</p>
       </div>
       <dl class="contact-list">
         <div><dt>WhatsApp</dt><dd>079 561 14 53</dd></div>
@@ -374,147 +399,38 @@ const RAL_GROUPS=[
  ["Grautöne, Schwarz und Weiss",[["9005","Tiefschwarz"],["9011","Graphitschwarz"],["7021","Schwarzgrau"],["7016","Anthrazitgrau"],["7024","Graphitgrau"],["7015","Schiefergrau"],["7043","Verkehrsgrau B"],["7012","Basaltgrau"],["7039","Quarzgrau"],["7005","Mausgrau"],["7037","Staubgrau"],["7030","Steingrau"],["7045","Telegrau 1"],["7001","Silbergrau"],["7040","Fenstergrau"],["7004","Signalgrau"],["7038","Achatgrau"],["7047","Telegrau 4"],["7035","Lichtgrau"],["9007","Graualuminium"],["9006","Weissaluminium"],["9001","Cremeweiss"],["9010","Reinweiss"],["9016","Verkehrsweiss"]]],
  ["Farben",[["1013","Perlweiss"],["1015","Hellelfenbein"],["1004","Goldgelb"],["1005","Honiggelb"],["1032","Ginstergelb"],["3000","Feuerrot"],["3004","Purpurrot"],["3005","Weinrot"],["3015","Hellrosa"],["4003","Erikaviolett"],["4010","Telemagenta"],["6019","Weissgrün"],["6034","Pastelltürkis"],["6033","Minttürkis"],["6004","Blaugrün"],["5021","Wasserblau"],["6005","Moosgrün"],["6009","Tannengrün"],["5024","Pastellblau"],["5012","Lichtblau"],["5015","Himmelblau"],["5010","Enzianblau"],["5003","Saphirblau"],["5011","Stahlblau"],["8017","Schokoladenbraun"]]]];
 const RAL_NAME=Object.fromEntries(RAL_GROUPS.flatMap(g=>g[1]));
-const SURF_NOTE={ral:"Lackiert im Karosseriewerk, im exakten RAL-Farbton.",gold:"Echtes Blattgold, von Hand aufgelegt. Jede Front zeigt eigene Falten und Kanten.",kupfer:"Blattkupfer, von Hand aufgelegt. Warm schimmernd, mit sichtbaren Blattkanten.",silber:"Blattsilber, von Hand aufgelegt. Kühler Glanz mit feinen Falten.",spiegel:"Spiegelnde Silberfront. Sie nimmt den Raum auf, in dem die Uhr hängt.",patina:"Kupfer, von Hand patiniert. Blau, Türkis und Rostinseln fallen bei jeder Uhr anders aus.",rost:"Echter Rost, aufwendig von Hand behandelt. Nur auf Anfrage, Preis und Lieferzeit nach Absprache."};
+/* Echte Fotos für handveredelte Fronten; vereinfachte Farbe nur für das Musterbild */
+const PHOTO={gold:"bilder/front-gold.jpg",patina:"bilder/front-patina.jpg"};
+const FLAT={gold:"BE9E52",patina:"2A4A63",kupfer:"A9653F",silber:"BFC2C3",spiegel:"A9AEB1",rost:"7A3E1F"};
+const SURF_NOTE={ral:"Autolack, lackiert in einer Autolackiererei, im exakten RAL-Farbton.",gold:"Echtes Blattgold, von Hand aufgelegt. Jede Front zeigt eigene Falten und Kanten.",kupfer:"Blattkupfer, von Hand aufgelegt. Warm schimmernd, mit sichtbaren Blattkanten. Vorschau vereinfacht.",silber:"Blattsilber, von Hand aufgelegt. Kühler Glanz mit feinen Falten. Vorschau vereinfacht.",spiegel:"Spiegelnde Silberfront, sie nimmt den Raum auf. Vorschau vereinfacht.",patina:"Kupfer, von Hand patiniert. Blau, Türkis und Rostinseln fallen bei jeder Front anders aus.",rost:"Echter Rost, aufwendig von Hand behandelt. Nur auf Anfrage. Vorschau vereinfacht."};
 const MIN_FIELDS=[["m5","5 Minuten"],["m10","10 Minuten"],["m15","Viertel"],["m20","20 Minuten"],["ab","nach (ab)"],["vor","vor"],["halb","halb"]];
 const lbl=(arr,v)=>arr.find(a=>a[0]===v)[1];
-const later=f=>(window.requestIdleCallback?requestIdleCallback(f,{timeout:600}):setTimeout(f,30));
 
-/* ---------- Hero: dieselbe Uhrzeit, vier Dialekte ---------- */
-const HERO=[
-  {d:"Bündnerdeutsch",surface:"patina",led:"mint"},
-  {d:"Züritüütsch",surface:"ral",ral:"3004",led:"weiss"},
-  {d:"Bärndütsch",surface:"ral",ral:"7016",led:"weiss"},
-  {d:"Hochdeutsch",surface:"gold",led:"rot"}];
-let heroIdx=0,heroTimer=null;
-function heroShow(i){
-  heroIdx=i;const h=HERO[i],words=ZF.presetWords(h.d);
-  const cfg={words,surface:h.surface,ral:h.ral||"7016",led:h.led,bright:"hell",time:"07:45",engraving:"ZEIT IST RELATIV"};
-  const L=ZF.layout(words,3);ZF.draw($("heroCv"),cfg,L);
-  $("heroSaid").innerHTML=`<b>${h.d}</b> · ${ZF.phrase(L,ZF.litFor(words,"07:45"))}`;
-  document.querySelectorAll("#heroChips .chip").forEach((b,j)=>b.setAttribute("aria-pressed",j===i?"true":"false"));
+/* ---------- Ihre Worte: dieselbe Zeit in vier Dialekten, auf Autolack ---------- */
+const SPEAK={"Bündnerdeutsch":["7016","mint"],"Züritüütsch":["5011","weiss"],"Bärndütsch":["3004","weiss"],"Hochdeutsch":["6009","gelb"]};
+function speak(d){
+  const words=ZF.presetWords(d),L=ZF.layout(words,3),[ral,led]=SPEAK[d];
+  ZF.draw($("speakCv"),{words,surface:"ral",ral,led,bright:"hell",time:"07:45",engraving:"ZEIT IST RELATIV"},L);
+  $("said").innerHTML=`<b>${d}</b> · Autolack RAL ${ral}`;
+  document.querySelectorAll("#dialects .dialect[data-d]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.d===d?"true":"false"));
 }
-HERO.forEach((h,i)=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=h.d;
-  b.addEventListener("click",()=>{clearInterval(heroTimer);heroShow(i)});$("heroChips").appendChild(b)});
-
-/* ---------- Dialekt-Karten ---------- */
 Object.keys(ZF.PRESETS).forEach(d=>{const w=ZF.presetWords(d),L=ZF.layout(w,3);
-  const c=document.createElement("div");c.className="dialect";c.innerHTML=`<h3>${d}</h3><p>${ZF.phrase(L,ZF.litFor(w,"07:45"))}</p>`;$("dialects").appendChild(c)});
-{const c=document.createElement("div");c.className="dialect own";c.innerHTML=`<h3>Ihr Wortlaut</h3><p>Walliser, Appenzeller, Rätoromanisch oder ein Spruch aus der Familie: Sie schreiben die Worte, wir setzen sie auf die Front.</p><a class="cta ghost" href="#gestalten" style="justify-self:start">Ausprobieren</a>`;$("dialects").appendChild(c)}
+  const b=document.createElement("button");b.type="button";b.className="dialect";b.dataset.d=d;
+  b.innerHTML=`<h3>${d}</h3><p>${ZF.phrase(L,ZF.litFor(w,"07:45"))}</p>`;b.addEventListener("click",()=>speak(d));$("dialects").appendChild(b)});
+{const c=document.createElement("div");c.className="dialect own";c.innerHTML=`<h3>Ihr Wortlaut</h3><p>Walliser, Appenzeller, Rätoromanisch oder ein Spruch aus der Familie: Sie schreiben die Worte, der Zeitfuchs setzt sie auf die Front.</p><a class="cta ghost" href="#gestalten" style="justify-self:start">Ausprobieren</a>`;$("dialects").appendChild(c)}
 
-/* ---------- Fronten ---------- */
-const FRONT_TILES=[["ral","RAL lackiert","Jeder RAL-Farbton","7016","weiss"],["gold","Blattgold","Handarbeit",null,"rot"],["kupfer","Blattkupfer","Handarbeit",null,"gelb"],["silber","Blattsilber","Handarbeit",null,"rot"],["spiegel","Spiegel silber","Spiegelnd",null,"gruen"],["patina","Kupferpatina","Unikat",null,"mint"],["rost","Rost","Auf Anfrage",null,"rot"]];
-const frontCanv=[];
-FRONT_TILES.forEach(([k,name,sub,ral,led])=>{const b=document.createElement("button");b.type="button";b.className="front";
-  b.innerHTML=`<canvas width="420" height="420" role="img" aria-label="Front ${name}"></canvas><b>${name}</b><span>${sub}</span>`;
-  b.addEventListener("click",()=>{state.surface=k;if(ral)setRal(ral,true);markChips("surfaces",k);update();$("gestalten").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"})});
-  $("fronts").appendChild(b);frontCanv.push([b.querySelector("canvas"),k,ral,led])});
-function drawFronts(){
-  const w=ZF.presetWords("Bündnerdeutsch"),L=ZF.layout(w,3);let i=0;
-  const next=()=>{if(i>=frontCanv.length)return;const [cv,k,ral,led]=frontCanv[i++];ZF.draw(cv,{words:w,surface:k,ral:ral||"7016",led,bright:"mittel",time:"07:45",engraving:""},L);later(next)};
-  next();
-}
-
-/* ---------- Räume (Visualisierung) ---------- */
-const ROOMS=[
- {key:"wohnzimmer",name:"Wohnzimmer",d:"Bündnerdeutsch",time:"20:30",surface:"patina",led:"mint"},
- {key:"restaurant",name:"Restaurant",d:"Züritüütsch",time:"12:15",surface:"gold",led:"rot"},
- {key:"entree",name:"Entrée",d:"Bärndütsch",time:"08:05",surface:"ral",ral:"7016",led:"weiss"},
- {key:"bank",name:"Empfang einer Bank",d:"Hochdeutsch",time:"10:50",surface:"ral",ral:"5011",led:"weiss"}];
-const roomCanv=[];
-ROOMS.forEach(r=>{const f=document.createElement("figure");f.className="room";
-  f.innerHTML=`<canvas width="1200" height="800" role="img" aria-label="${r.name} mit Zeitfuchs Wortuhr"></canvas><figcaption><b>${r.name}</b><span></span></figcaption>`;
-  $("rooms").appendChild(f);roomCanv.push([f,r])});
-function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
-function lin(c,y0,y1,stops){const g=c.createLinearGradient(0,y0,0,y1);stops.forEach(([o,col])=>g.addColorStop(o,col));return g}
-function speckle(c,W,H,y0,y1,n,col,seed){let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;c.fillStyle=col;for(let i=0;i<n;i++){const x=r()*W,y=y0+r()*(y1-y0),rad=r()*2.2+.4;c.beginPath();c.arc(x,y,rad,0,7);c.fill()}}
-function drawRoom(cv,r){
-  const c=cv.getContext("2d"),W=cv.width,H=cv.height;
-  const words=ZF.presetWords(r.d),L=ZF.layout(words,3);
-  const cfg={words,surface:r.surface,ral:r.ral||"7016",led:r.led,bright:"hell",time:r.time,engraving:"ZEIT IST RELATIV"};
-  const off=document.createElement("canvas");off.width=off.height=640;const {led}=ZF.draw(off,cfg,L);
-  let cx,cy,cs,floorY;
-  if(r.key==="wohnzimmer"){
-    floorY=H*.8;c.fillStyle=lin(c,0,floorY,[[0,"#cdc3b3"],[1,"#b9ad9a"]]);c.fillRect(0,0,W,floorY);
-    c.fillStyle=lin(c,floorY,H,[[0,"#7a5636"],[1,"#5a3d25"]]);c.fillRect(0,floorY,W,H-floorY);
-    c.strokeStyle="rgba(0,0,0,.18)";c.lineWidth=2;for(let x=-200;x<W+200;x+=130){c.beginPath();c.moveTo(x,floorY);c.lineTo(x-140,H);c.stroke()}
-    cs=H*.36;cx=W*.4;cy=H*.17;
-    // Sofa
-    c.fillStyle="rgba(0,0,0,.25)";c.beginPath();c.ellipse(W*.4,floorY+6,W*.3,14,0,0,7);c.fill();
-    c.fillStyle="#2c4a40";rr(c,W*.13,H*.6,W*.54,H*.16,14);c.fill();
-    c.fillStyle="#335548";rr(c,W*.11,H*.55,W*.08,H*.23,12);c.fill();rr(c,W*.61,H*.55,W*.08,H*.23,12);c.fill();
-    c.fillStyle="#3a5f52";rr(c,W*.19,H*.66,W*.205,H*.07,10);c.fill();rr(c,W*.405,H*.66,W*.205,H*.07,10);c.fill();
-    c.fillStyle="#c9a46a";rr(c,W*.22,H*.57,W*.08,H*.1,10);c.fill();
-    c.fillStyle="#1e2a26";c.fillRect(W*.16,H*.76,8,H*.04);c.fillRect(W*.635,H*.76,8,H*.04);
-    // Stehlampe
-    c.strokeStyle="#2a2a2a";c.lineWidth=5;c.beginPath();c.moveTo(W*.82,floorY);c.lineTo(W*.82,H*.32);c.stroke();
-    c.fillStyle="#e9e0cf";c.beginPath();c.moveTo(W*.775,H*.32);c.lineTo(W*.865,H*.32);c.lineTo(W*.845,H*.22);c.lineTo(W*.795,H*.22);c.closePath();c.fill();
-    const lg=c.createRadialGradient(W*.82,H*.32,10,W*.82,H*.4,W*.25);lg.addColorStop(0,"rgba(255,226,170,.35)");lg.addColorStop(1,"rgba(255,226,170,0)");c.fillStyle=lg;c.fillRect(0,0,W,H);
-    c.fillStyle="#2a2a2a";c.fillRect(W*.8,floorY-6,W*.04,6);
-  }else if(r.key==="restaurant"){
-    floorY=H*.72;c.fillStyle="#2c211a";c.fillRect(0,0,W,H);
-    c.strokeStyle="rgba(0,0,0,.35)";c.lineWidth=3;for(let x=0;x<W;x+=46){c.beginPath();c.moveTo(x,0);c.lineTo(x,floorY);c.stroke()}
-    c.fillStyle="rgba(255,255,255,.025)";for(let x=0;x<W;x+=92)c.fillRect(x+4,0,20,floorY);
-    cs=H*.38;cx=W*.5;cy=H*.13;
-    // Pendelleuchten
-    [[.18,.36],[.82,.36]].forEach(([u,v])=>{c.strokeStyle="#111";c.lineWidth=2;c.beginPath();c.moveTo(W*u,0);c.lineTo(W*u,H*v-24);c.stroke();
-      c.fillStyle="#c49a52";c.beginPath();c.moveTo(W*u-34,H*v);c.lineTo(W*u+34,H*v);c.lineTo(W*u+12,H*v-26);c.lineTo(W*u-12,H*v-26);c.closePath();c.fill();
-      const g=c.createRadialGradient(W*u,H*v,4,W*u,H*v+80,260);g.addColorStop(0,"rgba(255,210,140,.55)");g.addColorStop(1,"rgba(255,210,140,0)");c.fillStyle=g;c.fillRect(0,0,W,H)});
-    // Theke
-    c.fillStyle="#161210";c.fillRect(0,floorY,W,H-floorY);
-    c.fillStyle="#3d2f25";c.fillRect(0,floorY,W,14);c.fillStyle="rgba(255,220,160,.18)";c.fillRect(0,floorY,W,3);
-    c.strokeStyle="rgba(255,255,255,.05)";c.lineWidth=2;for(let x=30;x<W;x+=80){c.beginPath();c.moveTo(x,floorY+14);c.lineTo(x,H);c.stroke()}
-    // Gläser
-    for(let i=0;i<5;i++){const x=W*.3+i*44;c.fillStyle="rgba(230,240,240,.25)";rr(c,x,floorY-38,22,38,3);c.fill()}
-    c.fillStyle="#5b1f22";rr(c,W*.62,floorY-62,26,62,5);c.fill();c.fillStyle="#2b3a2a";rr(c,W*.66,floorY-70,24,70,5);c.fill();
-  }else if(r.key==="entree"){
-    floorY=H*.82;c.fillStyle=lin(c,0,floorY,[[0,"#9b9c99"],[1,"#86877f"]]);c.fillRect(0,0,W,floorY);
-    speckle(c,W,H,0,floorY,900,"rgba(60,60,58,.25)",7);speckle(c,W,H,0,floorY,400,"rgba(255,255,255,.12)",13);
-    c.strokeStyle="rgba(0,0,0,.12)";c.lineWidth=2;c.beginPath();c.moveTo(0,H*.42);c.lineTo(W,H*.42);c.stroke();
-    c.fillStyle=lin(c,floorY,H,[[0,"#d3cec5"],[1,"#bdb7ad"]]);c.fillRect(0,floorY,W,H-floorY);speckle(c,W,H,floorY,H,500,"rgba(90,80,70,.35)",21);
-    cs=H*.4;cx=W*.44;cy=H*.12;
-    // Bank
-    c.fillStyle="rgba(0,0,0,.22)";c.beginPath();c.ellipse(W*.44,floorY+4,W*.22,10,0,0,7);c.fill();
-    c.fillStyle="#b78c5c";c.fillRect(W*.24,H*.7,W*.4,H*.035);c.fillStyle="#9a7448";c.fillRect(W*.24,H*.735,W*.4,6);
-    c.fillStyle="#1f1f1f";c.fillRect(W*.26,H*.74,6,floorY-H*.74);c.fillRect(W*.62-6,H*.74,6,floorY-H*.74);
-    // Pflanze
-    c.fillStyle="#2a2a28";rr(c,W*.78,H*.66,W*.09,floorY-H*.66,6);c.fill();
-    c.fillStyle="#2f5a37";for(let i=0;i<9;i++){const a=-Math.PI/2+(i-4)*.32;c.beginPath();c.ellipse(W*.825+Math.cos(a)*60,H*.66+Math.sin(a)*120-20,18,62,a+Math.PI/2,0,7);c.fill()}
-    c.fillStyle="#24482c";for(let i=0;i<5;i++){const a=-Math.PI/2+(i-2)*.45;c.beginPath();c.ellipse(W*.825+Math.cos(a)*40,H*.66+Math.sin(a)*80-10,14,48,a+Math.PI/2,0,7);c.fill()}
-  }else{
-    floorY=H*.84;c.fillStyle=lin(c,0,floorY,[[0,"#e6e2da"],[1,"#d8d3c9"]]);c.fillRect(0,0,W,floorY);
-    c.strokeStyle="rgba(0,0,0,.07)";c.lineWidth=2;for(let x=W*.08;x<W;x+=W*.21){c.beginPath();c.moveTo(x,0);c.lineTo(x,floorY);c.stroke()}
-    c.beginPath();c.moveTo(0,H*.5);c.lineTo(W,H*.5);c.stroke();
-    c.fillStyle="#8d8a84";c.fillRect(0,floorY,W,H-floorY);
-    cs=H*.36;cx=W*.5;cy=H*.1;
-    // Empfangstheke
-    c.fillStyle="rgba(0,0,0,.18)";c.fillRect(W*.12,floorY-4,W*.76,10);
-    c.fillStyle=lin(c,H*.6,floorY,[[0,"#f6f4f0"],[1,"#e2ded6"]]);rr(c,W*.12,H*.6,W*.76,floorY-H*.6,6);c.fill();
-    c.fillStyle="#2a2d30";c.fillRect(W*.1,H*.58,W*.8,H*.03);
-    c.fillStyle="#b3925a";c.fillRect(W*.12,H*.75,W*.76,4);
-    // Bildschirm
-    c.fillStyle="#1d2024";rr(c,W*.62,H*.5,W*.1,H*.08,3);c.fill();c.fillRect(W*.665,H*.555,W*.01,H*.03);
-  }
-  // Leuchtschein an der Wand
-  const glow=c.createRadialGradient(cx,cy+cs/2,cs*.2,cx,cy+cs/2,cs*1.05);glow.addColorStop(0,led+"33");glow.addColorStop(1,led+"00");c.fillStyle=glow;c.fillRect(0,0,W,floorY);
-  // Uhr mit Schatten
-  c.save();c.shadowColor="rgba(0,0,0,.45)";c.shadowBlur=36;c.shadowOffsetY=18;c.fillStyle="#111";c.fillRect(cx-cs/2,cy,cs,cs);c.restore();
-  c.drawImage(off,cx-cs/2,cy,cs,cs);
-  // leichte Raumschattierung
-  const vg=c.createRadialGradient(W/2,H*.45,H*.3,W/2,H*.5,W*.75);vg.addColorStop(0,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(0,0,0,.35)");c.fillStyle=vg;c.fillRect(0,0,W,H);
-  return ZF.phrase(L,ZF.litFor(words,r.time));
-}
-function drawRooms(){let i=0;const next=()=>{if(i>=roomCanv.length)return;const [f,r]=roomCanv[i++];
-  f.querySelector("span").textContent=`${r.d} · ${drawRoom(f.querySelector("canvas"),r)}`;later(next)};next()}
+/* ---------- RAL-Muster in der Fronten-Übersicht ---------- */
+function drawRalBox(){const w=ZF.presetWords("Bündnerdeutsch"),L=ZF.layout(w,3);
+  [["7016","weiss"],["9016","mint"],["5011","weiss"],["6009","gelb"]].forEach(([ral,led])=>{const c=document.createElement("canvas");c.width=c.height=420;
+    c.setAttribute("role","img");c.setAttribute("aria-label","Autolack RAL "+ral);$("ralbox").appendChild(c);
+    ZF.draw(c,{words:w,surface:"ral",ral,led,bright:"hell",time:"07:45",engraving:""},L)})}
 
 /* ---------- Konfigurator ---------- */
 const state={words:{},surface:"ral",ral:"7016",ralKnown:true,led:"weiss",bright:"mittel",frame:"schwarz",cable:"schwarz",plug:"schwarz",
   engraving:"ZEIT IST RELATIV",time:"07:45",seed:7,preset:"Bündnerdeutsch"};
-function applyPreset(name){
-  state.preset=name;state.words=ZF.presetWords(name);
+function applyPreset(name){state.preset=name;state.words=ZF.presetWords(name);
   $("w-intro").value=state.words.intro;MIN_FIELDS.forEach(([k])=>$("w-"+k).value=state.words[k]);
-  for(let i=1;i<=12;i++)$("w-h"+i).value=state.words["h"+i];
-  markChips("presets",name);
-}
+  for(let i=1;i<=12;i++)$("w-h"+i).value=state.words["h"+i];markChips("presets",name)}
 function buildFields(){
   MIN_FIELDS.forEach(([k,l])=>{const d=document.createElement("div");d.className="field word";
     d.innerHTML=`<label for="w-${k}">${l}</label><input id="w-${k}" maxlength="11" autocomplete="off">`;$("minutes").appendChild(d)});
@@ -522,8 +438,7 @@ function buildFields(){
     d.innerHTML=`<label for="w-h${i}">${i} Uhr</label><input id="w-h${i}" maxlength="11" autocomplete="off">`;$("hours").appendChild(d)}
   document.querySelectorAll("#gestalten .word input").forEach(inp=>{if(inp.id==="engr")return;
     inp.addEventListener("input",()=>{const k=inp.id.slice(2);state.words[k]=k==="intro"?ZF.clean(inp.value):ZF.cleanWord(inp.value);
-      state.preset=null;markChips("presets",null);update()})});
-}
+      state.preset=null;markChips("presets",null);update()})})}
 function chipRow(id,items,key,onPick){const box=$(id);
   items.forEach(it=>{const b=document.createElement("button");b.type="button";b.className="chip";b.dataset.v=it[0];b.textContent=it[1];
     b.addEventListener("click",()=>{onPick?onPick(it[0]):(state[key]=it[0]);markChips(id,it[0]);update()});box.appendChild(b)});
@@ -534,22 +449,20 @@ function buildSwatches(){const wrap=$("swatches");
     const box=document.createElement("div");box.className="swgrid";wrap.appendChild(box);
     list.forEach(([c,n])=>{const b=document.createElement("button");b.type="button";b.className="sw";b.dataset.v=c;b.title="RAL "+c+" "+n;b.setAttribute("aria-label","RAL "+c+" "+n);
       b.innerHTML=`<i style="background:#${ZF.RAL[c]}"></i><span>${c}</span>`;b.addEventListener("click",()=>setRal(c));box.appendChild(b)})})}
-function setRal(code,silent){
-  state.ral=code;state.ralKnown=!!ZF.RAL[code];
+function setRal(code,silent){state.ral=code;state.ralKnown=!!ZF.RAL[code];
   document.querySelectorAll("#swatches .sw").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===code?"true":"false"));
   const h=$("ralHint");h.classList.remove("bad");
   h.textContent=state.ralKnown?`RAL ${code}${RAL_NAME[code]?" "+RAL_NAME[code]:""} gewählt. Alle RAL-Classic-Farben sind möglich.`:`RAL ${code} gewählt. Für diesen Farbton gibt es keine Bildschirmvorschau, lackiert wird exakt in RAL ${code}.`;
-  if(!silent)update();
-}
+  if(!silent)update()}
 function applyRalInput(){const m=$("ralIn").value.match(/\d{4}/),h=$("ralHint");
   if(!m||!/^[1-9]/.test(m[0])){h.textContent="Bitte eine vierstellige RAL-Nummer eingeben, zum Beispiel 7016.";h.classList.add("bad");return}
   setRal(m[0])}
-function frontLabel(){return state.surface==="ral"?`RAL ${state.ral}${RAL_NAME[state.ral]?" "+RAL_NAME[state.ral]:""}`:lbl(ZF.SURFACES,state.surface)}
+function frontLabel(){return state.surface==="ral"?`Autolack RAL ${state.ral}${RAL_NAME[state.ral]?" "+RAL_NAME[state.ral]:""}`:lbl(ZF.SURFACES,state.surface)}
 let current=null;
 function orderText(){
   const W=state.words,v=id=>$(id).value.trim(),hrs=[];for(let i=1;i<=12;i++)hrs.push(`${i}=${W["h"+i]||"–"}`);
   return [`ZEITFUCHS WORTUHR – ANFRAGE`,``,
-`Front: ${frontLabel()}`,`Lichtfarbe: ${lbl(ZF.LEDS,state.led)} · Helligkeit: ${lbl(ZF.BRIGHT,state.bright)}`,
+`Front: ${frontLabel()}`,`Lichtfarbe ab Werkstatt: ${lbl(ZF.LEDS,state.led)} · Helligkeit: ${lbl(ZF.BRIGHT,state.bright)} (per Handy änderbar)`,
 `Rahmen: ${lbl(FRAMES,state.frame)} · Kabel: ${lbl(CABLES,state.cable)} · Stecker: ${lbl(PLUGS,state.plug)}`,`Gravur: ${state.engraving||"keine"}`,``,
 `Wortlaut${state.preset?" ("+state.preset+")":""}:`,`Es ist: ${W.intro||"–"}`,
 `Minuten: 5=${W.m5||"–"}, 10=${W.m10||"–"}, 15=${W.m15||"–"}, 20=${W.m20||"–"}, nach=${W.ab||"–"}, vor=${W.vor||"–"}, halb=${W.halb||"–"}`,
@@ -557,25 +470,31 @@ function orderText(){
 `Name: ${v("o-name")||"–"}`,`Telefon: ${v("o-tel")||"–"}`,`E-Mail: ${v("o-mail")||"–"}`,`PLZ/Ort: ${v("o-ort")||"–"}`,
 v("o-note")?`Bemerkungen: ${v("o-note")}`:null,``,
 `Unverbindliche Anfrage. Verbindlich erst mit unterschriebenem Bestellschein und 30 % Anzahlung.`,
-`Musterbild dient nur zur Orientierung. Massgebend ist der RAL-Farbton, nicht die Darstellung am Bildschirm.`].filter(x=>x!==null).join("\n");
-}
+`Musterbild dient nur zur Orientierung. Massgebend ist der RAL-Farbton, nicht die Darstellung am Bildschirm.`].filter(x=>x!==null).join("\n")}
 function refreshOrder(){const t=orderText();$("orderText").textContent=t;
   $("waBtn").href="https://wa.me/41795611453?text="+encodeURIComponent(t);
   $("mailBtn").href="mailto:kontakt@zeitfuchs.ch?subject="+encodeURIComponent("Anfrage Zeitfuchs Wortuhr")+"&body="+encodeURIComponent(t)}
+function renderRaster(lit){const box=$("raster");box.innerHTML="";
+  current.grid.forEach((row,r)=>row.forEach((ch,c)=>{const s=document.createElement("span");s.textContent=ch;
+    const o=current.own[r][c];if(o&&lit.ids.has(o))s.className="on";box.appendChild(s)}))}
 let imgTimer=null;
 function update(){
   current=ZF.layout(state.words,state.seed);
-  ZF.draw($("cv"),state,current);
-  $("phrase").textContent=ZF.phrase(current,ZF.litFor(state.words,state.time));
+  const photo=PHOTO[state.surface],flat=state.surface!=="ral"?FLAT[state.surface]:null;
+  ZF.draw($("cv"),Object.assign({},state,{flat}),current);
+  $("cv").hidden=!!photo;$("photoFront").hidden=!photo;$("photoNote").hidden=!photo;
+  if(photo){$("photoFront").src=photo;$("photoFront").alt="Echte "+lbl(ZF.SURFACES,state.surface)+"-Front aus der Werkstatt";
+    $("photoNote").textContent="Echte Front aus der Werkstatt. Ihre Uhr bekommt Ihr Raster unten und wird ein Unikat."}
+  const lit=ZF.litFor(state.words,state.time);
+  $("phrase").textContent=ZF.phrase(current,lit);renderRaster(lit);
   const s=$("status");
   if(current.tooLong.length){s.className="status bad";s.textContent=`Zu lang für eine Zeile (max. ${ZF.COLS} Buchstaben): ${current.tooLong.map(t=>t.text).join(", ")}`}
   else if(current.rows>ZF.ROWS){s.className="status bad";s.textContent=`Passt nicht auf die Front: Ihr Wortlaut braucht ${current.rows} statt ${ZF.ROWS} Zeilen. Kürzen Sie ein paar Wörter.`}
-  else{s.className="status";s.textContent=`Passt auf die Front (${ZF.COLS} × ${ZF.ROWS} Buchstaben). Leuchtende Wörter zeigen die Musterzeit.`}
+  else{s.className="status";s.textContent=`Passt auf die Front (${ZF.COLS} × ${ZF.ROWS} Buchstaben). Wörter, die zusammen leuchten, sind immer durch einen Buchstaben getrennt.`}
   const fr=FRAMES.find(f=>f[0]===state.frame),clock=$("clock");
   clock.style.setProperty("--frame",fr[2]||ZF.frontColor(state));
   clock.style.setProperty("--cable",CABLES.find(c=>c[0]===state.cable)[2]);
-  $("ralBox").hidden=state.surface!=="ral";
-  $("surfHint").hidden=false;$("surfHint").textContent=SURF_NOTE[state.surface];
+  $("ralBox").hidden=state.surface!=="ral";$("surfHint").textContent=SURF_NOTE[state.surface];
   refreshOrder();
   clearTimeout(imgTimer);imgTimer=setTimeout(()=>{try{$("sampleImg").src=$("cv").toDataURL("image/jpeg",.86)}catch(e){}},250);
 }
@@ -603,11 +522,7 @@ $("copyBtn").addEventListener("click",()=>{const b=$("copyBtn");
   const sel=()=>{const r=document.createRange();r.selectNodeContents($("orderText"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Markiert"};
   try{navigator.clipboard.writeText(orderText()).then(done,sel)}catch(e){sel()}});
 
-const start=()=>{
-  heroShow(0);
-  if(!matchMedia("(prefers-reduced-motion:reduce)").matches)heroTimer=setInterval(()=>heroShow((heroIdx+1)%HERO.length),3600);
-  update();later(drawFronts);later(drawRooms);
-};
+const start=()=>{speak("Bündnerdeutsch");update();setTimeout(drawRalBox,50)};
 if(document.fonts&&document.fonts.load)document.fonts.load("500 40px Barlow").then(start,start);else start();
 })();
 </script>

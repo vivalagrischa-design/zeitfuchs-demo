@@ -90,7 +90,7 @@
     gx.putImageData(img, 0, 0);
     return texCache[key] = { canvas: c, lum: lum / (TEX * TEX * 255) };
   }
-  function surfaceKey(cfg) { return cfg.surface !== "ral" ? cfg.surface : "ral:" + (RAL[cfg.ral] || "8A8D8F") }
+  function surfaceKey(cfg) { if (cfg.flat) return "ral:" + cfg.flat; return cfg.surface !== "ral" ? cfg.surface : "ral:" + (RAL[cfg.ral] || "8A8D8F") }
   function frontColor(cfg) {
     if (cfg.surface === "ral") return "#" + (RAL[cfg.ral] || "8A8D8F");
     return { gold: "#9c7b33", kupfer: "#8a4526", silber: "#9a9d9e", spiegel: "#7d8285", patina: "#1b3247", rost: "#4a2412" }[cfg.surface];
@@ -106,35 +106,55 @@
     for (let i = 1; i <= 12; i++) if (W["h" + i]) t.push({ id: "h" + i, text: W["h" + i], seq: false });
     return t;
   }
-  function pack(toks, gap) {
+  /* Wörter, die gemeinsam leuchten können, brauchen einen Füllbuchstaben dazwischen (nie «ASISCH»).
+     Wörter, die nie zusammen leuchten (zwei Stunden, zwei Minutenzahlen, VOR und AB), dürfen sich berühren. */
+  const NUM = { m5: 1, m10: 1, m15: 1, m20: 1 };
+  function gapBetween(a, b) {
+    if (!a) return 0;
+    const ha = /^h\d/.test(a.id), hb = /^h\d/.test(b.id);
+    if (ha && hb) return 0;
+    if (NUM[a.id] && NUM[b.id]) return 0;
+    if ((a.id === "vor" && b.id === "ab") || (a.id === "ab" && b.id === "vor")) return 0;
+    return 1;
+  }
+  function pack(seq, hours) {
     const rows = []; let cur = [], used = 0;
-    const room = () => COLS - used - (cur.length ? gap : 0);
-    const put = t => { if (t.text.length > room() && cur.length) { rows.push(cur); cur = []; used = 0 } used += (cur.length ? gap : 0) + t.text.length; cur.push(t) };
-    toks.filter(t => t.seq).forEach(put);
-    const pool = toks.filter(t => !t.seq).sort((a, b) => b.text.length - a.text.length);
+    const last = () => cur[cur.length - 1];
+    const room = t => COLS - used - gapBetween(last(), t);
+    const put = t => { if (t.text.length > room(t) && cur.length) { rows.push(cur); cur = []; used = 0 } used += gapBetween(last(), t) + t.text.length; cur.push(t) };
+    seq.forEach(put);
+    const pool = hours.slice().sort((a, b) => b.text.length - a.text.length);
     while (pool.length) {
-      const i = pool.findIndex(t => t.text.length <= room());
+      const i = pool.findIndex(t => t.text.length <= room(t));
       if (i < 0) { if (cur.length) { rows.push(cur); cur = []; used = 0; continue } put(pool.shift()); continue }
       put(pool.splice(i, 1)[0]);
     }
     if (cur.length) rows.push(cur);
     return rows;
   }
+  function perms(a) { if (a.length < 2) return [a]; const out = []; a.forEach((x, i) => perms(a.slice(0, i).concat(a.slice(i + 1))).forEach(p => out.push([x].concat(p)))); return out }
   const FILL = "EEENNNIIRRSSTTAAHHDULGOCMBWFKZPVÄÜ";
   function layout(W, seed) {
     const toks = tokens(W); const tooLong = toks.filter(t => t.text.length > COLS);
-    let rows = pack(toks, 1), gap = 1;
-    if (rows.length > ROWS) { rows = pack(toks, 0); gap = 0 }
+    const intro = toks.filter(t => t.id[0] === "i"), nums = toks.filter(t => NUM[t.id]);
+    const va = toks.filter(t => t.id === "vor" || t.id === "ab"), halb = toks.filter(t => t.id === "halb"), hours = toks.filter(t => /^h\d/.test(t.id));
+    // Reihenfolge der Minutenwörter frei wählen, damit möglichst wenige Zeilen nötig sind
+    let rows = null;
+    perms(nums).forEach(pn => perms(va).forEach(pv => {
+      const r = pack(intro.concat(pn, pv, halb), hours);
+      if (!rows || r.length < rows.length) rows = r;
+    }));
     const r = rng((seed || 7) * 7919 + 1);
     while (rows.length < ROWS) rows.splice(Math.floor(r() * (rows.length + 1)), 0, []);
     const grid = [], own = [];
     rows.forEach(row => {
       const letters = [], owner = []; const L = row.reduce((s, t) => s + Math.min(t.text.length, COLS), 0);
-      let free = Math.max(0, COLS - L - gap * Math.max(0, row.length - 1));
+      const gaps = row.map((t, j) => j ? gapBetween(row[j - 1], t) : 0);
+      let free = Math.max(0, COLS - L - gaps.reduce((a, b) => a + b, 0));
       const slots = new Array(row.length + 1).fill(0);
       while (free > 0) { slots[Math.floor(r() * slots.length)]++; free-- }
       const fill = n => { for (let i = 0; i < n; i++) { letters.push(FILL[Math.floor(r() * FILL.length)]); owner.push(null) } };
-      row.forEach((t, j) => { fill(slots[j] + (j > 0 ? gap : 0)); for (const ch of t.text.slice(0, COLS)) { letters.push(ch); owner.push(t.id) } });
+      row.forEach((t, j) => { fill(slots[j] + gaps[j]); for (const ch of t.text.slice(0, COLS)) { letters.push(ch); owner.push(t.id) } });
       fill(slots[row.length]);
       grid.push(letters.slice(0, COLS)); own.push(owner.slice(0, COLS));
     });
