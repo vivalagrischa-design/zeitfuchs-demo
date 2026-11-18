@@ -190,7 +190,7 @@
     const lit = litFor(cfg.words, cfg.time), led = (LEDS.find(l => l[0] === cfg.led) || LEDS[0])[2];
     const rowsN = L.rows, span = Math.max(COLS, rowsN);
     const p = S * .64 / (span - 1) * (span > 10 ? 1 : 1), fs = p * .74;
-    const x0 = S / 2 - (COLS - 1) * p / 2, y0 = S * .46 - (rowsN - 1) * p / 2;
+    const x0 = S / 2 - (COLS - 1) * p / 2, y0 = S * .5 - (rowsN - 1) * p / 2;
     ctx.textAlign = "center"; ctx.textBaseline = "alphabetic"; ctx.font = `500 ${fs}px Barlow, Arial, sans-serif`;
     const ascent = fs * .35; // optische Mitte der Grossbuchstaben
     const litCells = [];

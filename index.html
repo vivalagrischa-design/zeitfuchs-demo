@@ -118,6 +118,8 @@ nav a:hover{color:var(--fg)}
 .clock{position:relative;width:76%}
 .clock canvas,.clock img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;box-shadow:0 0 0 var(--frame-w,5px) var(--frame,#111),0 22px 40px rgba(20,30,40,.28)}
 .cable{position:absolute;left:50%;top:100%;width:4px;height:60px;transform:translateX(-50%);background:var(--cable,#141414);border-radius:3px;z-index:-1}
+.foot{display:none;position:absolute;left:8%;right:8%;top:calc(100% + var(--frame-w,5px));height:14px;background:linear-gradient(#e9eaea,#b9bcbd);box-shadow:0 6px 12px rgba(0,0,0,.18)}
+.clock.tisch .foot{display:block}.clock.tisch .cable{display:none}
 .photo-note{position:absolute;left:12px;right:12px;bottom:10px;font-size:12.5px;color:var(--muted);text-align:center}
 .raster{margin-top:14px;display:grid;grid-template-columns:repeat(11,1fr);gap:2px;max-width:420px;font-family:var(--f-clock);font-size:14px;text-align:center;letter-spacing:0}
 .raster span{padding:2px 0;color:#9aa2a9}
@@ -301,7 +303,8 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
           <p>Echter Rost mit tiefer Struktur. Aufwendig in der Herstellung, auf Anfrage.</p>
         </figure>
       </div>
-      <div class="more">Ausserdem möglich: <span class="tag">Blattsilber</span><span class="tag">Spiegel silber</span><span class="tag">Tischuhr mit Fuss</span></div>
+      <div class="more">Ausserdem möglich: <span class="tag">Blattsilber</span><span class="tag">Spiegel silber</span></div>
+      <p class="lead" style="margin-top:22px">Jede Zeitfuchs gibt es als <strong>Wanduhr</strong> oder als <strong>Tischuhr mit Fuss</strong>.</p>
     </div>
   </section>
 
@@ -314,11 +317,11 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
       </div>
       <div class="gallery">
         <figure class="g-wide"><img src="bilder/patina-blau.jpg" alt="Kupferpatina in Blau: AS ISCH ZEHN VOR NÜÜNI" loading="lazy" width="1200" height="1200"><figcaption>Kupferpatina · «As isch zehn vor nüüni»</figcaption></figure>
-        <figure><img src="bilder/patina-halbi.jpg" alt="Kupferpatina mit dunklen Inseln, HALBI leuchtet türkis" loading="lazy" width="1000" height="1333"><figcaption>Patina im Detail</figcaption></figure>
+        <figure><img src="bilder/patina-halbi.jpg" alt="Kupferpatina mit dunklen Inseln, HALBI leuchtet türkis" loading="lazy" width="1000" height="1333"><figcaption>Kupferpatina im Detail</figcaption></figure>
         <figure><img src="bilder/rost-baerndeutsch.jpg" alt="Rostfront auf Berndeutsch: ÄS ISCH, VIERTU, ZWÄNZG, HAUBI" loading="lazy" width="1200" height="1200"><figcaption>Rost · auf Bärndütsch</figcaption></figure>
         <figure><img src="bilder/patina-pink.jpg" alt="Kupferpatina, pink leuchtend: AS ISCH FÜÜF VOR ÖLFI" loading="lazy" width="1200" height="1200"><figcaption>Kupferpatina · Licht in Pink</figcaption></figure>
-        <figure><img src="bilder/patina-as.jpg" alt="Nahaufnahme: AS leuchtet türkis auf Patina" loading="lazy" width="1000" height="1333"><figcaption>«As …»</figcaption></figure>
-        <figure><img src="bilder/patina-detail-2.jpg" alt="Patina mit Kupferadern, Nahaufnahme" loading="lazy" width="1000" height="1333"><figcaption>Gewachsene Struktur</figcaption></figure>
+        <figure><img src="bilder/patina-as.jpg" alt="Nahaufnahme: AS leuchtet türkis auf Patina" loading="lazy" width="1000" height="1333"><figcaption>Kupferpatina · leuchtend in Türkis</figcaption></figure>
+        <figure><img src="bilder/patina-detail-2.jpg" alt="Patina mit Kupferadern, Nahaufnahme" loading="lazy" width="1000" height="1333"><figcaption>Kupferpatina · Nahaufnahme</figcaption></figure>
       </div>
     </div>
   </section>
@@ -336,7 +339,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
             <div class="clock" id="clock">
               <canvas id="cv" width="1000" height="1000" role="img" aria-label="Musterbild Ihrer Wortuhr"></canvas>
               <img id="photoFront" alt="" hidden>
-              <div class="cable"></div>
+              <div class="cable"></div><div class="foot"></div>
             </div>
             <div class="photo-note" id="photoNote" hidden></div>
           </div>
@@ -380,11 +383,10 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
             <p class="sub">Lichtfarbe und Helligkeit ändern Sie jederzeit per Handy. Hier wählen Sie die Einstellung ab Werkstatt.</p>
             <div class="group"><h4>Lichtfarbe</h4><div class="chips" id="leds"></div></div>
             <div class="group"><h4>Helligkeit</h4><div class="chips" id="brights"></div></div>
+            <div class="group"><h4>Ausführung</h4><div class="chips" id="types"></div></div>
             <div class="group"><h4>Rahmen</h4><div class="chips" id="frames"></div></div>
             <div class="group"><h4>Kabel</h4><div class="chips" id="cables"></div></div>
             <div class="group"><h4>Stecker</h4><div class="chips" id="plugs"></div></div>
-            <div class="group"><h4>Gravur unten</h4>
-              <div class="field word"><label for="engr">Kurzer Text, bis 24 Zeichen</label><input id="engr" maxlength="24" autocomplete="off"></div></div>
           </div>
 
           <div class="step">
@@ -452,10 +454,11 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
 const $=id=>document.getElementById(id);
 const FRAMES=[["schwarz","Schwarz","#121212"],["weiss","Weiss","#efefea"]];
 const CABLES=[["schwarz","Schwarz","#141414"],["weiss","Weiss","#ececea"]];
+const TYPES=[["wand","Wanduhr"],["tisch","Tischuhr mit Fuss"]];
 const PLUGS=[["schwarz","Schwarz","#141414"],["weiss","Weiss","#ececea"]];
 const RAL_GROUPS=[
- ["Grautöne, Schwarz und Weiss",[["9005","Tiefschwarz"],["9011","Graphitschwarz"],["7021","Schwarzgrau"],["7016","Anthrazitgrau"],["7024","Graphitgrau"],["7015","Schiefergrau"],["7043","Verkehrsgrau B"],["7012","Basaltgrau"],["7039","Quarzgrau"],["7005","Mausgrau"],["7037","Staubgrau"],["7030","Steingrau"],["7045","Telegrau 1"],["7001","Silbergrau"],["7040","Fenstergrau"],["7004","Signalgrau"],["7038","Achatgrau"],["7047","Telegrau 4"],["7035","Lichtgrau"],["9007","Graualuminium"],["9006","Weissaluminium"],["9001","Cremeweiss"],["9010","Reinweiss"],["9016","Verkehrsweiss"]]],
- ["Farben",[["1013","Perlweiss"],["1015","Hellelfenbein"],["1004","Goldgelb"],["1005","Honiggelb"],["1032","Ginstergelb"],["3000","Feuerrot"],["3004","Purpurrot"],["3005","Weinrot"],["3015","Hellrosa"],["4003","Erikaviolett"],["4010","Telemagenta"],["6019","Weissgrün"],["6034","Pastelltürkis"],["6033","Minttürkis"],["6004","Blaugrün"],["5021","Wasserblau"],["6005","Moosgrün"],["6009","Tannengrün"],["5024","Pastellblau"],["5012","Lichtblau"],["5015","Himmelblau"],["5010","Enzianblau"],["5003","Saphirblau"],["5011","Stahlblau"],["8017","Schokoladenbraun"]]]];
+ ["Farben",[["4005","Blaulila"],["4008","Signalviolett"],["4007","Purpurviolett"],["4006","Verkehrspurpur"],["4001","Rotlila"],["4009","Pastellviolett"],["4003","Erikaviolett"],["4010","Telemagenta"],["3015","Hellrosa"],["3000","Feuerrot"],["3004","Purpurrot"],["3005","Weinrot"],["1004","Goldgelb"],["1005","Honiggelb"],["1032","Ginstergelb"],["1013","Perlweiss"],["6019","Weissgrün"],["6034","Pastelltürkis"],["6033","Minttürkis"],["6004","Blaugrün"],["5021","Wasserblau"],["6005","Moosgrün"],["6009","Tannengrün"],["5024","Pastellblau"],["5012","Lichtblau"],["5015","Himmelblau"],["5010","Enzianblau"],["5003","Saphirblau"],["8017","Schokoladenbraun"]]],
+ ["Schwarz, Weiss und Grau",[["9005","Tiefschwarz"],["7021","Schwarzgrau"],["7016","Anthrazitgrau"],["7035","Lichtgrau"],["9006","Weissaluminium"],["9010","Reinweiss"],["9016","Verkehrsweiss"]]]];
 const RAL_NAME=Object.fromEntries(RAL_GROUPS.flatMap(g=>g[1]));
 /* Echte Fotos für handveredelte Fronten; vereinfachte Farbe nur für das Musterbild */
 const PHOTO={gold:"bilder/blattgold.jpg",kupfer:"bilder/blattkupfer.jpg",patina:"bilder/patina-tuerkis.jpg",rost:"bilder/rost-baerndeutsch.jpg"};
@@ -468,7 +471,7 @@ const lbl=(arr,v)=>arr.find(a=>a[0]===v)[1];
 const SPEAK={"Bündnerdeutsch":["7016","mint"],"Züritüütsch":["5011","weiss"],"Bärndütsch":["3004","weiss"],"Hochdeutsch":["6009","gelb"]};
 function speak(d){
   const words=ZF.presetWords(d),L=ZF.layout(words,3),[ral,led]=SPEAK[d];
-  ZF.draw($("speakCv"),{words,surface:"ral",ral,led,bright:"hell",time:"07:45",engraving:"ZEIT IST RELATIV"},L);
+  ZF.draw($("speakCv"),{words,surface:"ral",ral,led,bright:"hell",time:"07:45",engraving:""},L);
   $("said").innerHTML=`<b>${d}</b> · RAL ${ral}`;
   document.querySelectorAll("#dialects .dialect[data-d]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.d===d?"true":"false"));
 }
@@ -484,8 +487,8 @@ function drawRalBox(){const w=ZF.presetWords("Bündnerdeutsch"),L=ZF.layout(w,3)
     ZF.draw(c,{words:w,surface:"ral",ral,led,bright:"hell",time:"07:45",engraving:""},L)})}
 
 /* ---------- Konfigurator ---------- */
-const state={words:{},surface:"ral",sys:"RAL",ncs:"",ncsHex:"",ral:"7016",ralKnown:true,led:"weiss",bright:"mittel",frame:"schwarz",cable:"schwarz",plug:"schwarz",
-  engraving:"ZEIT IST RELATIV",time:"07:45",seed:7,preset:"Bündnerdeutsch"};
+const state={words:{},surface:"ral",sys:"RAL",ncs:"",ncsHex:"",ral:"7016",ralKnown:true,type:"wand",led:"weiss",bright:"mittel",frame:"schwarz",cable:"schwarz",plug:"schwarz",
+  engraving:"",time:"07:45",seed:7,preset:"Bündnerdeutsch"};
 function applyPreset(name){state.preset=name;state.words=ZF.presetWords(name);
   $("w-intro").value=state.words.intro;MIN_FIELDS.forEach(([k])=>$("w-"+k).value=state.words[k]);
   for(let i=1;i<=12;i++)$("w-h"+i).value=state.words["h"+i];markChips("presets",name)}
@@ -539,7 +542,8 @@ function orderText(){
   const W=state.words,v=id=>$(id).value.trim(),hrs=[];for(let i=1;i<=12;i++)hrs.push(`${i}=${W["h"+i]||"–"}`);
   return [`ZEITFUCHS WORTUHR – ANFRAGE`,``,
 `Front: ${frontLabel()}`,`Lichtfarbe ab Werkstatt: ${lbl(ZF.LEDS,state.led)} · Helligkeit: ${lbl(ZF.BRIGHT,state.bright)} (per Handy änderbar)`,
-`Rahmen: ${lbl(FRAMES,state.frame)} · Kabel: ${lbl(CABLES,state.cable)} · Stecker: ${lbl(PLUGS,state.plug)}`,`Gravur: ${state.engraving||"keine"}`,``,
+`Ausführung: ${lbl(TYPES,state.type)}`,
+`Rahmen: ${lbl(FRAMES,state.frame)} · Kabel: ${lbl(CABLES,state.cable)} · Stecker: ${lbl(PLUGS,state.plug)}`,``,
 `Wortlaut${state.preset?" ("+state.preset+")":""}:`,`Es ist: ${W.intro||"–"}`,
 `Minuten: 5=${W.m5||"–"}, 10=${W.m10||"–"}, 15=${W.m15||"–"}, 20=${W.m20||"–"}, nach=${W.ab||"–"}, vor=${W.vor||"–"}, halb=${W.halb||"–"}`,
 `Stunden: ${hrs.join(", ")}`,``,`Raster ${ZF.COLS}×${current.rows}:`,...current.grid.map(r=>r.join(" ")),``,
@@ -567,7 +571,7 @@ function update(){
   if(current.tooLong.length){s.className="status bad";s.textContent=`Zu lang für eine Zeile (max. ${ZF.COLS} Buchstaben): ${current.tooLong.map(t=>t.text).join(", ")}`}
   else if(current.rows>ZF.ROWS){s.className="status bad";s.textContent=`Passt nicht auf die Front: Ihr Wortlaut braucht ${current.rows} statt ${ZF.ROWS} Zeilen. Kürzen Sie ein paar Wörter.`}
   else{s.className="status";s.textContent=`Passt auf die Front (${ZF.COLS} × ${ZF.ROWS} Buchstaben). Wörter, die zusammen leuchten, sind immer durch einen Buchstaben getrennt.`}
-  const fr=FRAMES.find(f=>f[0]===state.frame),clock=$("clock");
+  const fr=FRAMES.find(f=>f[0]===state.frame),clock=$("clock");clock.classList.toggle("tisch",state.type==="tisch");
   clock.style.setProperty("--frame",fr[2]||(flat?"#"+flat:ZF.frontColor(state)));
   clock.style.setProperty("--cable",CABLES.find(c=>c[0]===state.cable)[2]);
   $("ralBox").hidden=state.surface!=="ral";$("surfHint").textContent=SURF_NOTE[state.surface];
@@ -580,14 +584,13 @@ chipRow("presets",Object.keys(ZF.PRESETS).map(k=>[k,k]),null,k=>applyPreset(k));
 chipRow("surfaces",ZF.SURFACES,"surface");
 chipRow("leds",ZF.LEDS,"led");
 chipRow("brights",ZF.BRIGHT,"bright");
+chipRow("types",TYPES,"type");
 chipRow("frames",FRAMES,"frame");
 chipRow("cables",CABLES,"cable");
 chipRow("plugs",PLUGS,"plug");
 buildSwatches();
 applyPreset("Bündnerdeutsch");
 setRal("7016",true);
-$("engr").value=state.engraving;
-$("engr").addEventListener("input",e=>{state.engraving=e.target.value.toUpperCase().replace(/[^A-ZÄÖÜ0-9 .,&'-]/g,"");update()});
 $("time").addEventListener("input",e=>{if(e.target.value){state.time=e.target.value;update()}});
 $("shuffle").addEventListener("click",()=>{state.seed++;update()});
 $("ralApply").addEventListener("click",applyRalInput);
