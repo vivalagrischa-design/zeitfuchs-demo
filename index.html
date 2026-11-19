@@ -418,7 +418,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
             </div>
             <div class="field" style="margin-top:10px"><label for="o-note">Bemerkungen</label><textarea id="o-note"></textarea></div>
             <div class="summary">
-              <div class="sample"><img id="sampleImg" alt="Musterbild Ihrer Wortuhr"><p>Musterbild mit Ihrem Buchstabenraster. Gedrückt halten zum Speichern und der Nachricht anhängen.</p></div>
+              <div class="sample"><img id="sampleImg" alt="Musterbild Ihrer Wortuhr"><p>Musterbild mit Ihrem Buchstabenraster. Der Zeitfuchs orientiert sich daran, die genaue Anordnung kann noch abweichen. Gedrückt halten zum Speichern und der Nachricht anhängen.</p></div>
               <pre id="orderText"></pre>
             </div>
             <div class="actions">
@@ -427,7 +427,8 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
               <button class="btn ghost" id="copyBtn" type="button">Kopieren</button>
             </div>
             <p class="hint" style="margin-top:12px">Auf dieser Seite wird nichts gespeichert. Ihre Angaben verlassen Ihr Gerät erst, wenn Sie auf WhatsApp oder E-Mail tippen. Mehr dazu in der <a href="#datenschutz">Datenschutzerklärung</a>.</p>
-            <div class="note"><strong>Musterbild, keine Farbvorlage.</strong> Bildschirme und Drucker zeigen Farben unterschiedlich. Massgebend ist der RAL- oder NCS-Code: RAL 7016 bleibt RAL 7016, auch wenn er hier heller oder dunkler wirkt. Handveredelte Fronten sind Unikate.</div>
+            <div class="note"><strong>Musterbild, keine Endfassung.</strong> Die Anordnung der Buchstaben ist ein Vorschlag. Der Zeitfuchs orientiert sich daran und kann die Buchstaben für Ihre Front noch anders kombinieren.</div>
+            <div class="note"><strong>Farben am Bildschirm.</strong> Bildschirme und Drucker zeigen Farben unterschiedlich. Massgebend ist der RAL- oder NCS-Code: RAL 7016 bleibt RAL 7016, auch wenn er hier heller oder dunkler wirkt. Handveredelte Fronten sind Unikate.</div>
           </div>
         </div>
       </div>
@@ -605,7 +606,8 @@ function orderText(){
 `Name: ${v("o-name")||"–"}`,`Telefon: ${v("o-tel")||"–"}`,`E-Mail: ${v("o-mail")||"–"}`,`PLZ/Ort: ${v("o-ort")||"–"}`,
 v("o-note")?`Bemerkungen: ${v("o-note")}`:null,``,
 `Unverbindliche Anfrage. Verbindlich erst mit unterschriebenem Bestellschein und 30 % Anzahlung.`,
-`Musterbild dient nur zur Orientierung. Massgebend ist der RAL- oder NCS-Code, nicht die Darstellung am Bildschirm.`].filter(x=>x!==null).join("\n")}
+`Das Musterbild dient zur Orientierung. Der Zeitfuchs kann die Buchstaben auf der Front noch anders kombinieren.`,
+`Massgebend für die Farbe ist der RAL- oder NCS-Code, nicht die Darstellung am Bildschirm.`].filter(x=>x!==null).join("\n")}
 function refreshOrder(){const t=orderText();$("orderText").textContent=t;
   $("waBtn").href="https://wa.me/41795611453?text="+encodeURIComponent(t);
   $("mailBtn").href="mailto:kontakt@zeitfuchs.ch?subject="+encodeURIComponent("Anfrage Zeitfuchs Wortuhr")+"&body="+encodeURIComponent(t)}
