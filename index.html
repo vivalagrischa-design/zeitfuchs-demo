@@ -109,11 +109,24 @@ nav a:hover{color:var(--fg)}
 .light-grid img{width:100%;aspect-ratio:3/4;object-fit:cover}
 .light-grid figcaption{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.18em;font-size:14px;margin-top:8px;color:#d6dbde}
 /* Galerie */
-.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-@media (min-width:860px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.gallery figure{margin:0;min-width:0}
-.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover}
-.gallery figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.g-filter{margin-bottom:22px}
+.gallery{columns:2 180px;column-gap:12px}
+@media (min-width:860px){.gallery{columns:4 220px}}
+.gallery figure{margin:0 0 14px;break-inside:avoid}
+.gallery figure[hidden]{display:none}
+.g-open{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.gallery img{width:100%;height:auto;display:block;transition:opacity .2s}
+.g-open:hover img{opacity:.88}
+.g-open:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gallery figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(10,12,14,.94);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lightbox figure{margin:0;max-width:min(92vw,1100px);text-align:center}
+.lightbox img{max-width:100%;max-height:82vh;width:auto;height:auto;margin:0 auto}
+.lightbox figcaption{color:#e4e7e9;font-size:14px;margin-top:10px}
+.lb-close,.lb-nav{position:absolute;background:rgba(255,255,255,.1);color:#fff;border:0;border-radius:50%;width:46px;height:46px;font-size:28px;line-height:1;cursor:pointer}
+.lb-close{top:max(16px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
+.lb-prev{left:max(12px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
+.lb-next{right:max(12px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
 /* Rechtliches */
 .legal{padding-block:36px;border-top:1px solid var(--line)}
 .legal details{border-bottom:1px solid var(--line);padding-block:14px}
@@ -327,18 +340,54 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
       <div class="sec-head">
         <div class="eyebrow">Galerie</div>
         <h2>Keine Front gleicht der anderen.</h2>
-        <p class="lead">Alles echte Uhren aus der Werkstatt in Fideris.</p>
+        <p class="lead">Alles echte Uhren aus der Werkstatt in Fideris. Tippen Sie auf ein Bild, um es gross zu sehen.</p>
       </div>
-      <div class="gallery">
-        <figure><img src="bilder/patina-front.jpg" alt="Kupferpatina, blau leuchtend: AS ISCH VIARTEL VOR ACHTI" loading="lazy" width="900" height="900"><figcaption>Kupferpatina · «As isch viartel vor achti»</figcaption></figure>
-        <figure><img src="bilder/raum-blattkupfer-konsole.jpg" alt="Wortuhr in Blattkupfer über einer Konsole mit Lampe und Vase" loading="lazy" width="1200" height="1200"><figcaption>Blattkupfer · über der Konsole</figcaption></figure>
-        <figure><img src="bilder/patina-blau.jpg" alt="Kupferpatina in Blau: AS ISCH ZEHN VOR NÜÜNI" loading="lazy" width="1200" height="1200"><figcaption>Kupferpatina · «As isch zehn vor nüüni»</figcaption></figure>
-        <figure><img src="bilder/rost-baerndeutsch.jpg" alt="Rostfront auf Luzernerdeutsch: ÄS ISCH, VIERTU, ZWÄNZG, HAUBI" loading="lazy" width="1200" height="1200"><figcaption>Rost · auf Luzernerdeutsch</figcaption></figure>
-        <figure><img src="bilder/patina-pink.jpg" alt="Kupferpatina, pink leuchtend: AS ISCH FÜÜF VOR ÖLFI" loading="lazy" width="1200" height="1200"><figcaption>Kupferpatina · Licht in Pink</figcaption></figure>
-        <figure><img src="bilder/patina-halbi.jpg" alt="Kupferpatina mit dunklen Inseln, HALBI leuchtet türkis" loading="lazy" width="1000" height="1333"><figcaption>Kupferpatina im Detail</figcaption></figure>
+      <div class="chips g-filter" id="gFilter" role="group" aria-label="Galerie filtern">
+        <button type="button" class="chip" data-f="all" aria-pressed="true">Alle</button>
+        <button type="button" class="chip" data-f="patina" aria-pressed="false">Kupferpatina</button>
+        <button type="button" class="chip" data-f="rost" aria-pressed="false">Rost</button>
+        <button type="button" class="chip" data-f="gold" aria-pressed="false">Blattgold &amp; Kupfer</button>
+        <button type="button" class="chip" data-f="schwarz" aria-pressed="false">Schwarz</button>
+        <button type="button" class="chip" data-f="detail" aria-pressed="false">Nahaufnahmen</button>
+      </div>
+      <div class="gallery" id="gallery">
+        <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As isch zehn vor zwai»"><img src="bilder/galerie/patina-wand-weiss.jpg" alt="Kupferpatina an weisser Wand, leuchtend: AS ISCH ZEHN VOR ZWAI" loading="lazy" width="1000" height="1000"></button><figcaption>Kupferpatina · «As isch zehn vor zwai»</figcaption></figure>
+        <figure data-cat="rost"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · «As isch zwenzg ab drei»"><img src="bilder/galerie/rost-wand-beton.jpg" alt="Rostfront an Betonwand, leuchtend: AS ISCH ZWENZG AB DREI" loading="lazy" width="750" height="1000"></button><figcaption>Rost · «As isch zwenzg ab drei»</figcaption></figure>
+        <figure data-cat="schwarz"><button type="button" class="g-open" aria-label="Gross anzeigen: Schwarz · Licht in Grün"><img src="bilder/galerie/schwarz-gruen.jpg" alt="Schwarze Front, grün leuchtend" loading="lazy" width="750" height="1000"></button><figcaption>Schwarz · Licht in Grün</figcaption></figure>
+        <figure data-cat="rost detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · Nahaufnahme"><img src="bilder/galerie/rost-detail-1.jpg" alt="Nahaufnahme einer Rostfront mit ausgeschnittenen Buchstaben" loading="lazy" width="563" height="1000"></button><figcaption>Rost · Nahaufnahme</figcaption></figure>
+        <figure data-cat="gold"><button type="button" class="g-open" aria-label="Gross anzeigen: Blattgold · «As isch halbi achti»"><img src="bilder/galerie/gold-beton.jpg" alt="Blattgold an Betonwand, leuchtend: AS ISCH HALBI ACHTI" loading="lazy" width="750" height="1000"></button><figcaption>Blattgold · «As isch halbi achti»</figcaption></figure>
+        <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As …»"><img src="bilder/galerie/patina-as.jpg" alt="Nahaufnahme: AS leuchtet türkis auf Patina" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · «As …»</figcaption></figure>
+        <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · Licht in Pink"><img src="bilder/galerie/patina-pink.jpg" alt="Kupferpatina, pink leuchtend: AS ISCH FÜÜF VOR ÖLFI" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · Licht in Pink</figcaption></figure>
+        <figure data-cat="schwarz"><button type="button" class="g-open" aria-label="Gross anzeigen: Schwarz · Licht in Pink"><img src="bilder/galerie/schwarz-pink.jpg" alt="Schwarze Front, pink leuchtend" loading="lazy" width="750" height="1000"></button><figcaption>Schwarz · Licht in Pink</figcaption></figure>
+        <figure data-cat="rost"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · auf Luzernerdeutsch"><img src="bilder/galerie/rost-luzern.jpg" alt="Rostfront auf Luzernerdeutsch" loading="lazy" width="750" height="1000"></button><figcaption>Rost · auf Luzernerdeutsch</figcaption></figure>
+        <figure data-cat="rost detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · Nahaufnahme"><img src="bilder/galerie/rost-detail-2.jpg" alt="Rostfront im Detail" loading="lazy" width="563" height="1000"></button><figcaption>Rost · Nahaufnahme</figcaption></figure>
+        <figure data-cat="gold"><button type="button" class="g-open" aria-label="Gross anzeigen: Blattkupfer · über der Konsole"><img src="bilder/galerie/kupfer-konsole.jpg" alt="Blattkupfer über einer Konsole mit Lampe und Vase" loading="lazy" width="1000" height="626"></button><figcaption>Blattkupfer · über der Konsole</figcaption></figure>
+        <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «… nüüni»"><img src="bilder/galerie/patina-nueuni.jpg" alt="Kupferpatina, NÜÜNI leuchtet türkis" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · «… nüüni»</figcaption></figure>
+        <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As isch zehn vor nüüni»"><img src="bilder/galerie/patina-blau.jpg" alt="Kupferpatina in Blau" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · «As isch zehn vor nüüni»</figcaption></figure>
+        <figure data-cat="schwarz"><button type="button" class="g-open" aria-label="Gross anzeigen: Schwarz · Licht in Violett"><img src="bilder/galerie/schwarz-violett.jpg" alt="Schwarze Front, violett leuchtend" loading="lazy" width="1000" height="750"></button><figcaption>Schwarz · Licht in Violett</figcaption></figure>
+        <figure data-cat="rost detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · Nahaufnahme"><img src="bilder/galerie/rost-detail-3.jpg" alt="Rostfront im Detail" loading="lazy" width="563" height="1000"></button><figcaption>Rost · Nahaufnahme</figcaption></figure>
+        <figure data-cat="gold"><button type="button" class="g-open" aria-label="Gross anzeigen: Blattkupfer · «As isch zehn ab zwai»"><img src="bilder/galerie/blattkupfer.jpg" alt="Blattkupfer, leuchtend: AS ISCH ZEHN AB ZWAI" loading="lazy" width="1000" height="999"></button><figcaption>Blattkupfer · «As isch zehn ab zwai»</figcaption></figure>
+        <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «… halbi …»"><img src="bilder/galerie/patina-halbi.jpg" alt="Kupferpatina mit dunklen Inseln, HALBI leuchtet" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · «… halbi …»</figcaption></figure>
+        <figure data-cat="rost"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · als Tischuhr"><img src="bilder/galerie/rost-tischuhr.jpg" alt="Rost als Tischuhr auf Aluminiumfuss" loading="lazy" width="750" height="1000"></button><figcaption>Rost · als Tischuhr</figcaption></figure>
+        <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · Nahaufnahme"><img src="bilder/galerie/patina-detail-3.jpg" alt="Kupferpatina im Detail" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · Nahaufnahme</figcaption></figure>
+        <figure data-cat="rost detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · Nahaufnahme"><img src="bilder/galerie/rost-detail-4.jpg" alt="Rostfront im Detail" loading="lazy" width="563" height="1000"></button><figcaption>Rost · Nahaufnahme</figcaption></figure>
+        <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As isch zwenzg ab zehni»"><img src="bilder/galerie/patina-tuerkis.jpg" alt="Kupferpatina, türkis leuchtend" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · «As isch zwenzg ab zehni»</figcaption></figure>
+        <figure data-cat="gold"><button type="button" class="g-open" aria-label="Gross anzeigen: Blattgold · über dem Regal"><img src="bilder/galerie/gold-regal.jpg" alt="Blattgold an heller Wand über einem Regal" loading="lazy" width="799" height="1000"></button><figcaption>Blattgold · über dem Regal</figcaption></figure>
+        <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · Nahaufnahme"><img src="bilder/galerie/patina-detail-1.jpg" alt="Kupferpatina mit Buchstaben im Detail" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · Nahaufnahme</figcaption></figure>
+        <figure data-cat="rost detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · Nahaufnahme"><img src="bilder/galerie/rost-detail-5.jpg" alt="Rostfront im Detail" loading="lazy" width="563" height="1000"></button><figcaption>Rost · Nahaufnahme</figcaption></figure>
+        <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · Nahaufnahme"><img src="bilder/galerie/patina-detail-4.jpg" alt="Kupferpatina im Detail" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · Nahaufnahme</figcaption></figure>
+        <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · gewachsene Struktur"><img src="bilder/galerie/patina-detail-2.jpg" alt="Kupferpatina mit Kupferadern" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · gewachsene Struktur</figcaption></figure>
+        <figure data-cat="rost detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · Nahaufnahme"><img src="bilder/galerie/rost-detail-6.jpg" alt="Rostfront im Detail" loading="lazy" width="563" height="1000"></button><figcaption>Rost · Nahaufnahme</figcaption></figure>
+        <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As isch viartel vor achti»"><img src="bilder/galerie/patina-front.jpg" alt="Kupferpatina, blau leuchtend" loading="lazy" width="632" height="632"></button><figcaption>Kupferpatina · «As isch viartel vor achti»</figcaption></figure>
       </div>
     </div>
   </section>
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Bild gross">
+    <button type="button" class="lb-close" id="lbClose" aria-label="Schliessen">×</button>
+    <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Vorheriges Bild">‹</button>
+    <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+    <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Nächstes Bild">›</button>
+  </div>
 
   <section class="cfgsec" id="gestalten" style="background:#fff">
     <div class="w">
@@ -676,6 +725,25 @@ $("copyBtn").addEventListener("click",()=>{const b=$("copyBtn");
 function openLegal(){const id=location.hash.slice(1);const d=document.getElementById(id);if(d&&d.tagName==="DETAILS"){d.open=true;d.scrollIntoView()}}
 window.addEventListener("hashchange",openLegal);openLegal();
 document.querySelectorAll("a[href='#datenschutz'],a[href='#impressum']").forEach(a=>a.addEventListener("click",()=>{const d=document.getElementById(a.getAttribute("href").slice(1));if(d)d.open=true}));
+/* Galerie: Filter und Grossansicht */
+(function(){
+  const figs=[...document.querySelectorAll("#gallery figure")];let cur=0;
+  document.querySelectorAll("#gFilter .chip").forEach(b=>b.addEventListener("click",()=>{
+    const f=b.dataset.f;document.querySelectorAll("#gFilter .chip").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
+    figs.forEach(fg=>{fg.hidden=!(f==="all"||fg.dataset.cat.split(" ").includes(f))})}));
+  const lb=document.getElementById("lightbox"),img=document.getElementById("lbImg"),cap=document.getElementById("lbCap");
+  const vis=()=>figs.filter(f=>!f.hidden);
+  function show(i){const v=vis();cur=(i+v.length)%v.length;const f=v[cur],im=f.querySelector("img");img.src=im.src;img.alt=im.alt;cap.textContent=f.querySelector("figcaption").textContent}
+  figs.forEach(f=>f.querySelector(".g-open").addEventListener("click",()=>{show(vis().indexOf(f));lb.hidden=false;document.getElementById("lbClose").focus()}));
+  const close=()=>{lb.hidden=true};
+  document.getElementById("lbClose").addEventListener("click",close);
+  document.getElementById("lbPrev").addEventListener("click",()=>show(cur-1));
+  document.getElementById("lbNext").addEventListener("click",()=>show(cur+1));
+  lb.addEventListener("click",e=>{if(e.target===lb)close()});
+  document.addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")show(cur-1);if(e.key==="ArrowRight")show(cur+1)});
+  let x0=null;lb.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});
+  lb.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1));x0=null});
+})();
 const start=()=>{speak("Bündnerdeutsch");update()};
 if(document.fonts&&document.fonts.load)document.fonts.load("500 40px Barlow").then(start,start);else start();
 })();
