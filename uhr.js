@@ -117,13 +117,13 @@
     if ((a.id === "vor" && b.id === "ab") || (a.id === "ab" && b.id === "vor")) return 0;
     return 1;
   }
-  function pack(seq, hours) {
+  function pack(seq, hours, keepOrder) {
     const rows = []; let cur = [], used = 0;
     const last = () => cur[cur.length - 1];
     const room = t => COLS - used - gapBetween(last(), t);
     const put = t => { if (t.text.length > room(t) && cur.length) { rows.push(cur); cur = []; used = 0 } used += gapBetween(last(), t) + t.text.length; cur.push(t) };
     seq.forEach(put);
-    const pool = hours.slice().sort((a, b) => b.text.length - a.text.length);
+    const pool = keepOrder ? hours.slice() : hours.slice().sort((a, b) => b.text.length - a.text.length);
     while (pool.length) {
       const i = pool.findIndex(t => t.text.length <= room(t));
       if (i < 0) { if (cur.length) { rows.push(cur); cur = []; used = 0; continue } put(pool.shift()); continue }
@@ -133,32 +133,63 @@
     return rows;
   }
   function perms(a) { if (a.length < 2) return [a]; const out = []; a.forEach((x, i) => perms(a.slice(0, i).concat(a.slice(i + 1))).forEach(p => out.push([x].concat(p)))); return out }
+  function shuffle(a, r) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] } return a }
   const FILL = "EEENNNIIRRSSTTAAHHDULGOCMBWFKZPVÄÜ";
+  /* Eine Zeile mit festen Lücken setzen: Rückgabe Buchstaben (null = Füllfeld) und Besitzer */
+  function placeRow(row, slots) {
+    const letters = [], owner = [];
+    const gaps = row.map((t, j) => j ? gapBetween(row[j - 1], t) : 0);
+    const blank = n => { for (let i = 0; i < n; i++) { letters.push(null); owner.push(null) } };
+    row.forEach((t, j) => { blank(slots[j] + gaps[j]); for (const ch of t.text.slice(0, COLS)) { letters.push(ch); owner.push(t.id) } });
+    blank(slots[row.length]);
+    return { letters: letters.slice(0, COLS), owner: owner.slice(0, COLS) };
+  }
+  function collisions(a, b) { let n = 0; for (let c = 0; c < COLS; c++) if (a[c] && b[c] && a[c] === b[c]) n++; return n }
+  /* Verteilung so suchen, dass übereinander nie zwei gleiche Buchstaben stehen */
   function layout(W, seed) {
     const toks = tokens(W); const tooLong = toks.filter(t => t.text.length > COLS);
     const intro = toks.filter(t => t.id[0] === "i"), nums = toks.filter(t => NUM[t.id]);
     const va = toks.filter(t => t.id === "vor" || t.id === "ab"), halb = toks.filter(t => t.id === "halb"), hours = toks.filter(t => /^h\d/.test(t.id));
-    // Reihenfolge der Minutenwörter frei wählen, damit möglichst wenige Zeilen nötig sind
-    let rows = null;
-    perms(nums).forEach(pn => perms(va).forEach(pv => {
-      const r = pack(intro.concat(pn, pv, halb), hours);
-      if (!rows || r.length < rows.length) rows = r;
-    }));
+    const seqs = [];
+    perms(nums).forEach(pn => perms(va).forEach(pv => seqs.push(intro.concat(pn, pv, halb))));
+    let minRows = Infinity; seqs.forEach(sq => { minRows = Math.min(minRows, pack(sq, hours).length) });
     const r = rng((seed || 7) * 7919 + 1);
-    while (rows.length < ROWS) rows.splice(Math.floor(r() * (rows.length + 1)), 0, []);
-    const grid = [], own = [];
-    rows.forEach(row => {
-      const letters = [], owner = []; const L = row.reduce((s, t) => s + Math.min(t.text.length, COLS), 0);
-      const gaps = row.map((t, j) => j ? gapBetween(row[j - 1], t) : 0);
-      let free = Math.max(0, COLS - L - gaps.reduce((a, b) => a + b, 0));
-      const slots = new Array(row.length + 1).fill(0);
-      while (free > 0) { slots[Math.floor(r() * slots.length)]++; free-- }
-      const fill = n => { for (let i = 0; i < n; i++) { letters.push(FILL[Math.floor(r() * FILL.length)]); owner.push(null) } };
-      row.forEach((t, j) => { fill(slots[j] + gaps[j]); for (const ch of t.text.slice(0, COLS)) { letters.push(ch); owner.push(t.id) } });
-      fill(slots[row.length]);
-      grid.push(letters.slice(0, COLS)); own.push(owner.slice(0, COLS));
-    });
-    return { grid, own, rows: grid.length, tooLong };
+    let best = null;
+    for (let attempt = 0; attempt < 120; attempt++) {
+      const sq = seqs[Math.floor(r() * seqs.length)];
+      let rows = attempt === 0 ? pack(sq, hours) : pack(sq, shuffle(hours, r).sort((a, b) => (b.text.length - a.text.length) + (r() - .5) * 3), true);
+      if (rows.length > Math.max(minRows, ROWS)) continue;
+      // Zeilen nur mit Stunden dürfen die Reihenfolge tauschen, Wörter darin auch
+      const isHourRow = row => row.every(t => /^h\d/.test(t.id));
+      const fixed = rows.filter(row => !isHourRow(row)), free = shuffle(rows.filter(isHourRow), r).map(row => shuffle(row, r));
+      rows = fixed.concat(free);
+      while (rows.length < ROWS) rows.splice(1 + Math.floor(r() * rows.length), 0, []);
+      let score = 0; const placed = [];
+      rows.forEach((row, i) => {
+        const L = row.reduce((s, t) => s + Math.min(t.text.length, COLS), 0) + row.reduce((s, t, j) => s + (j ? gapBetween(row[j - 1], t) : 0), 0);
+        const freeN = Math.max(0, COLS - L);
+        let bestRow = null, bestC = Infinity;
+        for (let k = 0; k < (freeN ? 24 : 1); k++) {
+          const slots = new Array(row.length + 1).fill(0); let f = freeN;
+          while (f > 0) { slots[Math.floor(r() * slots.length)]++; f-- }
+          const pr = placeRow(row, slots), c = i ? collisions(placed[i - 1].letters, pr.letters) : 0;
+          if (c < bestC) { bestC = c; bestRow = pr; if (!c) break }
+        }
+        score += bestC; placed.push(bestRow);
+      });
+      if (!best || score < best.score) best = { score, placed };
+      if (best.score === 0 && attempt > 6) break;
+    }
+    // Füllbuchstaben: nie gleich wie oben, unten, links oder rechts
+    const grid = best.placed.map(p => p.letters.slice()), own = best.placed.map(p => p.owner);
+    for (let i = 0; i < grid.length; i++) for (let c = 0; c < COLS; c++) {
+      if (grid[i][c]) continue;
+      const near = [i ? grid[i - 1][c] : null, grid[i + 1] ? grid[i + 1][c] : null, c ? grid[i][c - 1] : null, grid[i][c + 1]];
+      let ch, tries = 0;
+      do { ch = FILL[Math.floor(r() * FILL.length)]; tries++ } while (near.includes(ch) && tries < 50);
+      grid[i][c] = ch;
+    }
+    return { grid, own, rows: grid.length, tooLong, collisions: best.score };
   }
 
   /* Uhrzeit auf Dialekt */
