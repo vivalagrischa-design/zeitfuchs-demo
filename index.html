@@ -137,6 +137,8 @@ nav a:hover{color:var(--fg)}
 .raster span{padding:2px 0;color:#9aa2a9}
 .raster span.on{color:var(--fg);font-weight:500;background:var(--accent-soft)}
 .readout{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.simbar{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+#playBtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent)}
 .phrase{font-family:var(--f-clock);letter-spacing:.14em;font-size:15px;flex:1 1 220px;min-width:0}
 .timebox{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
 .timebox input{font:inherit;font-size:15px;color:var(--fg);background:#fff;border:1px solid var(--line);border-radius:4px;padding:6px 8px}
@@ -312,7 +314,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
         <figure class="front-card">
           <img src="bilder/rost-tischuhr.jpg" alt="Wortuhr in Rost als Tischuhr auf Aluminiumfuss" loading="lazy" width="1200" height="1200">
           <h3>Rost</h3>
-          <p>Echter Rost mit tiefer Struktur. Aufwendig in der Herstellung, auf Anfrage.</p>
+          <p>Echter Rost mit tiefer Struktur. Jede Front ein Unikat.</p>
         </figure>
       </div>
       <div class="more">Ausserdem möglich: <span class="tag">Blattsilber</span><span class="tag">Spiegel silber</span></div>
@@ -342,8 +344,8 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
     <div class="w">
       <div class="sec-head">
         <div class="eyebrow">Gestalten</div>
-        <h2>Ihre Wortuhr, Wort für Wort.</h2>
-        <p class="lead">Schreiben Sie Ihren Wortlaut und wählen Sie die Front. Die Vorschau verteilt die Buchstaben auf das Raster von 11 × 10 Feldern.</p>
+        <h2>Simulieren Sie Ihre eigene Wortuhr.</h2>
+        <p class="lead">Tippen Sie Ihren Wortlaut ein, wählen Sie Front und Licht, und schauen Sie Ihrer Uhr beim Zeitanzeigen zu. Die Buchstaben verteilen sich live auf das Raster von 11 × 10 Feldern.</p>
       </div>
       <div class="cfg">
         <div class="preview">
@@ -357,7 +359,11 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
           </div>
           <div class="readout">
             <div class="phrase" id="phrase"></div>
-            <label class="timebox" for="time">Musterzeit <input type="time" id="time" value="07:45"></label>
+          </div>
+          <div class="simbar" role="group" aria-label="Uhrzeit simulieren">
+            <button class="btn small" id="playBtn" type="button" aria-pressed="false">▶ Zeitraffer</button>
+            <button class="btn ghost small" id="nowBtn" type="button">Jetzt</button>
+            <label class="timebox" for="time">Uhrzeit <input type="time" id="time" value="07:45"></label>
             <button class="btn ghost small" id="shuffle" type="button">Neu verteilen</button>
           </div>
           <div class="raster" id="raster" aria-label="Ihr Buchstabenraster"></div>
@@ -512,7 +518,7 @@ const RAL_NAME=Object.fromEntries(RAL_GROUPS.flatMap(g=>g[1]));
 /* Echte Fotos für handveredelte Fronten; vereinfachte Farbe nur für das Musterbild */
 const PHOTO={gold:"bilder/blattgold.jpg",kupfer:"bilder/blattkupfer.jpg",patina:"bilder/patina-tuerkis.jpg",rost:"bilder/rost-baerndeutsch.jpg"};
 const FLAT={gold:"BE9E52",patina:"2A4A63",kupfer:"A9653F",silber:"BFC2C3",spiegel:"A9AEB1",rost:"7A3E1F"};
-const SURF_NOTE={ral:"Lackiert im exakten RAL- oder NCS-Farbton.",gold:"Echtes Blattgold, von Hand aufgelegt. Jede Front zeigt eigene Falten und Kanten.",kupfer:"Blattkupfer, von Hand aufgelegt. Warm schimmernd, mit sichtbaren Blattkanten.",silber:"Blattsilber, von Hand aufgelegt. Kühler Glanz mit feinen Falten. Foto folgt, die Vorschau zeigt nur die Grundfarbe.",spiegel:"Spiegelnde Silberfront, sie nimmt den Raum auf. Foto folgt, die Vorschau zeigt nur die Grundfarbe.",patina:"Kupfer, von Hand patiniert. Blau, Türkis und Rostinseln fallen bei jeder Front anders aus.",rost:"Echter Rost, aufwendig von Hand behandelt. Nur auf Anfrage."};
+const SURF_NOTE={ral:"Lackiert im exakten RAL- oder NCS-Farbton.",gold:"Echtes Blattgold, von Hand aufgelegt. Jede Front zeigt eigene Falten und Kanten.",kupfer:"Blattkupfer, von Hand aufgelegt. Warm schimmernd, mit sichtbaren Blattkanten.",silber:"Blattsilber, von Hand aufgelegt. Kühler Glanz mit feinen Falten. Foto folgt, die Vorschau zeigt nur die Grundfarbe.",spiegel:"Spiegelnde Silberfront, sie nimmt den Raum auf. Foto folgt, die Vorschau zeigt nur die Grundfarbe.",patina:"Kupfer, von Hand patiniert. Blau, Türkis und Rostinseln fallen bei jeder Front anders aus.",rost:"Echter Rost, aufwendig von Hand behandelt. Jede Front ein Unikat."};
 const MIN_FIELDS=[["m5","5 Minuten"],["m10","10 Minuten"],["m15","Viertel"],["m20","20 Minuten"],["ab","nach (ab)"],["vor","vor"],["halb","halb"]];
 const lbl=(arr,v)=>arr.find(a=>a[0]===v)[1];
 
@@ -640,7 +646,22 @@ chipRow("plugs",PLUGS,"plug");
 buildSwatches();
 applyPreset("Bündnerdeutsch");
 setRal("7016",true);
-$("time").addEventListener("input",e=>{if(e.target.value){state.time=e.target.value;update()}});
+/* Simulation: Zeitraffer und aktuelle Uhrzeit */
+let simTimer=null,liveTimer=null;
+const pad=n=>String(n).padStart(2,"0");
+function setTime(t){state.time=t;$("time").value=t;update()}
+function stopSim(){clearInterval(simTimer);simTimer=null;clearInterval(liveTimer);liveTimer=null;$("playBtn").setAttribute("aria-pressed","false");$("playBtn").textContent="▶ Zeitraffer"}
+function startSim(){stopSim();$("playBtn").setAttribute("aria-pressed","true");$("playBtn").textContent="❚❚ Pause";
+  simTimer=setInterval(()=>{let [h,m]=state.time.split(":").map(Number);m=Math.floor(m/5)*5+5;if(m>=60){m-=60;h=(h+1)%24}setTime(pad(h)+":"+pad(m))},800)}
+function nowTime(){const d=new Date();setTime(pad(d.getHours())+":"+pad(d.getMinutes()))}
+$("playBtn").addEventListener("click",()=>{simTimer?stopSim():startSim()});
+$("nowBtn").addEventListener("click",()=>{stopSim();nowTime();liveTimer=setInterval(nowTime,15000)});
+$("time").addEventListener("input",e=>{stopSim();if(e.target.value){state.time=e.target.value;update()}});
+/* Zeitraffer startet einmal von selbst, sobald der Konfigurator sichtbar wird */
+if("IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion:reduce)").matches){
+  let started=false;const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!started){started=true;startSim();io.disconnect()}})},{threshold:.4});
+  io.observe($("cv").closest(".stage"));
+}
 $("shuffle").addEventListener("click",()=>{state.seed++;update()});
 $("ralApply").addEventListener("click",applyRalInput);
 $("ralIn").addEventListener("keydown",e=>{if(e.key==="Enter")applyRalInput()});
