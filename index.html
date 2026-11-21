@@ -153,6 +153,7 @@ nav a:hover{color:var(--fg)}
 .simbar{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
 #playBtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent)}
 .phrase{font-family:var(--f-clock);letter-spacing:.14em;font-size:15px;flex:1 1 220px;min-width:0}
+.speed{display:inline-flex;gap:4px;flex-wrap:wrap}.speed .btn[aria-pressed="true"]{background:var(--fg);color:#fff;border-color:var(--fg)}
 .timebox{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
 .timebox input{font:inherit;font-size:15px;color:var(--fg);background:#fff;border:1px solid var(--line);border-radius:4px;padding:6px 8px}
 .status{margin-top:10px;font-size:13.5px;padding:9px 12px;border-radius:4px;background:var(--accent-soft)}
@@ -411,6 +412,13 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
           </div>
           <div class="simbar" role="group" aria-label="Uhrzeit simulieren">
             <button class="btn small" id="playBtn" type="button" aria-pressed="false">▶ Zeitraffer</button>
+            <div class="speed" role="group" aria-label="Tempo">
+              <button class="btn ghost small" type="button" data-speed="1500" aria-pressed="false">Langsam</button>
+              <button class="btn ghost small" type="button" data-speed="600" aria-pressed="true">Normal</button>
+              <button class="btn ghost small" type="button" data-speed="180" aria-pressed="false">Schnell</button>
+            </div>
+            <button class="btn ghost small" id="minusBtn" type="button" aria-label="Eine Minute zurück">−1 Min</button>
+            <button class="btn ghost small" id="plusBtn" type="button" aria-label="Eine Minute vor">+1 Min</button>
             <button class="btn ghost small" id="nowBtn" type="button">Jetzt</button>
             <label class="timebox" for="time">Uhrzeit <input type="time" id="time" value="07:45"></label>
             <button class="btn ghost small" id="shuffle" type="button">Neu verteilen</button>
@@ -566,7 +574,9 @@ const RAL_GROUPS=[
  ["Schwarz, Weiss und Grau",[["9005","Tiefschwarz"],["7021","Schwarzgrau"],["7016","Anthrazitgrau"],["7035","Lichtgrau"],["9006","Weissaluminium"],["9010","Reinweiss"],["9016","Verkehrsweiss"]]]];
 const RAL_NAME=Object.fromEntries(RAL_GROUPS.flatMap(g=>g[1]));
 /* Echte Fotos für handveredelte Fronten; vereinfachte Farbe nur für das Musterbild */
-const PHOTO={gold:"bilder/blattgold.jpg",kupfer:"bilder/blattkupfer.jpg",patina:"bilder/patina-tuerkis.jpg",rost:"bilder/rost-baerndeutsch.jpg"};
+const PHOTO={rost:"bilder/rost-baerndeutsch.jpg"};
+/* Gold, Kupfer und Patina: echtes Materialbild in der Simulation (jede Lichtfarbe möglich). Fotos in der Galerie. */
+const SAMPLE_FALLBACK={gold:"bilder/blattgold.jpg",kupfer:"bilder/blattkupfer.jpg",patina:"bilder/patina-tuerkis.jpg"};
 const FLAT={gold:"BE9E52",patina:"2A4A63",kupfer:"A9653F",silber:"BFC2C3",spiegel:"A9AEB1",rost:"7A3E1F"};
 const SURF_NOTE={ral:"Lackiert im exakten RAL- oder NCS-Farbton.",gold:"Echtes Blattgold, von Hand aufgelegt. Jede Front zeigt eigene Falten und Kanten.",kupfer:"Blattkupfer, von Hand aufgelegt. Warm schimmernd, mit sichtbaren Blattkanten.",silber:"Blattsilber, von Hand aufgelegt. Kühler Glanz mit feinen Falten. Foto folgt, die Vorschau zeigt nur die Grundfarbe.",spiegel:"Spiegelnde Silberfront, sie nimmt den Raum auf. Foto folgt, die Vorschau zeigt nur die Grundfarbe.",patina:"Kupfer, von Hand patiniert. Blau, Türkis und Rostinseln fallen bei jeder Front anders aus.",rost:"Echter Rost, aufwendig von Hand behandelt. Jede Front ein Unikat."};
 const MIN_FIELDS=[["m5","5 Minuten"],["m10","10 Minuten"],["m15","Viertel"],["m20","20 Minuten"],["ab","nach (ab)"],["vor","vor"],["halb","halb"]];
@@ -667,7 +677,8 @@ let imgTimer=null;
 function update(){
   current=ZF.layout(state.words,state.seed);
   const photo=PHOTO[state.surface],flat=state.surface!=="ral"?FLAT[state.surface]:(state.sys==="NCS"?state.ncsHex:null);
-  ZF.draw($("cv"),Object.assign({},state,{flat}),current);
+  const drawFlat=ZF.IMG[state.surface]?null:flat;   // Materialbild statt Einheitsfarbe
+  ZF.draw($("cv"),Object.assign({},state,{flat:drawFlat}),current);
   $("cv").hidden=!!photo;$("photoFront").hidden=!photo;$("photoNote").hidden=!photo;
   if(photo){$("photoFront").src=photo;$("photoFront").alt="Echte "+lbl(ZF.SURFACES,state.surface)+"-Front aus der Werkstatt";
     $("photoNote").textContent="Echte Front aus der Werkstatt. Ihre Uhr bekommt Ihr eigenes Raster (unten) und wird ein Unikat."}
@@ -682,7 +693,7 @@ function update(){
   clock.style.setProperty("--cable",CABLES.find(c=>c[0]===state.cable)[2]);
   $("ralBox").hidden=state.surface!=="ral";$("surfHint").textContent=SURF_NOTE[state.surface];
   refreshOrder();
-  clearTimeout(imgTimer);imgTimer=setTimeout(()=>{try{$("sampleImg").src=photo||$("cv").toDataURL("image/jpeg",.86)}catch(e){}},250);
+  clearTimeout(imgTimer);imgTimer=setTimeout(()=>{try{$("sampleImg").src=photo||$("cv").toDataURL("image/jpeg",.86)}catch(e){$("sampleImg").src=SAMPLE_FALLBACK[state.surface]||""}},250);
 }
 
 buildFields();
@@ -702,8 +713,15 @@ let simTimer=null,liveTimer=null;
 const pad=n=>String(n).padStart(2,"0");
 function setTime(t){state.time=t;$("time").value=t;update()}
 function stopSim(){clearInterval(simTimer);simTimer=null;clearInterval(liveTimer);liveTimer=null;$("playBtn").setAttribute("aria-pressed","false");$("playBtn").textContent="▶ Zeitraffer"}
+/* Zeitraffer läuft Minute für Minute, damit auch die vier Eck-Punkte (Minuten 1–4) zu sehen sind */
+let simSpeed=600;
+function addMin(d){let [h,m]=state.time.split(":").map(Number);let t=(h*60+m+d+1440)%1440;setTime(pad(Math.floor(t/60))+":"+pad(t%60))}
 function startSim(){stopSim();$("playBtn").setAttribute("aria-pressed","true");$("playBtn").textContent="❚❚ Pause";
-  simTimer=setInterval(()=>{let [h,m]=state.time.split(":").map(Number);m=Math.floor(m/5)*5+5;if(m>=60){m-=60;h=(h+1)%24}setTime(pad(h)+":"+pad(m))},800)}
+  simTimer=setInterval(()=>addMin(1),simSpeed)}
+document.querySelectorAll(".speed [data-speed]").forEach(b=>b.addEventListener("click",()=>{simSpeed=+b.dataset.speed;
+  document.querySelectorAll(".speed [data-speed]").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));startSim()}));
+$("minusBtn").addEventListener("click",()=>{stopSim();addMin(-1)});
+$("plusBtn").addEventListener("click",()=>{stopSim();addMin(1)});
 function nowTime(){const d=new Date();setTime(pad(d.getHours())+":"+pad(d.getMinutes()))}
 $("playBtn").addEventListener("click",()=>{simTimer?stopSim():startSim()});
 $("nowBtn").addEventListener("click",()=>{stopSim();nowTime();liveTimer=setInterval(nowTime,15000)});
@@ -744,6 +762,7 @@ document.querySelectorAll("a[href='#datenschutz'],a[href='#impressum']").forEach
   let x0=null;lb.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});
   lb.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1));x0=null});
 })();
+ZF.onTexture=()=>update();
 const start=()=>{speak("Bündnerdeutsch");update()};
 if(document.fonts&&document.fonts.load)document.fonts.load("500 40px Barlow").then(start,start);else start();
 })();

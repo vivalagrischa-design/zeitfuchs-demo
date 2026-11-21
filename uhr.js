@@ -49,9 +49,31 @@
 
   /* Fronten */
   const TEX = 500, texCache = {};
+  /* Echte Materialbilder (aus Werkstattfotos, Buchstaben herausgerechnet). Darauf
+     zeichnet die Simulation Buchstaben in jeder Lichtfarbe. Bis ein Bild geladen
+     ist, wird die gerechnete Struktur gezeigt. */
+  const IMG = { gold: "bilder/textur-gold.jpg", kupfer: "bilder/textur-kupfer.jpg", patina: "bilder/textur-patina.jpg" };
+  const IMG_LUM = { gold: .58, kupfer: .5, patina: .3 };
+  const imgs = {};
+  function loadImg(key) {
+    if (imgs[key]) return imgs[key];
+    const im = new Image();
+    im.onload = () => { delete texCache[key]; if (g.ZF && g.ZF.onTexture) g.ZF.onTexture(key) };
+    im.src = IMG[key];
+    return imgs[key] = im;
+  }
+  Object.keys(IMG).forEach(loadImg);
+  function imageTexture(key) {
+    const im = loadImg(key);
+    if (!im.complete || !im.naturalWidth) return null;
+    const c = document.createElement("canvas"); c.width = c.height = TEX;
+    c.getContext("2d").drawImage(im, 0, 0, TEX, TEX);
+    return texCache[key] = { canvas: c, lum: IMG_LUM[key], image: true };
+  }
   let F1, F2, F3;
   function texture(key) {
     if (texCache[key]) return texCache[key];
+    if (IMG[key]) { const t = imageTexture(key); if (t) return t; if (texCache[key + ":proc"]) return texCache[key + ":proc"] }
     if (!F1) { F1 = noise(11); F2 = noise(23); F3 = noise(37) }
     const c = document.createElement("canvas"); c.width = c.height = TEX; const gx = c.getContext("2d"); const img = gx.createImageData(TEX, TEX), d = img.data;
     let lum = 0;
@@ -88,7 +110,9 @@
       lum += .2126 * col[0] + .7152 * col[1] + .0722 * col[2];
     }
     gx.putImageData(img, 0, 0);
-    return texCache[key] = { canvas: c, lum: lum / (TEX * TEX * 255) };
+    const res = { canvas: c, lum: lum / (TEX * TEX * 255) };
+    if (IMG[key]) return texCache[key + ":proc"] = res;   // Platzhalter bis das Bild da ist
+    return texCache[key] = res;
   }
   function surfaceKey(cfg) { if (cfg.flat) return "ral:" + cfg.flat; return cfg.surface !== "ral" ? cfg.surface : "ral:" + (RAL[cfg.ral] || "8A8D8F") }
   function frontColor(cfg) {
@@ -245,5 +269,5 @@
     return { lit, led };
   }
 
-  g.ZF = { COLS, ROWS, PRESETS, presetWords, RAL, SURFACES, LEDS, BRIGHT, texture, surfaceKey, frontColor, layout, litFor, phrase, draw, clean, cleanWord, mix, hex };
+  g.ZF = { IMG, COLS, ROWS, PRESETS, presetWords, RAL, SURFACES, LEDS, BRIGHT, texture, surfaceKey, frontColor, layout, litFor, phrase, draw, clean, cleanWord, mix, hex };
 })(window);
