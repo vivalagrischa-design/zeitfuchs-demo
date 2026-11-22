@@ -349,7 +349,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
         </figure>
       </div>
       <div class="more">Ausserdem möglich: <span class="tag">Blattsilber</span><span class="tag">Spiegel silber</span></div>
-      <p class="lead" style="margin-top:22px">Jede Wortuhr gibt es als <strong>Wanduhr</strong> (48,5 × 48,5 cm, ab 1980 CHF) oder als <strong>Tischuhr</strong> mit Füssen aus Aluminium (24,2 × 24,2 cm, ab 1280 CHF). Aktionspreise Weihnachtsmarkt, gültig bis 31.12.26.</p>
+      <p class="lead" style="margin-top:22px">Jede Wortuhr gibt es als <strong>Wanduhr</strong> (48,5 × 48,5 cm, ab 1980 CHF) oder als <strong>Tischuhr</strong> mit Füssen aus Aluminium (24,2 × 24,2 cm, ab 1280 CHF). Aktionspreise Weihnachtsmarkt, gültig bis 31.12.26. Wanduhr in echtem Blattgold: 5780 CHF.</p>
     </div>
   </section>
 
@@ -673,18 +673,19 @@ function applyRalInput(){const v=$("ralIn").value.trim(),h=$("ralHint");
 function frontLabel(){if(state.surface!=="ral")return lbl(ZF.SURFACES,state.surface);return state.sys==="NCS"?`Lackiert, ${state.ncs}`:`Lackiert, RAL ${state.ral}${RAL_NAME[state.ral]?" "+RAL_NAME[state.ral]:""}`}
 /* Preise gemäss Bestellschein (Aktion Weihnachtsmarkt bis 31.12.26). Blattgold, -kupfer, -silber, Spiegel: auf Anfrage */
 const PRICES={wand:[2450,1980],tisch:[1450,1280]};
-const PRICED=["ral","patina","rost"];
-function priceInfo(){if(!PRICED.includes(state.surface))return null;return PRICES[state.type]||PRICES.wand}
+/* Echtes Blattgold: Wanduhr 5780 CHF (keine Aktion), Tischuhr auf Anfrage */
+const GOLD={wand:[null,5780]};
+function priceInfo(){if(state.surface==="gold")return GOLD[state.type]||null;return PRICES[state.type]||PRICES.wand}
 const chf=n=>n.toLocaleString("de-CH").replace(/[’']/g,"’")+" CHF";
 function renderPrice(){const p=priceInfo(),el=$("price");
-  el.innerHTML=p?`<span>${lbl(TYPES,state.type)}</span><s>${chf(p[0])}</s><b>${chf(p[1])}</b><span class="act">Aktion Weihnachtsmarkt bis 31.12.26</span><span style="flex-basis:100%;font-size:13px;color:var(--muted)">Produktionszeit ca. 6–8 Wochen. Jede Uhr ist ein Einzelstück.</span>`
+  el.innerHTML=p?`<span>${lbl(TYPES,state.type)}</span>${p[0]?`<s>${chf(p[0])}</s>`:""}<b>${chf(p[1])}</b>${p[0]?`<span class="act">Aktion Weihnachtsmarkt bis 31.12.26</span>`:`<span class="act">Echtes Blattgold</span>`}<span style="flex-basis:100%;font-size:13px;color:var(--muted)">Produktionszeit ca. 6–8 Wochen. Jede Uhr ist ein Einzelstück.</span>`
     :`<span>${lbl(TYPES,state.type)}, ${lbl(ZF.SURFACES,state.surface)}:</span><b style="font-size:17px">Preis auf Anfrage</b>`}
 let current=null;
 function orderText(){
   const W=state.words,v=id=>$(id).value.trim(),hrs=[];for(let i=1;i<=12;i++)hrs.push(`${i}=${W["h"+i]||"–"}`);
   return [`ZEITFUCHS WORTUHR – ANFRAGE`,``,
 `Front: ${frontLabel()}`,`Lichtfarbe ab Werkstatt: ${state.led==="eigene"?"eigene Farbe "+(state.ledHex||""):lbl(ZF.LEDS,state.led)} · Helligkeit: ${lbl(ZF.BRIGHT,state.bright)} (per Handy änderbar)`,
-`Ausführung: ${lbl(TYPES,state.type)}`,(()=>{const p=priceInfo();return p?`Preis: ${chf(p[1])} statt ${chf(p[0])} (Aktion Weihnachtsmarkt bis 31.12.26)`:`Preis: auf Anfrage`})(),
+`Ausführung: ${lbl(TYPES,state.type)}`,(()=>{const p=priceInfo();return p?(p[0]?`Preis: ${chf(p[1])} statt ${chf(p[0])} (Aktion Weihnachtsmarkt bis 31.12.26)`:`Preis: ${chf(p[1])}`):`Preis: auf Anfrage`})(),
 `Rahmen (Holzkorpus): ${lbl(FRAMES,state.frame)} · USB-C-Kabel 2 m mit Stecker: ${lbl(CABLES,state.cable)}`,`Produktionszeit: ca. 6–8 Wochen`,``,
 `Wortlaut${state.preset?" ("+state.preset+")":""}:`,`Es ist: ${W.intro||"–"}`,
 `Minuten: 5=${W.m5||"–"}, 10=${W.m10||"–"}, 15=${W.m15||"–"}, 20=${W.m20||"–"}, nach=${W.ab||"–"}, vor=${W.vor||"–"}, halb=${W.halb||"–"}`,
