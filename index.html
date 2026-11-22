@@ -469,9 +469,8 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
             <p class="sub">Lichtfarbe und Helligkeit ändern Sie jederzeit per Handy. Hier wählen Sie die Einstellung ab Werkstatt.</p>
             <div class="group"><h4>Lichtfarbe</h4><div class="ledsw" id="leds" role="group" aria-label="Lichtfarbe"></div></div>
             <div class="group"><h4>Helligkeit</h4><div class="chips" id="brights"></div></div>
-            <div class="group"><h4>Rahmen</h4><div class="chips" id="frames"></div></div>
-            <div class="group"><h4>Kabel</h4><div class="chips" id="cables"></div></div>
-            <div class="group"><h4>Stecker</h4><div class="chips" id="plugs"></div></div>
+            <div class="group"><h4>Rahmen (Holzkorpus)</h4><div class="chips" id="frames"></div></div>
+            <div class="group"><h4>USB-C-Kabel 2 m mit Stecker</h4><div class="chips" id="cables"></div></div>
           </div>
 
           <div class="step">
@@ -493,6 +492,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
               <div class="field"><label for="o-mail">E-Mail</label><input id="o-mail" type="email" autocomplete="email"></div>
               <div class="field"><label for="o-ort">PLZ / Ort</label><input id="o-ort" autocomplete="address-level2"></div>
             </div>
+            <div class="field" style="margin-top:10px"><label for="o-date">Wunschdatum</label><input id="o-date" placeholder="z.B. Weihnachten oder 15. März" autocomplete="off"></div>
             <div class="field" style="margin-top:10px"><label for="o-note">Bemerkungen</label><textarea id="o-note"></textarea></div>
             <div class="summary">
               <div class="sample"><img id="sampleImg" alt="Musterbild Ihrer Wortuhr"><p>Musterbild mit Ihrem Buchstabenraster. Der Zeitfuchs orientiert sich daran, die genaue Anordnung kann noch abweichen. Gedrückt halten zum Speichern und der Nachricht anhängen.</p></div>
@@ -677,7 +677,7 @@ const PRICED=["ral","patina","rost"];
 function priceInfo(){if(!PRICED.includes(state.surface))return null;return PRICES[state.type]||PRICES.wand}
 const chf=n=>n.toLocaleString("de-CH").replace(/[’']/g,"’")+" CHF";
 function renderPrice(){const p=priceInfo(),el=$("price");
-  el.innerHTML=p?`<span>${lbl(TYPES,state.type)}</span><s>${chf(p[0])}</s><b>${chf(p[1])}</b><span class="act">Aktion Weihnachtsmarkt bis 31.12.26</span>`
+  el.innerHTML=p?`<span>${lbl(TYPES,state.type)}</span><s>${chf(p[0])}</s><b>${chf(p[1])}</b><span class="act">Aktion Weihnachtsmarkt bis 31.12.26</span><span style="flex-basis:100%;font-size:13px;color:var(--muted)">Produktionszeit ca. 6–8 Wochen. Jede Uhr ist ein Einzelstück.</span>`
     :`<span>${lbl(TYPES,state.type)}, ${lbl(ZF.SURFACES,state.surface)}:</span><b style="font-size:17px">Preis auf Anfrage</b>`}
 let current=null;
 function orderText(){
@@ -685,11 +685,11 @@ function orderText(){
   return [`ZEITFUCHS WORTUHR – ANFRAGE`,``,
 `Front: ${frontLabel()}`,`Lichtfarbe ab Werkstatt: ${state.led==="eigene"?"eigene Farbe "+(state.ledHex||""):lbl(ZF.LEDS,state.led)} · Helligkeit: ${lbl(ZF.BRIGHT,state.bright)} (per Handy änderbar)`,
 `Ausführung: ${lbl(TYPES,state.type)}`,(()=>{const p=priceInfo();return p?`Preis: ${chf(p[1])} statt ${chf(p[0])} (Aktion Weihnachtsmarkt bis 31.12.26)`:`Preis: auf Anfrage`})(),
-`Rahmen: ${lbl(FRAMES,state.frame)} · Kabel: ${lbl(CABLES,state.cable)} · Stecker: ${lbl(PLUGS,state.plug)}`,``,
+`Rahmen (Holzkorpus): ${lbl(FRAMES,state.frame)} · USB-C-Kabel 2 m mit Stecker: ${lbl(CABLES,state.cable)}`,`Produktionszeit: ca. 6–8 Wochen`,``,
 `Wortlaut${state.preset?" ("+state.preset+")":""}:`,`Es ist: ${W.intro||"–"}`,
 `Minuten: 5=${W.m5||"–"}, 10=${W.m10||"–"}, 15=${W.m15||"–"}, 20=${W.m20||"–"}, nach=${W.ab||"–"}, vor=${W.vor||"–"}, halb=${W.halb||"–"}`,
 `Stunden: ${hrs.join(", ")}`,``,`Raster ${ZF.COLS}×${current.rows}:`,...current.grid.map(r=>r.join(" ")),``,
-`Name: ${v("o-name")||"–"}`,`Telefon: ${v("o-tel")||"–"}`,`E-Mail: ${v("o-mail")||"–"}`,`PLZ/Ort: ${v("o-ort")||"–"}`,
+`Name: ${v("o-name")||"–"}`,`Telefon: ${v("o-tel")||"–"}`,`E-Mail: ${v("o-mail")||"–"}`,`PLZ/Ort: ${v("o-ort")||"–"}`,`Wunschdatum: ${v("o-date")||"–"}`,
 v("o-note")?`Bemerkungen: ${v("o-note")}`:null,``,
 `Unverbindliche Anfrage. Verbindlich erst mit unterschriebenem Bestellschein und 30 % Anzahlung.`,
 `Das Musterbild dient zur Orientierung. Der Zeitfuchs kann die Buchstaben auf der Front noch anders kombinieren.`,
@@ -741,8 +741,7 @@ function markLed(){document.querySelectorAll("#leds button").forEach(b=>b.setAtt
 chipRow("brights",ZF.BRIGHT,"bright");
 chipRow("types",TYPES,"type");
 chipRow("frames",FRAMES,"frame");
-chipRow("cables",CABLES,"cable");
-chipRow("plugs",PLUGS,"plug");
+chipRow("cables",CABLES,"cable",v=>{state.cable=v;state.plug=v});
 buildSwatches();
 applyPreset("Bündnertüütsch");
 setRal("7016",true);
@@ -772,7 +771,7 @@ if("IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion:reduce
 $("shuffle").addEventListener("click",()=>{state.seed++;update()});
 $("ralApply").addEventListener("click",applyRalInput);
 $("ralIn").addEventListener("keydown",e=>{if(e.key==="Enter")applyRalInput()});
-["o-name","o-tel","o-mail","o-ort","o-note"].forEach(id=>$(id).addEventListener("input",refreshOrder));
+["o-name","o-tel","o-mail","o-ort","o-date","o-note"].forEach(id=>$(id).addEventListener("input",refreshOrder));
 $("copyBtn").addEventListener("click",()=>{const b=$("copyBtn");
   const done=()=>{b.textContent="Kopiert";setTimeout(()=>b.textContent="Kopieren",1800)};
   const sel=()=>{const r=document.createRange();r.selectNodeContents($("orderText"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Markiert"};
