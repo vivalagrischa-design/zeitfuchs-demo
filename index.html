@@ -349,7 +349,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
         </figure>
       </div>
       <div class="more">Ausserdem möglich: <span class="tag">Blattsilber</span><span class="tag">Spiegel silber</span></div>
-      <p class="lead" style="margin-top:22px">Jede Wortuhr gibt es als <strong>Wanduhr</strong> oder als <strong>Tischuhr mit Fuss</strong>.</p>
+      <p class="lead" style="margin-top:22px">Jede Wortuhr gibt es als <strong>Wanduhr</strong> (48,5 × 48,5 cm, ab 1980 CHF) oder als <strong>Tischuhr</strong> mit Füssen aus Aluminium (24,2 × 24,2 cm, ab 1280 CHF). Aktionspreise Weihnachtsmarkt, gültig bis 31.12.26.</p>
     </div>
   </section>
 
@@ -365,10 +365,14 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
         <button type="button" class="chip" data-f="patina" aria-pressed="false">Kupferpatina</button>
         <button type="button" class="chip" data-f="rost" aria-pressed="false">Rost</button>
         <button type="button" class="chip" data-f="gold" aria-pressed="false">Blattgold &amp; Kupfer</button>
+        <button type="button" class="chip" data-f="tisch" aria-pressed="false">Tischuhren</button>
         <button type="button" class="chip" data-f="schwarz" aria-pressed="false">Schwarz</button>
         <button type="button" class="chip" data-f="detail" aria-pressed="false">Nahaufnahmen</button>
       </div>
       <div class="gallery" id="gallery">
+        <figure data-cat="patina tisch"><button type="button" class="g-open" aria-label="Gross anzeigen: Tischuhr · Kupferpatina"><img src="bilder/galerie/tisch-patina.jpg" alt="Tischuhr in Kupferpatina vor Betonwand, leuchtend: AS ISCH ZEHN AB FÜÜFI" loading="lazy" width="750" height="1000"></button><figcaption>Tischuhr · Kupferpatina</figcaption></figure>
+        <figure data-cat="tisch"><button type="button" class="g-open" aria-label="Gross anzeigen: Tischuhr · Glitzerlack"><img src="bilder/galerie/tisch-glitzer.jpg" alt="Tischuhr mit schillerndem Glitzerlack, leuchtend: AS ISCH ZWENZG VOR NÜÜNI" loading="lazy" width="750" height="1000"></button><figcaption>Tischuhr · Glitzerlack</figcaption></figure>
+        <figure data-cat="tisch"><button type="button" class="g-open" aria-label="Gross anzeigen: Tischuhr · lackiert"><img src="bilder/galerie/tisch-kupfer.jpg" alt="Tischuhr lackiert in Kupferrosa: AS ISCH FÜÜF VOR SIBNI" loading="lazy" width="750" height="1000"></button><figcaption>Tischuhr · lackiert</figcaption></figure>
         <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As isch zehn vor zwai»"><img src="bilder/galerie/patina-wand-weiss.jpg" alt="Kupferpatina an weisser Wand, leuchtend: AS ISCH ZEHN VOR ZWAI" loading="lazy" width="1000" height="1000"></button><figcaption>Kupferpatina · «As isch zehn vor zwai»</figcaption></figure>
         <figure data-cat="rost"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · «As isch zwenzg ab drei»"><img src="bilder/galerie/rost-wand-beton.jpg" alt="Rostfront an Betonwand, leuchtend: AS ISCH ZWENZG AB DREI" loading="lazy" width="750" height="1000"></button><figcaption>Rost · «As isch zwenzg ab drei»</figcaption></figure>
         <figure data-cat="schwarz"><button type="button" class="g-open" aria-label="Gross anzeigen: Schwarz · Licht in Grün"><img src="bilder/galerie/schwarz-gruen.jpg" alt="Schwarze Front, grün leuchtend" loading="lazy" width="750" height="1000"></button><figcaption>Schwarz · Licht in Grün</figcaption></figure>
@@ -582,7 +586,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
 const $=id=>document.getElementById(id);
 const FRAMES=[["schwarz","Schwarz","#121212"],["weiss","Weiss","#efefea"]];
 const CABLES=[["schwarz","Schwarz","#141414"],["weiss","Weiss","#ececea"]];
-const TYPES=[["wand","Wanduhr"],["tisch","Tischuhr mit Fuss"]];
+const TYPES=[["wand","Wanduhr 48,5 × 48,5 cm"],["tisch","Tischuhr 24,2 × 24,2 cm"]];
 const PLUGS=[["schwarz","Schwarz","#141414"],["weiss","Weiss","#ececea"]];
 const RAL_GROUPS=[
  ["Farben",[["4005","Blaulila"],["4008","Signalviolett"],["4007","Purpurviolett"],["4006","Verkehrspurpur"],["4001","Rotlila"],["4009","Pastellviolett"],["4003","Erikaviolett"],["4010","Telemagenta"],["3015","Hellrosa"],["3000","Feuerrot"],["3004","Purpurrot"],["3005","Weinrot"],["1004","Goldgelb"],["1005","Honiggelb"],["1032","Ginstergelb"],["1013","Perlweiss"],["6019","Weissgrün"],["6034","Pastelltürkis"],["6033","Minttürkis"],["6004","Blaugrün"],["5021","Wasserblau"],["6005","Moosgrün"],["6009","Tannengrün"],["5024","Pastellblau"],["5012","Lichtblau"],["5015","Himmelblau"],["5010","Enzianblau"],["5003","Saphirblau"],["8017","Schokoladenbraun"]]],
@@ -668,7 +672,7 @@ function applyRalInput(){const v=$("ralIn").value.trim(),h=$("ralHint");
   setRal(m[0])}
 function frontLabel(){if(state.surface!=="ral")return lbl(ZF.SURFACES,state.surface);return state.sys==="NCS"?`Lackiert, ${state.ncs}`:`Lackiert, RAL ${state.ral}${RAL_NAME[state.ral]?" "+RAL_NAME[state.ral]:""}`}
 /* Preise gemäss Bestellschein (Aktion Weihnachtsmarkt bis 31.12.26). Blattgold, -kupfer, -silber, Spiegel: auf Anfrage */
-const PRICES={wand:[1450,1280],tisch:[2450,1980]};
+const PRICES={wand:[2450,1980],tisch:[1450,1280]};
 const PRICED=["ral","patina","rost"];
 function priceInfo(){if(!PRICED.includes(state.surface))return null;return PRICES[state.type]||PRICES.wand}
 const chf=n=>n.toLocaleString("de-CH").replace(/[’']/g,"’")+" CHF";
