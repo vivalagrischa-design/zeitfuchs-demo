@@ -106,6 +106,16 @@ nav a:hover{color:var(--fg)}
 .light-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (min-width:860px){.light-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .light-grid figure{margin:0;min-width:0}
+.app-shots{margin-top:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:760px}
+.app-shots figure{margin:0;min-width:0}
+.app-shots img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 28px rgba(20,30,40,.10)}
+.app-shots figcaption{margin-top:8px;font-size:13.5px;color:var(--muted)}
+.ledsw{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:10px 6px;max-width:440px}
+.ledsw button{font:inherit;background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);font-size:12px}
+.ledsw .dot{width:38px;height:38px;border-radius:50%;box-shadow:inset 0 0 0 4px #fff,0 0 0 1.5px #cfd6da;position:relative;overflow:hidden}
+.ledsw button[aria-pressed="true"] .dot{box-shadow:inset 0 0 0 4px #fff,0 0 0 3px var(--fg)}
+.ledsw button[aria-pressed="true"]{color:var(--fg);font-weight:500}
+.ledsw .dot input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;border:0;padding:0}
 .light-grid img{width:100%;aspect-ratio:3/4;object-fit:cover}
 .light-grid figcaption{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.18em;font-size:14px;margin-top:8px;color:#d6dbde}
 /* Galerie */
@@ -295,6 +305,11 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
         <figure><img src="bilder/patina-nueuni.jpg" alt="Kupferpatina, Buchstaben leuchten türkis: NÜÜNI" loading="lazy" width="1000" height="1333"><figcaption>Türkis</figcaption></figure>
         <figure><img src="bilder/schwarz-violett.jpg" alt="Schwarze Front, Buchstaben leuchten violett" loading="lazy" width="1000" height="750"><figcaption>Violett</figcaption></figure>
       </div>
+      <div class="app-shots">
+        <figure><img src="bilder/handy-farbe.jpg" alt="Bedienung der Uhr auf dem Handy: Lichtfarben zum Antippen" loading="lazy" width="700" height="828"><figcaption>Farbe antippen, die Uhr leuchtet sofort so.</figcaption></figure>
+        <figure><img src="bilder/handy-helligkeit.jpg" alt="Bedienung der Uhr auf dem Handy: Helligkeit und Nachtruhe" loading="lazy" width="700" height="979"><figcaption>Helligkeit, Raumlicht und Nachtruhe.</figcaption></figure>
+      </div>
+      <p class="lead" style="margin-top:18px">Die Uhr öffnet ihr eigenes WLAN. Handy verbinden, Seite öffnen, fertig. Keine App, kein Konto.</p>
     </div>
   </section>
 
@@ -375,10 +390,8 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
         <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As isch zwenzg ab zehni»"><img src="bilder/galerie/patina-tuerkis.jpg" alt="Kupferpatina, türkis leuchtend" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · «As isch zwenzg ab zehni»</figcaption></figure>
         <figure data-cat="gold"><button type="button" class="g-open" aria-label="Gross anzeigen: Blattgold · über dem Regal"><img src="bilder/galerie/gold-regal.jpg" alt="Blattgold an heller Wand über einem Regal" loading="lazy" width="799" height="1000"></button><figcaption>Blattgold · über dem Regal</figcaption></figure>
         <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · Nahaufnahme"><img src="bilder/galerie/patina-detail-1.jpg" alt="Kupferpatina mit Buchstaben im Detail" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · Nahaufnahme</figcaption></figure>
-        <figure data-cat="rost detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · Nahaufnahme"><img src="bilder/galerie/rost-detail-5.jpg" alt="Rostfront im Detail" loading="lazy" width="563" height="1000"></button><figcaption>Rost · Nahaufnahme</figcaption></figure>
         <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · Nahaufnahme"><img src="bilder/galerie/patina-detail-4.jpg" alt="Kupferpatina im Detail" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · Nahaufnahme</figcaption></figure>
         <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · gewachsene Struktur"><img src="bilder/galerie/patina-detail-2.jpg" alt="Kupferpatina mit Kupferadern" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · gewachsene Struktur</figcaption></figure>
-        <figure data-cat="rost detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Rost · Nahaufnahme"><img src="bilder/galerie/rost-detail-6.jpg" alt="Rostfront im Detail" loading="lazy" width="563" height="1000"></button><figcaption>Rost · Nahaufnahme</figcaption></figure>
         <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As isch viartel vor achti»"><img src="bilder/galerie/patina-front.jpg" alt="Kupferpatina, blau leuchtend" loading="lazy" width="632" height="632"></button><figcaption>Kupferpatina · «As isch viartel vor achti»</figcaption></figure>
       </div>
     </div>
@@ -395,7 +408,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
       <div class="sec-head">
         <div class="eyebrow">Gestalten</div>
         <h2>Simulieren Sie Ihre eigene Wortuhr.</h2>
-        <p class="lead">Tippen Sie Ihren Wortlaut ein, wählen Sie Front und Licht, und schauen Sie Ihrer Uhr beim Zeitanzeigen zu. Die Buchstaben verteilen sich live auf das Raster von 11 × 10 Feldern.</p>
+        <p class="lead">Wählen Sie Front und Licht, tippen Sie Ihren Wortlaut ein und schauen Sie Ihrer Uhr beim Zeitanzeigen zu. Die Buchstaben verteilen sich live auf das Raster von 11 × 10 Feldern.</p>
       </div>
       <div class="cfg">
         <div class="preview">
@@ -429,17 +442,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
 
         <div class="steps">
           <div class="step">
-            <h3><span class="n">1</span>Wortlaut</h3>
-            <p class="sub">Starten Sie mit einem Dialekt und passen Sie jedes Wort an.</p>
-            <div class="chips" id="presets"></div>
-            <div class="group"><h4>So beginnt der Satz</h4>
-              <div class="field word"><label for="w-intro">«Es ist»</label><input id="w-intro" maxlength="23" autocomplete="off"></div></div>
-            <div class="group"><h4>Minuten</h4><div class="grid2" id="minutes"></div></div>
-            <div class="group"><h4>Stunden</h4><div class="grid3" id="hours"></div></div>
-          </div>
-
-          <div class="step">
-            <h3><span class="n">2</span>Front</h3>
+            <h3><span class="n">1</span>Front</h3>
             <div class="chips" id="surfaces"></div>
             <div id="ralBox" class="group">
               <h4>Farbton</h4>
@@ -454,14 +457,24 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
           </div>
 
           <div class="step">
-            <h3><span class="n">3</span>Licht und Details</h3>
+            <h3><span class="n">2</span>Licht und Details</h3>
             <p class="sub">Lichtfarbe und Helligkeit ändern Sie jederzeit per Handy. Hier wählen Sie die Einstellung ab Werkstatt.</p>
-            <div class="group"><h4>Lichtfarbe</h4><div class="chips" id="leds"></div></div>
+            <div class="group"><h4>Lichtfarbe</h4><div class="ledsw" id="leds" role="group" aria-label="Lichtfarbe"></div></div>
             <div class="group"><h4>Helligkeit</h4><div class="chips" id="brights"></div></div>
             <div class="group"><h4>Ausführung</h4><div class="chips" id="types"></div></div>
             <div class="group"><h4>Rahmen</h4><div class="chips" id="frames"></div></div>
             <div class="group"><h4>Kabel</h4><div class="chips" id="cables"></div></div>
             <div class="group"><h4>Stecker</h4><div class="chips" id="plugs"></div></div>
+          </div>
+
+          <div class="step">
+            <h3><span class="n">3</span>Wortlaut</h3>
+            <p class="sub">Starten Sie mit einem Dialekt und passen Sie jedes Wort an.</p>
+            <div class="chips" id="presets"></div>
+            <div class="group"><h4>So beginnt der Satz</h4>
+              <div class="field word"><label for="w-intro">«Es ist»</label><input id="w-intro" maxlength="23" autocomplete="off"></div></div>
+            <div class="group"><h4>Minuten</h4><div class="grid2" id="minutes"></div></div>
+            <div class="group"><h4>Stunden</h4><div class="grid3" id="hours"></div></div>
           </div>
 
           <div class="step">
@@ -526,27 +539,26 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
       <details id="impressum">
         <summary>Impressum</summary>
         <div class="prose">
-          <p><strong>Zeitfuchs</strong><br>[Vor- und Nachname bzw. Firmenname gemäss Handelsregister]<br>[Strasse Nr.]<br>[PLZ] Fideris<br>Schweiz</p>
+          <p><strong>Zeitfuchs</strong><br>Pascal Manetsch<br>Palottis 15<br>7235 Fideris<br>Schweiz</p>
           <p>E-Mail: kontakt@zeitfuchs.ch<br>WhatsApp: 079 561 14 53</p>
-          <p>[Falls im Handelsregister eingetragen: UID CHE-xxx.xxx.xxx]<br>[Falls mehrwertsteuerpflichtig: MWST-Nr.]</p>
-          <p>Verantwortlich für den Inhalt: [Vor- und Nachname]</p>
+          <p>Verantwortlich für den Inhalt: Pascal Manetsch</p>
         </div>
       </details>
       <details id="datenschutz">
         <summary>Datenschutzerklärung</summary>
         <div class="prose">
-          <p>Stand: [Datum]. Diese Erklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG). Soweit Personen in der EU betroffen sind, gelten die Grundsätze der DSGVO sinngemäss.</p>
+          <p>Stand: 22. November 2026. Diese Erklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG). Soweit Personen in der EU betroffen sind, gelten die Grundsätze der DSGVO sinngemäss.</p>
           <h3>Verantwortlich</h3>
-          <p>[Vor- und Nachname], Zeitfuchs, [Strasse Nr.], [PLZ] Fideris, kontakt@zeitfuchs.ch. An diese Adresse richten Sie auch alle Fragen und Anliegen zum Datenschutz.</p>
+          <p>Zeitfuchs, Pascal Manetsch, Palottis 15, 7235 Fideris, kontakt@zeitfuchs.ch. An diese Adresse richten Sie auch alle Fragen und Anliegen zum Datenschutz.</p>
           <h3>Besuch der Website</h3>
           <p>Die Website setzt keine Cookies, verwendet keine Analyse- oder Werbedienste und lädt keine Inhalte von Drittanbietern wie Google Fonts. Schriften und Bilder liegen auf unserem eigenen Server.</p>
-          <p>Unser Hosting-Anbieter [GitHub Inc., USA / Render Services Inc., USA] speichert beim Aufruf technisch notwendige Daten wie IP-Adresse, Datum, Uhrzeit und aufgerufene Seite in Server-Protokollen. Diese dienen dem sicheren Betrieb der Website und werden vom Anbieter nach kurzer Zeit gelöscht. Dabei können Daten in die USA übermittelt werden.</p>
+          <p>Unser Hosting-Anbieter GitHub Inc., USA (GitHub Pages), speichert beim Aufruf technisch notwendige Daten wie IP-Adresse, Datum, Uhrzeit und aufgerufene Seite in Server-Protokollen. Diese dienen dem sicheren Betrieb der Website und werden vom Anbieter nach kurzer Zeit gelöscht. Dabei können Daten in die USA übermittelt werden.</p>
           <h3>Konfigurator</h3>
           <p>Der Konfigurator läuft vollständig in Ihrem Browser. Ihr Wortlaut, Ihre Farbwahl und Ihre Kontaktangaben werden dabei weder gespeichert noch an uns übertragen.</p>
           <h3>Anfrage per WhatsApp oder E-Mail</h3>
           <p>Erst wenn Sie auf «Anfrage per WhatsApp» oder «Anfrage per E-Mail» tippen, öffnet sich die jeweilige App mit Ihrer Anfrage. Sie entscheiden, ob Sie diese senden. Wir erhalten dann die Angaben, die Sie uns schicken: Name, Telefon, E-Mail, Ort, Wortlaut und Ausstattung Ihrer Uhr.</p>
           <p>Wir verwenden diese Daten nur, um Ihre Anfrage zu beantworten, ein Angebot zu erstellen und eine Bestellung abzuwickeln. Wir geben sie nicht an Dritte weiter, ausser soweit für Lieferung oder Zahlung nötig. Die Lackierung erfolgt durch einen Partnerbetrieb, der dafür nur die Farbangabe erhält.</p>
-          <p>WhatsApp wird von WhatsApp Ireland Ltd. (Meta) betrieben. Dabei können Daten in die USA übermittelt werden. Wenn Sie das nicht möchten, wählen Sie die E-Mail. Unsere E-Mails werden über [E-Mail-Anbieter, Land] verarbeitet.</p>
+          <p>WhatsApp wird von WhatsApp Ireland Ltd. (Meta) betrieben. Dabei können Daten in die USA übermittelt werden. Wenn Sie das nicht möchten, wählen Sie die E-Mail. Unsere E-Mails werden über Hoststar (Schweiz) verarbeitet.</p>
           <h3>Aufbewahrung</h3>
           <p>Anfragen ohne Bestellung löschen wir spätestens nach 12 Monaten. Bestell- und Rechnungsdaten bewahren wir so lange auf, wie es das Gesetz verlangt (in der Schweiz in der Regel 10 Jahre).</p>
           <h3>Ihre Rechte</h3>
@@ -656,7 +668,7 @@ let current=null;
 function orderText(){
   const W=state.words,v=id=>$(id).value.trim(),hrs=[];for(let i=1;i<=12;i++)hrs.push(`${i}=${W["h"+i]||"–"}`);
   return [`ZEITFUCHS WORTUHR – ANFRAGE`,``,
-`Front: ${frontLabel()}`,`Lichtfarbe ab Werkstatt: ${lbl(ZF.LEDS,state.led)} · Helligkeit: ${lbl(ZF.BRIGHT,state.bright)} (per Handy änderbar)`,
+`Front: ${frontLabel()}`,`Lichtfarbe ab Werkstatt: ${state.led==="eigene"?"eigene Farbe "+(state.ledHex||""):lbl(ZF.LEDS,state.led)} · Helligkeit: ${lbl(ZF.BRIGHT,state.bright)} (per Handy änderbar)`,
 `Ausführung: ${lbl(TYPES,state.type)}`,
 `Rahmen: ${lbl(FRAMES,state.frame)} · Kabel: ${lbl(CABLES,state.cable)} · Stecker: ${lbl(PLUGS,state.plug)}`,``,
 `Wortlaut${state.preset?" ("+state.preset+")":""}:`,`Es ist: ${W.intro||"–"}`,
@@ -699,7 +711,18 @@ function update(){
 buildFields();
 chipRow("presets",Object.keys(ZF.PRESETS).map(k=>[k,k]),null,k=>applyPreset(k));
 chipRow("surfaces",ZF.SURFACES,"surface");
-chipRow("leds",ZF.LEDS,"led");
+/* Lichtfarben als Farbkreise wie in der Bedienung der Uhr, plus eigene Farbe */
+(function(){const box=$("leds");
+  const mk=(id,name,bg)=>{const b=document.createElement("button");b.type="button";b.dataset.v=id;b.setAttribute("aria-label",name);
+    b.innerHTML=`<span class="dot" style="background:${bg}"></span><span>${name}</span>`;box.appendChild(b);return b};
+  ZF.LEDS.forEach(([id,name,hex])=>mk(id,name,hex).addEventListener("click",()=>{state.led=id;markLed();update()}));
+  const own=mk("eigene","Eigene","conic-gradient(red,yellow,lime,cyan,blue,magenta,red)");
+  const pick=document.createElement("input");pick.type="color";pick.value="#ff9ad5";pick.setAttribute("aria-label","Eigene Lichtfarbe wählen");
+  own.querySelector(".dot").appendChild(pick);
+  pick.addEventListener("input",()=>{state.led="eigene";state.ledHex=pick.value;own.querySelector(".dot").style.background=pick.value;markLed();update()});
+  own.addEventListener("click",()=>{if(state.ledHex){state.led="eigene";markLed();update()}});
+  markLed()})();
+function markLed(){document.querySelectorAll("#leds button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===state.led?"true":"false"))}
 chipRow("brights",ZF.BRIGHT,"bright");
 chipRow("types",TYPES,"type");
 chipRow("frames",FRAMES,"frame");

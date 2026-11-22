@@ -30,7 +30,10 @@
 
   const SURFACES = [["ral", "Lackiert (RAL / NCS)"], ["gold", "Blattgold"], ["kupfer", "Blattkupfer"], ["silber", "Blattsilber"], ["spiegel", "Spiegel silber"], ["patina", "Kupferpatina"], ["rost", "Rost"]];
   const LEAF = { gold: ["a7843a", "eed890", "7d6125", "fff3c6"], kupfer: ["8a4526", "e39a6c", "5e2c16", "ffd2b0"], silber: ["8e9192", "eceeec", "6a6d6e", "ffffff"] };
-  const LEDS = [["weiss", "Weiss", "#fff3e2"], ["blau", "Blau", "#2f8bff"], ["mint", "Mint", "#5ff2c0"], ["gruen", "Grün", "#3ee05a"], ["gelb", "Gelb", "#ffd23a"], ["orange", "Orange", "#ff8a1f"], ["rot", "Rot", "#ff3b30"]];
+  /* Gleiche Lichtfarben wie in der Bedienung der Uhr */
+  const LEDS = [["weiss", "Weiss", "#fff3e2"], ["gelb", "Gelb", "#ffe63a"], ["orange", "Orange", "#ff8a1f"], ["rot", "Rot", "#ff3b30"], ["pink", "Pink", "#ff3d8b"],
+    ["magenta", "Magenta", "#f53cf0"], ["violett", "Violett", "#8a3cff"], ["blau", "Blau", "#2f5bff"], ["hellblau", "Hellblau", "#4a9bff"], ["cyan", "Cyan", "#6ff7ff"],
+    ["mint", "Mintgrün", "#6ff5a8"], ["gruen", "Grün", "#7cff4a"]];
   const BRIGHT = [["gedimmt", "Gedimmt", .45], ["mittel", "Mittel", .75], ["hell", "Hell", 1]];
 
   /* Zufall und Rauschen */
@@ -242,7 +245,7 @@
     ctx.fillStyle = vg; ctx.fillRect(0, 0, S, S);
     const light = tex.lum > .42, bf = (BRIGHT.find(b => b[0] === cfg.bright) || BRIGHT[1])[2];
     const off = light ? "rgba(28,24,20,0.78)" : "rgba(200,208,214,0.32)";
-    const lit = litFor(cfg.words, cfg.time), led = (LEDS.find(l => l[0] === cfg.led) || LEDS[0])[2];
+    const lit = litFor(cfg.words, cfg.time), led = cfg.led === "eigene" && cfg.ledHex ? cfg.ledHex : (LEDS.find(l => l[0] === cfg.led) || LEDS[0])[2];
     const rowsN = L.rows, span = Math.max(COLS, rowsN);
     const p = S * .64 / (span - 1) * (span > 10 ? 1 : 1), fs = p * .74;
     const x0 = S / 2 - (COLS - 1) * p / 2, y0 = S * .5 - (rowsN - 1) * p / 2;
