@@ -595,7 +595,7 @@ const MIN_FIELDS=[["m5","5 Minuten"],["m10","10 Minuten"],["m15","Viertel"],["m2
 const lbl=(arr,v)=>arr.find(a=>a[0]===v)[1];
 
 /* ---------- Ihre Worte: dieselbe Zeit in vier Dialekten ---------- */
-const SPEAK={"Bündnerdeutsch":["7016","mint"],"Züritüütsch":["5011","weiss"],"Bärndütsch":["3004","weiss"],"Hochdeutsch":["6009","gelb"]};
+const SPEAK={"Bündnertüütsch":["7016","mint"],"Züritüütsch":["5011","weiss"],"Berndüütsch":["3004","weiss"],"Hochdeutsch":["6009","gelb"]};
 function speak(d){
   const words=ZF.presetWords(d),L=ZF.layout(words,3),[ral,led]=SPEAK[d];
   ZF.draw($("speakCv"),{words,surface:"ral",ral,led,bright:"hell",time:"07:45",engraving:""},L);
@@ -608,14 +608,14 @@ Object.keys(ZF.PRESETS).forEach(d=>{const w=ZF.presetWords(d),L=ZF.layout(w,3);
 {const c=document.createElement("div");c.className="dialect own";c.innerHTML=`<h3>Ihr Wortlaut</h3><p>Walliser, Appenzeller, Rätoromanisch oder ein Spruch aus der Familie: Sie schreiben die Worte, der Zeitfuchs setzt sie auf die Front.</p><a class="cta ghost" href="#gestalten" style="justify-self:start">Ausprobieren</a>`;$("dialects").appendChild(c)}
 
 /* ---------- RAL-Muster in der Fronten-Übersicht ---------- */
-function drawRalBox(){const w=ZF.presetWords("Bündnerdeutsch"),L=ZF.layout(w,3);
+function drawRalBox(){const w=ZF.presetWords("Bündnertüütsch"),L=ZF.layout(w,3);
   [["7016","weiss"],["9016","mint"],["5011","weiss"],["6009","gelb"]].forEach(([ral,led])=>{const c=document.createElement("canvas");c.width=c.height=420;
     c.setAttribute("role","img");c.setAttribute("aria-label","RAL "+ral);$("ralbox").appendChild(c);
     ZF.draw(c,{words:w,surface:"ral",ral,led,bright:"hell",time:"07:45",engraving:""},L)})}
 
 /* ---------- Konfigurator ---------- */
 const state={words:{},surface:"ral",sys:"RAL",ncs:"",ncsHex:"",ral:"7016",ralKnown:true,type:"wand",led:"weiss",bright:"mittel",frame:"schwarz",cable:"schwarz",plug:"schwarz",
-  engraving:"",time:"07:45",seed:7,preset:"Bündnerdeutsch"};
+  engraving:"",time:"07:45",seed:7,preset:"Bündnertüütsch"};
 function applyPreset(name){state.preset=name;state.words=ZF.presetWords(name);
   $("w-intro").value=state.words.intro;MIN_FIELDS.forEach(([k])=>$("w-"+k).value=state.words[k]);
   for(let i=1;i<=12;i++)$("w-h"+i).value=state.words["h"+i];markChips("presets",name)}
@@ -729,7 +729,7 @@ chipRow("frames",FRAMES,"frame");
 chipRow("cables",CABLES,"cable");
 chipRow("plugs",PLUGS,"plug");
 buildSwatches();
-applyPreset("Bündnerdeutsch");
+applyPreset("Bündnertüütsch");
 setRal("7016",true);
 /* Simulation: Zeitraffer und aktuelle Uhrzeit */
 let simTimer=null,liveTimer=null;
@@ -786,7 +786,7 @@ document.querySelectorAll("a[href='#datenschutz'],a[href='#impressum']").forEach
   lb.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1));x0=null});
 })();
 ZF.onTexture=()=>update();
-const start=()=>{speak("Bündnerdeutsch");update()};
+const start=()=>{speak("Bündnertüütsch");update()};
 if(document.fonts&&document.fonts.load)document.fonts.load("500 40px Barlow").then(start,start);else start();
 })();
 </script>

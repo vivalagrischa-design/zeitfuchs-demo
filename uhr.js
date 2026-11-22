@@ -3,11 +3,11 @@
   const COLS = 11, ROWS = 10;
 
   const PRESETS = {
-    "Bündnerdeutsch": { intro: "AS ISCH", m5: "FÜÜF", m10: "ZEHN", m15: "VIARTEL", m20: "ZWENZG", vor: "VOR", ab: "AB", halb: "HALBI",
+    "Bündnertüütsch": { intro: "AS ISCH", m5: "FÜÜF", m10: "ZEHN", m15: "VIARTEL", m20: "ZWENZG", vor: "VOR", ab: "AB", halb: "HALBI",
       h: ["AIS", "ZWAI", "DREI", "VIARI", "FÜÜFI", "SEGGSI", "SIBNI", "ACHTI", "NÜÜNI", "ZEHNI", "ÖLFI", "ZWÖLFI"] },
     "Züritüütsch": { intro: "ES ISCH", m5: "FÜÜF", m10: "ZÄH", m15: "VIERTEL", m20: "ZWÄNZG", vor: "VOR", ab: "AB", halb: "HALBI",
       h: ["EIS", "ZWEI", "DRÜÜ", "VIERI", "FÜÜFI", "SÄCHSI", "SIBNI", "ACHTI", "NÜÜNI", "ZÄNI", "ELFI", "ZWÖLFI"] },
-    "Bärndütsch": { intro: "ES ISCH", m5: "FÜF", m10: "ZÄH", m15: "VIERTU", m20: "ZWÄNZG", vor: "VOR", ab: "AB", halb: "HALBI",
+    "Berndüütsch": { intro: "ES ISCH", m5: "FÜF", m10: "ZÄH", m15: "VIERTU", m20: "ZWÄNZG", vor: "VOR", ab: "AB", halb: "HALBI",
       h: ["EIS", "ZWÖI", "DRÜ", "VIERI", "FÜFI", "SÄCHSI", "SIBNI", "ACHTI", "NÜNI", "ZÄNI", "EUFI", "ZWÖUFI"] },
     "Hochdeutsch": { intro: "ES IST", m5: "FÜNF", m10: "ZEHN", m15: "VIERTEL", m20: "ZWANZIG", vor: "VOR", ab: "NACH", halb: "HALB",
       h: ["EINS", "ZWEI", "DREI", "VIER", "FÜNF", "SECHS", "SIEBEN", "ACHT", "NEUN", "ZEHN", "ELF", "ZWÖLF"] }
