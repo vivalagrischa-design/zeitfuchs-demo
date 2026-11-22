@@ -166,6 +166,8 @@ nav a:hover{color:var(--fg)}
 .speed{display:inline-flex;gap:4px;flex-wrap:wrap}.speed .btn[aria-pressed="true"]{background:var(--fg);color:#fff;border-color:var(--fg)}
 .timebox{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
 .timebox input{font:inherit;font-size:15px;color:var(--fg);background:#fff;border:1px solid var(--line);border-radius:4px;padding:6px 8px}
+.price{margin-top:14px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-size:15px}
+.price s{color:var(--muted)}.price b{font-size:22px;color:var(--fg)}.price .act{font-size:13px;color:var(--accent);font-weight:500}
 .status{margin-top:10px;font-size:13.5px;padding:9px 12px;border-radius:4px;background:var(--accent-soft)}
 .status.bad{background:var(--warn-soft);color:var(--warn);font-weight:500}
 .steps{display:grid;gap:14px;min-width:0}
@@ -420,6 +422,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
             </div>
             <div class="photo-note" id="photoNote" hidden></div>
           </div>
+          <div class="price" id="price" aria-live="polite"></div>
           <div class="readout">
             <div class="phrase" id="phrase"></div>
           </div>
@@ -664,12 +667,20 @@ function applyRalInput(){const v=$("ralIn").value.trim(),h=$("ralHint");
   if(!m||!/^[1-9]/.test(m[0])){h.textContent="Bitte eine RAL-Nummer wie 7016 oder einen NCS-Code wie S 2010-Y30R eingeben.";h.classList.add("bad");return}
   setRal(m[0])}
 function frontLabel(){if(state.surface!=="ral")return lbl(ZF.SURFACES,state.surface);return state.sys==="NCS"?`Lackiert, ${state.ncs}`:`Lackiert, RAL ${state.ral}${RAL_NAME[state.ral]?" "+RAL_NAME[state.ral]:""}`}
+/* Preise gemäss Bestellschein (Aktion Weihnachtsmarkt bis 31.12.26). Blattgold, -kupfer, -silber, Spiegel: auf Anfrage */
+const PRICES={wand:[1450,1280],tisch:[2450,1980]};
+const PRICED=["ral","patina","rost"];
+function priceInfo(){if(!PRICED.includes(state.surface))return null;return PRICES[state.type]||PRICES.wand}
+const chf=n=>n.toLocaleString("de-CH").replace(/[’']/g,"’")+" CHF";
+function renderPrice(){const p=priceInfo(),el=$("price");
+  el.innerHTML=p?`<span>${lbl(TYPES,state.type)}</span><s>${chf(p[0])}</s><b>${chf(p[1])}</b><span class="act">Aktion Weihnachtsmarkt bis 31.12.26</span>`
+    :`<span>${lbl(TYPES,state.type)}, ${lbl(ZF.SURFACES,state.surface)}:</span><b style="font-size:17px">Preis auf Anfrage</b>`}
 let current=null;
 function orderText(){
   const W=state.words,v=id=>$(id).value.trim(),hrs=[];for(let i=1;i<=12;i++)hrs.push(`${i}=${W["h"+i]||"–"}`);
   return [`ZEITFUCHS WORTUHR – ANFRAGE`,``,
 `Front: ${frontLabel()}`,`Lichtfarbe ab Werkstatt: ${state.led==="eigene"?"eigene Farbe "+(state.ledHex||""):lbl(ZF.LEDS,state.led)} · Helligkeit: ${lbl(ZF.BRIGHT,state.bright)} (per Handy änderbar)`,
-`Ausführung: ${lbl(TYPES,state.type)}`,
+`Ausführung: ${lbl(TYPES,state.type)}`,(()=>{const p=priceInfo();return p?`Preis: ${chf(p[1])} statt ${chf(p[0])} (Aktion Weihnachtsmarkt bis 31.12.26)`:`Preis: auf Anfrage`})(),
 `Rahmen: ${lbl(FRAMES,state.frame)} · Kabel: ${lbl(CABLES,state.cable)} · Stecker: ${lbl(PLUGS,state.plug)}`,``,
 `Wortlaut${state.preset?" ("+state.preset+")":""}:`,`Es ist: ${W.intro||"–"}`,
 `Minuten: 5=${W.m5||"–"}, 10=${W.m10||"–"}, 15=${W.m15||"–"}, 20=${W.m20||"–"}, nach=${W.ab||"–"}, vor=${W.vor||"–"}, halb=${W.halb||"–"}`,
@@ -687,7 +698,7 @@ function renderRaster(lit){const box=$("raster");box.innerHTML="";
     const o=current.own[r][c];if(o&&lit.ids.has(o))s.className="on";box.appendChild(s)}))}
 let imgTimer=null;
 function update(){
-  current=ZF.layout(state.words,state.seed);
+  current=ZF.layout(state.words,state.seed);renderPrice();
   const photo=PHOTO[state.surface],flat=state.surface!=="ral"?FLAT[state.surface]:(state.sys==="NCS"?state.ncsHex:null);
   const drawFlat=ZF.IMG[state.surface]?null:flat;   // Materialbild statt Einheitsfarbe
   ZF.draw($("cv"),Object.assign({},state,{flat:drawFlat}),current);
