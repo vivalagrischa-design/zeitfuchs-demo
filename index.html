@@ -503,7 +503,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
               <a class="btn ghost" id="mailBtn" href="mailto:kontakt@zeitfuchs.ch">Anfrage per E-Mail</a>
               <button class="btn ghost" id="copyBtn" type="button">Kopieren</button>
             </div>
-            <p class="hint" style="margin-top:12px">Auf dieser Seite wird nichts gespeichert. Ihre Angaben verlassen Ihr Gerät erst, wenn Sie auf WhatsApp oder E-Mail tippen. Mehr dazu in der <a href="#datenschutz">Datenschutzerklärung</a>.</p>
+            <p class="hint" style="margin-top:12px">Während Sie gestalten, wird nichts übertragen. Erst wenn Sie auf WhatsApp oder E-Mail tippen, geht Ihre Anfrage zusätzlich verschlüsselt an die Werkstatt in Fideris, damit nichts verloren geht. Das Musterbild enthält einen Zeitfuchs-Code mit Ihrem Wortlaut. Mehr dazu in der <a href="#datenschutz">Datenschutzerklärung</a>.</p>
             <div class="note"><strong>Musterbild, keine Endfassung.</strong> Die Anordnung der Buchstaben ist ein Vorschlag. Der Zeitfuchs orientiert sich daran und kann die Buchstaben für Ihre Front noch anders kombinieren.</div>
             <div class="note"><strong>Farben am Bildschirm.</strong> Bildschirme und Drucker zeigen Farben unterschiedlich. Massgebend ist der RAL- oder NCS-Code: RAL 7016 bleibt RAL 7016, auch wenn er hier heller oder dunkler wirkt. Handveredelte Fronten sind Unikate.</div>
           </div>
@@ -554,16 +554,17 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
       <details id="datenschutz">
         <summary>Datenschutzerklärung</summary>
         <div class="prose">
-          <p>Stand: 22. November 2026. Diese Erklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG). Soweit Personen in der EU betroffen sind, gelten die Grundsätze der DSGVO sinngemäss.</p>
+          <p>Stand: 25. November 2026. Diese Erklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG). Soweit Personen in der EU betroffen sind, gelten die Grundsätze der DSGVO sinngemäss.</p>
           <h3>Verantwortlich</h3>
           <p>Zeitfuchs, Pascal Manetsch, Palottis 15, 7235 Fideris, kontakt@zeitfuchs.ch. An diese Adresse richten Sie auch alle Fragen und Anliegen zum Datenschutz.</p>
           <h3>Besuch der Website</h3>
           <p>Die Website setzt keine Cookies, verwendet keine Analyse- oder Werbedienste und lädt keine Inhalte von Drittanbietern wie Google Fonts. Schriften und Bilder liegen auf unserem eigenen Server.</p>
           <p>Unser Hosting-Anbieter GitHub Inc., USA (GitHub Pages), speichert beim Aufruf technisch notwendige Daten wie IP-Adresse, Datum, Uhrzeit und aufgerufene Seite in Server-Protokollen. Diese dienen dem sicheren Betrieb der Website und werden vom Anbieter nach kurzer Zeit gelöscht. Dabei können Daten in die USA übermittelt werden.</p>
           <h3>Konfigurator</h3>
-          <p>Der Konfigurator läuft vollständig in Ihrem Browser. Ihr Wortlaut, Ihre Farbwahl und Ihre Kontaktangaben werden dabei weder gespeichert noch an uns übertragen.</p>
+          <p>Der Konfigurator läuft in Ihrem Browser. Solange Sie gestalten, werden Ihr Wortlaut, Ihre Farbwahl und Ihre Kontaktangaben weder gespeichert noch übertragen. Das Musterbild enthält einen Zeitfuchs-Code (QR-Code) mit Wortlaut, Buchstabenraster und Ausstattung, aber keine Kontaktangaben. So kann der Zeitfuchs Ihre Front direkt aus dem Bild übernehmen.</p>
           <h3>Anfrage per WhatsApp oder E-Mail</h3>
-          <p>Erst wenn Sie auf «Anfrage per WhatsApp» oder «Anfrage per E-Mail» tippen, öffnet sich die jeweilige App mit Ihrer Anfrage. Sie entscheiden, ob Sie diese senden. Wir erhalten dann die Angaben, die Sie uns schicken: Name, Telefon, E-Mail, Ort, Wortlaut und Ausstattung Ihrer Uhr.</p>
+          <p>Wenn Sie auf «Anfrage per WhatsApp» oder «Anfrage per E-Mail» tippen, öffnet sich die jeweilige App mit Ihrer Anfrage. Sie entscheiden, ob Sie diese dort senden. Gleichzeitig übermittelt die Website Ihre Anfrage (Name, Telefon, E-Mail, Ort, Wunschdatum, Bemerkungen, Wortlaut, Raster und Ausstattung) direkt an die Werkstatt, damit sie nicht verloren geht, auch wenn die Nachricht in der App nicht ankommt.</p>
+          <p>Diese Übermittlung ist bereits in Ihrem Browser verschlüsselt. Nur der Zeitfuchs kann sie mit seinem privaten Schlüssel öffnen. Gespeichert wird sie auf einem Server von Render Services Inc. (USA) im Rechenzentrum Frankfurt; der Anbieter sieht nur verschlüsselte Daten. Ohne Tippen auf WhatsApp oder E-Mail wird nichts übermittelt.</p>
           <p>Wir verwenden diese Daten nur, um Ihre Anfrage zu beantworten, ein Angebot zu erstellen und eine Bestellung abzuwickeln. Wir geben sie nicht an Dritte weiter, ausser soweit für Lieferung oder Zahlung nötig. Die Lackierung erfolgt durch einen Partnerbetrieb, der dafür nur die Farbangabe erhält.</p>
           <p>WhatsApp wird von WhatsApp Ireland Ltd. (Meta) betrieben. Dabei können Daten in die USA übermittelt werden. Wenn Sie das nicht möchten, wählen Sie die E-Mail. Unsere E-Mails werden über Hoststar (Schweiz) verarbeitet.</p>
           <h3>Aufbewahrung</h3>
@@ -580,6 +581,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
 
 <footer><div class="w"><span>© Zeitfuchs · Wortuhren aus Fideris</span><span>Verkauf und Lieferung nur innerhalb der Schweiz</span><span><a href="#impressum" data-open="impressum">Impressum</a> · <a href="#datenschutz" data-open="datenschutz">Datenschutz</a> · <a href="werkstatt/" rel="nofollow">Werkstatt</a></span></div></footer>
 
+<script src="qr.js"></script>
 <script src="uhr.js"></script>
 <script>
 (function(){
@@ -695,13 +697,26 @@ v("o-note")?`Bemerkungen: ${v("o-note")}`:null,``,
 `Unverbindliche Anfrage. Verbindlich erst mit unterschriebenem Bestellschein und 30 % Anzahlung.`,
 `Das Musterbild dient zur Orientierung. Der Zeitfuchs kann die Buchstaben auf der Front noch anders kombinieren.`,
 `Massgebend für die Farbe ist der RAL- oder NCS-Code, nicht die Darstellung am Bildschirm.`].filter(x=>x!==null).join("\n")}
-function refreshOrder(){const t=orderText();$("orderText").textContent=t;
+function refreshOrder(){const t=orderText();$("orderText").textContent=t;if(typeof zfQueue==="function")zfQueue();
   $("waBtn").href="https://wa.me/41795611453?text="+encodeURIComponent(t);
   $("mailBtn").href="mailto:kontakt@zeitfuchs.ch?subject="+encodeURIComponent("Anfrage Zeitfuchs Wortuhr")+"&body="+encodeURIComponent(t)}
 function renderRaster(lit){const box=$("raster");box.innerHTML="";
   current.grid.forEach((row,r)=>row.forEach((ch,c)=>{const s=document.createElement("span");s.textContent=ch;
     const o=current.own[r][c];if(o&&lit.ids.has(o))s.className="on";box.appendChild(s)}))}
 let imgTimer=null;
+/* Zeitfuchs-Code: QR-Code mit Wortlaut, Raster und Ausstattung unten auf dem Musterbild (ohne Kontaktangaben) */
+function codeData(){return "ZF1"+JSON.stringify({w:state.words,g:current.grid.map(r=>r.join("")),s:state.surface,c:state.surface==="ral"?(state.sys==="NCS"?state.ncs:"RAL "+state.ral):"",t:state.type,f:state.frame,k:state.cable,l:state.led,p:state.preset||""})}
+function withCode(src,cb){if(!src||typeof qrcode!=="function"){cb(null);return}const img=new Image();
+  img.onload=()=>{try{const W=1000,H=Math.round(img.naturalHeight*W/img.naturalWidth),S=360,c=document.createElement("canvas");c.width=W;c.height=H+S;const g=c.getContext("2d");
+    g.fillStyle="#fff";g.fillRect(0,0,W,c.height);g.drawImage(img,0,0,W,H);
+    qrcode.stringToBytes=qrcode.stringToBytesFuncs["UTF-8"];const q=qrcode(0,"M");q.addData(codeData(),"Byte");q.make();
+    const n=q.getModuleCount(),cell=Math.floor((S-40)/(n+8)),size=cell*(n+8),x0=30,y0=H+(S-size)/2;
+    g.fillStyle="#fff";g.fillRect(x0,y0,size,size);g.fillStyle="#000";
+    for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))g.fillRect(x0+(k+4)*cell,y0+(r+4)*cell,cell,cell);
+    const tx=x0+size+34;g.fillStyle="#1f2a30";g.font="600 38px Barlow, Arial, sans-serif";g.fillText("Zeitfuchs-Code",tx,H+S/2-40);
+    g.fillStyle="#5c6b72";g.font="26px Inter, Arial, sans-serif";["Enthält Wortlaut und Raster","Ihrer Uhr. Bitte dieses Bild","mit der Anfrage mitschicken."].forEach((t,i)=>g.fillText(t,tx,H+S/2+6+i*36));
+    cb(c.toDataURL("image/jpeg",.9))}catch(e){cb(null)}};
+  img.onerror=()=>cb(null);img.src=src}
 function update(){
   current=ZF.layout(state.words,state.seed);renderPrice();
   const photo=PHOTO[state.surface],flat=state.surface!=="ral"?FLAT[state.surface]:(state.sys==="NCS"?state.ncsHex:null);
@@ -721,7 +736,7 @@ function update(){
   clock.style.setProperty("--cable",CABLES.find(c=>c[0]===state.cable)[2]);
   $("ralBox").hidden=state.surface!=="ral";$("surfHint").textContent=SURF_NOTE[state.surface];
   refreshOrder();
-  clearTimeout(imgTimer);imgTimer=setTimeout(()=>{try{$("sampleImg").src=photo||$("cv").toDataURL("image/jpeg",.86)}catch(e){$("sampleImg").src=SAMPLE_FALLBACK[state.surface]||""}},250);
+  clearTimeout(imgTimer);imgTimer=setTimeout(()=>{let src;try{src=photo||$("cv").toDataURL("image/jpeg",.86)}catch(e){src=SAMPLE_FALLBACK[state.surface]||""}$("sampleImg").src=src;withCode(src,u=>{if(u)$("sampleImg").src=u})},250);
 }
 
 buildFields();
@@ -773,6 +788,26 @@ $("shuffle").addEventListener("click",()=>{state.seed++;update()});
 $("ralApply").addEventListener("click",applyRalInput);
 $("ralIn").addEventListener("keydown",e=>{if(e.key==="Enter")applyRalInput()});
 ["o-name","o-tel","o-mail","o-ort","o-date","o-note"].forEach(id=>$(id).addEventListener("input",refreshOrder));
+/* Anfrage zusätzlich verschlüsselt an die Werkstatt (nur beim Tippen auf WhatsApp oder E-Mail) */
+const ZF_API="https://zeitfuchs-api-ewxn.onrender.com",ZF_PUB="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjsXTBCvZp2QmQiWegNl3IVq2Z3Z2UYbf6vAuA8zbt4CgS2psxl2hEo4J+0A5zdb/L7WRQzPo1JxTtygyrpAo8kCPDRxQU7oeKghD5VM965SdLXLwitRMT34PPA78EXI7ouXQWH6zLnKBn0bAPhjdKzpzP2Xm8JLMXN2e/yKg352Qe8CUdRmhiCftAiOAMihrRZOYYdIQ93Bs0ApbeJ/7P0dKbtTG63qR3EvtDLwO0GXEsD2I0q7ym6u1Z0lRpNlifx3PJC17sYe2qq6xNv9ZtO8sDqpqqf20dLm45taWkdYq/rPSFzuBRf9pm8RmCp/LQGYMz75+JnTDo6pE7CodRwIDAQAB";
+let zfKey=null,zfSealed=null,zfFor="",zfSent="",zfT=null;
+const zfB64=u=>{let s="";new Uint8Array(u).forEach(x=>s+=String.fromCharCode(x));return btoa(s)};
+function zfPayload(){const v=id=>$(id).value.trim();
+  return {v:1,zeit:new Date().toISOString(),name:v("o-name"),tel:v("o-tel"),mail:v("o-mail"),ort:v("o-ort"),wunsch:v("o-date"),notiz:v("o-note"),
+    worte:state.words,vorlage:state.preset||"",raster:current?current.grid.map(r=>r.join("")):[],front:frontLabel(),oberflaeche:state.surface,
+    farbe:state.surface==="ral"?(state.sys==="NCS"?state.ncs:"RAL "+state.ral):"",typ:state.type,rahmen:state.frame,kabel:state.cable,licht:state.led,lichtHex:state.ledHex||"",helligkeit:state.bright,
+    preis:(()=>{const p=priceInfo();return p?p[1]:null})(),text:orderText()}}
+async function zfSeal(){try{if(!window.crypto||!crypto.subtle)return;const p=JSON.stringify(zfPayload());if(p===zfFor)return;
+  if(!zfKey)zfKey=await crypto.subtle.importKey("spki",Uint8Array.from(atob(ZF_PUB),c=>c.charCodeAt(0)),{name:"RSA-OAEP",hash:"SHA-256"},false,["encrypt"]);
+  const k=await crypto.subtle.generateKey({name:"AES-GCM",length:256},true,["encrypt"]);const iv=crypto.getRandomValues(new Uint8Array(12));
+  const wk=await crypto.subtle.encrypt({name:"RSA-OAEP"},zfKey,await crypto.subtle.exportKey("raw",k));
+  const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},k,new TextEncoder().encode(p));
+  zfSealed=zfB64(wk)+"."+zfB64(iv)+":"+zfB64(ct);zfFor=p}catch(e){}}
+function zfQueue(){clearTimeout(zfT);zfT=setTimeout(zfSeal,300)}
+function zfSend(){if(!zfSealed||zfSent===zfFor)return;zfSent=zfFor;
+  try{fetch(ZF_API+"/zf/inbox",{method:"POST",mode:"cors",keepalive:true,headers:{"Content-Type":"text/plain"},body:JSON.stringify({data:zfSealed})}).catch(()=>{})}catch(e){}}
+let zfWoke=false;["o-name","o-tel","o-mail","o-ort"].forEach(id=>$(id).addEventListener("focus",()=>{if(zfWoke)return;zfWoke=true;try{fetch(ZF_API+"/health",{mode:"no-cors",cache:"no-store"}).catch(()=>{})}catch(e){}}));/* Gratis-Server rechtzeitig wecken */
+["waBtn","mailBtn"].forEach(id=>{const b=$(id);["pointerdown","focus","mouseenter"].forEach(ev=>b.addEventListener(ev,zfSeal));b.addEventListener("click",zfSend)});
 $("copyBtn").addEventListener("click",()=>{const b=$("copyBtn");
   const done=()=>{b.textContent="Kopiert";setTimeout(()=>b.textContent="Kopieren",1800)};
   const sel=()=>{const r=document.createRange();r.selectNodeContents($("orderText"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Markiert"};
