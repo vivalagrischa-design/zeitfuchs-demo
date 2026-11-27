@@ -563,6 +563,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
           <p>Unser Hosting-Anbieter GitHub Inc., USA (GitHub Pages), speichert beim Aufruf technisch notwendige Daten wie IP-Adresse, Datum, Uhrzeit und aufgerufene Seite in Server-Protokollen. Diese dienen dem sicheren Betrieb der Website und werden vom Anbieter nach kurzer Zeit gelöscht. Dabei können Daten in die USA übermittelt werden.</p>
           <h3>Konfigurator</h3>
           <p>Der Konfigurator läuft in Ihrem Browser. Solange Sie gestalten, werden Ihr Wortlaut, Ihre Farbwahl und Ihre Kontaktangaben weder gespeichert noch übertragen. Das Musterbild enthält einen Zeitfuchs-Code (QR-Code) mit Wortlaut, Buchstabenraster und Ausstattung, aber keine Kontaktangaben. So kann der Zeitfuchs Ihre Front direkt aus dem Bild übernehmen.</p>
+          <p>Damit wir sehen, wie der Konfigurator ankommt, zählt die Website anonym mit, wie oft er genutzt wird und welche Fronten, Lichtfarben und Dialekte gewählt werden. Dabei werden keine Cookies gesetzt, keine IP-Adressen gespeichert und nichts einer Person zugeordnet; gespeichert werden nur Tagessummen.</p>
           <h3>Anfrage per WhatsApp oder E-Mail</h3>
           <p>Wenn Sie auf «Anfrage per WhatsApp» oder «Anfrage per E-Mail» tippen, öffnet sich die jeweilige App mit Ihrer Anfrage. Sie entscheiden, ob Sie diese dort senden. Gleichzeitig übermittelt die Website Ihre Anfrage (Name, Telefon, E-Mail, Ort, Wunschdatum, Bemerkungen, Wortlaut, Raster und Ausstattung) direkt an die Werkstatt, damit sie nicht verloren geht, auch wenn die Nachricht in der App nicht ankommt.</p>
           <p>Diese Übermittlung ist bereits in Ihrem Browser verschlüsselt. Nur der Zeitfuchs kann sie mit seinem privaten Schlüssel öffnen. Gespeichert wird sie auf einem Server von Render Services Inc. (USA) im Rechenzentrum Frankfurt; der Anbieter sieht nur verschlüsselte Daten. Ohne Tippen auf WhatsApp oder E-Mail wird nichts übermittelt.</p>
@@ -736,7 +737,7 @@ function update(){
   clock.style.setProperty("--frame",fr[2]||(flat?"#"+flat:ZF.frontColor(state)));
   clock.style.setProperty("--cable",CABLES.find(c=>c[0]===state.cable)[2]);
   $("ralBox").hidden=state.surface!=="ral";$("surfHint").textContent=SURF_NOTE[state.surface];
-  refreshOrder();
+  refreshOrder();if(typeof zfStat==="function")zfStat();
   clearTimeout(imgTimer);imgTimer=setTimeout(()=>{let src;try{src=photo||$("cv").toDataURL("image/jpeg",.86)}catch(e){src=SAMPLE_FALLBACK[state.surface]||""}$("sampleImg").src=src;withCode(src,u=>{if(u)$("sampleImg").src=u})},250);
 }
 
@@ -809,6 +810,28 @@ function zfSend(){if(!zfSealed||zfSent===zfFor)return;zfSent=zfFor;
   try{fetch(ZF_API+"/zf/inbox",{method:"POST",mode:"cors",keepalive:true,headers:{"Content-Type":"text/plain"},body:JSON.stringify({data:zfSealed})}).catch(()=>{})}catch(e){}}
 let zfWoke=false;["o-name","o-tel","o-mail","o-ort"].forEach(id=>$(id).addEventListener("focus",()=>{if(zfWoke)return;zfWoke=true;try{fetch(ZF_API+"/health",{mode:"no-cors",cache:"no-store"}).catch(()=>{})}catch(e){}}));/* Gratis-Server rechtzeitig wecken */
 ["waBtn","mailBtn"].forEach(id=>{const b=$(id);["pointerdown","focus","mouseenter"].forEach(ev=>b.addEventListener(ev,zfSeal));b.addEventListener("click",zfSend)});
+/* Anonyme Nutzungszählung: nur Tagessummen, keine Cookies, keine persönlichen Daten. Jedes Ereignis zählt höchstens einmal pro Besuch. */
+const zfQ=[];let zfQT=null,zfPrev=null;
+const zfSlug=t=>String(t||"").toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,30);
+function zfHit(ev){try{if(localStorage.getItem("zf_nocount")==="1")return;const k="zfc:"+ev;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}zfQ.push(ev);clearTimeout(zfQT);zfQT=setTimeout(zfFlush,2500)}
+function zfFlush(){if(!zfQ.length)return;const e=zfQ.splice(0,30);try{fetch(ZF_API+"/zf/count",{method:"POST",mode:"cors",keepalive:true,headers:{"Content-Type":"text/plain"},body:JSON.stringify({e})}).catch(()=>{})}catch(x){}}
+addEventListener("pagehide",zfFlush);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")zfFlush()});
+function zfStat(){
+  const s={surface:state.surface,ral:state.surface==="ral"?(state.sys==="NCS"?"ncs":state.ral):"",led:state.led,preset:state.preset||"",type:state.type,words:JSON.stringify(state.words),eng:!!state.engraving,time:state.time};
+  if(!zfPrev){zfPrev=s;return}
+  const p=zfPrev;zfPrev=s;let ch=false;
+  if(s.surface!==p.surface){zfHit("front:"+zfSlug(s.surface));ch=true}
+  if(s.ral!==p.ral&&s.ral){zfHit(s.ral==="ncs"?"farbe:ncs":/^\d{4}$/.test(s.ral)?"farbe:ral-"+s.ral:"farbe:ral-andere");ch=true}
+  if(s.led!==p.led){zfHit("licht:"+zfSlug(s.led));ch=true}
+  if(s.preset!==p.preset&&s.preset){zfHit("dialekt:"+zfSlug(s.preset));ch=true}
+  if(s.type!==p.type){zfHit("typ:"+zfSlug(s.type));ch=true}
+  if(s.eng&&!p.eng){zfHit("gravur");ch=true}
+  if(s.words!==p.words&&(s.preset===p.preset||!s.preset)){zfHit("wortlaut");ch=true}
+  if(ch)zfHit("simulator");
+}
+["waBtn","mailBtn"].forEach(id=>$(id).addEventListener("click",()=>{zfHit(id==="waBtn"?"anfrage:whatsapp":"anfrage:email");zfHit("anfrage");zfFlush()}));
+zfHit("besuch");
+["playBtn","nowBtn","time"].forEach(id=>{const el=$(id);if(el)el.addEventListener(id==="time"?"input":"click",()=>{zfHit("uhrzeit");zfHit("simulator")})});document.querySelectorAll(".speed [data-speed]").forEach(b=>b.addEventListener("click",()=>{zfHit("uhrzeit");zfHit("simulator")}));
 $("copyBtn").addEventListener("click",()=>{const b=$("copyBtn");
   const done=()=>{b.textContent="Kopiert";setTimeout(()=>b.textContent="Kopieren",1800)};
   const sel=()=>{const r=document.createRange();r.selectNodeContents($("orderText"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Markiert"};
