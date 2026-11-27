@@ -8,9 +8,12 @@ const ORIGINS=(process.env.ALLOW_ORIGINS||'https://zeitfuchs.ch').split(',').map
 const AUTH=(process.env.ZF_AUTH_HASH||'').toLowerCase();
 const MAX=4*1024*1024;
 let ready=null;
-const init=()=>ready||(ready=pool.query(`CREATE TABLE IF NOT EXISTS zf_store(k text PRIMARY KEY,ver integer NOT NULL DEFAULT 0,data text,updated timestamptz NOT NULL DEFAULT now());CREATE TABLE IF NOT EXISTS zf_inbox(id bigserial PRIMARY KEY,created timestamptz NOT NULL DEFAULT now(),data text NOT NULL)`).catch(e=>{ready=null;throw e}));
+const init=()=>ready||(ready=pool.query(`CREATE TABLE IF NOT EXISTS zf_store(k text PRIMARY KEY,ver integer NOT NULL DEFAULT 0,data text,updated timestamptz NOT NULL DEFAULT now());CREATE TABLE IF NOT EXISTS zf_inbox(id bigserial PRIMARY KEY,created timestamptz NOT NULL DEFAULT now(),data text NOT NULL);CREATE TABLE IF NOT EXISTS zf_counts(day date NOT NULL,ev text NOT NULL,n integer NOT NULL DEFAULT 0,PRIMARY KEY(day,ev))`).catch(e=>{ready=null;throw e}));
 // Öffentlicher Eingang (Website-Anfragen): pro IP höchstens 20 pro Stunde, insgesamt höchstens 2000 Einträge
 const posts=new Map();
+// Anonyme Nutzungszählung: nur Tagessummen, keine IP, keine Cookies
+const cposts=new Map();
+function countOk(ip){const now=Date.now(),l=(cposts.get(ip)||[]).filter(t=>now-t<3600e3);if(l.length>=120)return false;l.push(now);cposts.set(ip,l);return true}
 function postOk(ip){const now=Date.now(),l=(posts.get(ip)||[]).filter(t=>now-t<3600e3);if(l.length>=20)return false;l.push(now);posts.set(ip,l);return true}
 const fails=new Map();
 function authed(req){
@@ -30,6 +33,23 @@ http.createServer(async(req,res)=>{
   if(req.method==='OPTIONS'){res.writeHead(204);return res.end()}
   const u=new URL(req.url,'http://x');
   if(u.pathname==='/health')return send(res,200,{ok:true});
+  if(u.pathname==='/zf/count'&&req.method==='POST'){
+    const ip=(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].trim();
+    if(!countOk(ip))return send(res,429,{error:'too_many'});
+    try{await init();let b;try{b=JSON.parse(await body(req))}catch(e){return send(res,400,{error:'bad_json'})}
+      const evs=[...new Set((Array.isArray(b.e)?b.e:[]).filter(x=>typeof x==='string'&&/^[a-z0-9:_-]{1,40}$/.test(x)))].slice(0,30);
+      if(!evs.length)return send(res,200,{ok:true});
+      const day="(now() AT TIME ZONE 'Europe/Zurich')::date";
+      const c=await pool.query(`SELECT count(*)::int n FROM zf_counts WHERE day=${day}`);if(c.rows[0].n>=500)return send(res,200,{ok:true});
+      await pool.query(`INSERT INTO zf_counts(day,ev,n) SELECT ${day},x,1 FROM unnest($1::text[]) x ON CONFLICT(day,ev) DO UPDATE SET n=zf_counts.n+1`,[evs]);
+      return send(res,200,{ok:true});
+    }catch(e){console.error(e);return send(res,500,{error:'server'})}
+  }
+  if(u.pathname==='/zf/counts'&&req.method==='GET'){
+    const a=authed(req);if(a==='blocked')return send(res,429,{error:'too_many_attempts'});if(!a)return send(res,401,{error:'unauthorized'});
+    try{await init();const r=await pool.query("SELECT to_char(day,'YYYY-MM-DD') d,ev,n FROM zf_counts WHERE day>=(now() AT TIME ZONE 'Europe/Zurich')::date-730 ORDER BY day");return send(res,200,{rows:r.rows})}
+    catch(e){console.error(e);return send(res,500,{error:'server'})}
+  }
   if(u.pathname==='/zf/inbox'&&req.method==='POST'){
     const ip=(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].trim();
     if(!postOk(ip))return send(res,429,{error:'too_many'});
