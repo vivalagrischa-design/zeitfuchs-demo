@@ -129,6 +129,15 @@ nav a:hover{color:var(--fg)}
 .g-open:hover img{opacity:.88}
 .g-open:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .gallery figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+.g-nav{display:none}
+@media (max-width:700px){
+  .gallery{columns:auto;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -20px;padding:0 20px 6px;scroll-padding:0 20px}
+  .gallery::-webkit-scrollbar{display:none}
+  .gallery figure{flex:0 0 74%;margin:0;scroll-snap-align:start;min-width:0}
+  .gallery img{aspect-ratio:3/4;object-fit:cover;border-radius:10px}
+  .g-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;font-size:14px;color:var(--muted)}
+  .g-nav button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,.15);background:#fff;font-size:22px;line-height:1;color:inherit;cursor:pointer}
+}
 .lightbox{position:fixed;inset:0;z-index:50;background:rgba(10,12,14,.94);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .lightbox figure{margin:0;max-width:min(92vw,1100px);text-align:center}
 .lightbox img{max-width:100%;max-height:82vh;width:auto;height:auto;margin:0 auto}
@@ -294,6 +303,109 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
     </div>
   </section>
 
+  <section class="cfgsec" id="gestalten" style="background:#fff">
+    <div class="w">
+      <div class="sec-head">
+        <div class="eyebrow">Gestalten</div>
+        <h2>Simulieren Sie Ihre eigene Wortuhr.</h2>
+        <p class="lead">Wählen Sie Front und Licht, tippen Sie Ihren Wortlaut ein und schauen Sie Ihrer Uhr beim Zeitanzeigen zu. Die Buchstaben verteilen sich live auf das Raster von 11 × 10 Feldern.</p>
+      </div>
+      <div class="cfg">
+        <div class="preview">
+          <div class="stage">
+            <div class="clock" id="clock">
+              <canvas id="cv" width="1000" height="1000" role="img" aria-label="Musterbild Ihrer Wortuhr"></canvas>
+              <img id="photoFront" alt="" hidden>
+              <div class="cable"></div><div class="foot"></div>
+            </div>
+            <div class="photo-note" id="photoNote" hidden></div>
+          </div>
+          <div class="price" id="price" aria-live="polite"></div>
+          <div class="readout">
+            <div class="phrase" id="phrase"></div>
+          </div>
+          <div class="simbar" role="group" aria-label="Uhrzeit simulieren">
+            <button class="btn small" id="playBtn" type="button" aria-pressed="false">▶ Zeitraffer</button>
+            <div class="speed" role="group" aria-label="Tempo">
+              <button class="btn ghost small" type="button" data-speed="1500" aria-pressed="false">Langsam</button>
+              <button class="btn ghost small" type="button" data-speed="600" aria-pressed="true">Normal</button>
+              <button class="btn ghost small" type="button" data-speed="180" aria-pressed="false">Schnell</button>
+            </div>
+            <button class="btn ghost small" id="minusBtn" type="button" aria-label="Eine Minute zurück">−1 Min</button>
+            <button class="btn ghost small" id="plusBtn" type="button" aria-label="Eine Minute vor">+1 Min</button>
+            <button class="btn ghost small" id="nowBtn" type="button">Jetzt</button>
+            <label class="timebox" for="time">Uhrzeit <input type="time" id="time" value="07:45"></label>
+            <button class="btn ghost small" id="shuffle" type="button">Neu verteilen</button>
+          </div>
+          <div class="raster" id="raster" aria-label="Ihr Buchstabenraster"></div>
+          <div class="status" id="status" role="status"></div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <h3><span class="n">1</span>Uhr und Front</h3>
+            <div class="group" style="margin-top:0"><h4>Wanduhr oder Tischuhr</h4><div class="chips" id="types"></div></div>
+            <div class="group"><h4>Front</h4><div class="chips" id="surfaces"></div></div>
+            <div id="ralBox" class="group">
+              <h4>Farbton</h4>
+              <div class="swatches" id="swatches"></div>
+              <div class="ralpick">
+                <div class="field"><label for="ralIn">Eigener Farbton, RAL oder NCS</label><input id="ralIn" placeholder="z.B. RAL 7016 oder NCS S 2010-Y30R" maxlength="24" autocomplete="off"></div>
+                <button class="btn ghost small" id="ralApply" type="button">Übernehmen</button>
+              </div>
+              <p class="hint" id="ralHint"></p>
+            </div>
+            <p class="hint" id="surfHint"></p>
+          </div>
+
+          <div class="step">
+            <h3><span class="n">2</span>Licht und Details</h3>
+            <p class="sub">Lichtfarbe und Helligkeit ändern Sie jederzeit per Handy. Hier wählen Sie die Einstellung ab Werkstatt.</p>
+            <div class="group"><h4>Lichtfarbe</h4><div class="ledsw" id="leds" role="group" aria-label="Lichtfarbe"></div></div>
+            <div class="group"><h4>Helligkeit</h4><div class="chips" id="brights"></div></div>
+            <div class="group"><h4>Rahmen (Holzkorpus)</h4><div class="chips" id="frames"></div></div>
+            <div class="group"><h4>USB-C-Kabel 2 m mit Stecker</h4><div class="chips" id="cables"></div></div>
+          </div>
+
+          <div class="step">
+            <h3><span class="n">3</span>Wortlaut</h3>
+            <p class="sub">Starten Sie mit einem Dialekt und passen Sie jedes Wort an.</p>
+            <div class="chips" id="presets"></div>
+            <div class="group"><h4>So beginnt der Satz</h4>
+              <div class="field word"><label for="w-intro">«Es ist»</label><input id="w-intro" maxlength="23" autocomplete="off"></div></div>
+            <div class="group"><h4>Minuten</h4><div class="grid2" id="minutes"></div></div>
+            <div class="group"><h4>Stunden</h4><div class="grid3" id="hours"></div></div>
+          </div>
+
+          <div class="step">
+            <h3><span class="n">4</span>Anfrage</h3>
+            <p class="sub">Unverbindlich. Verbindlich wird die Bestellung erst mit Ihrer Unterschrift und der Anzahlung.</p>
+            <div class="grid2">
+              <div class="field"><label for="o-name">Name</label><input id="o-name" autocomplete="name"></div>
+              <div class="field"><label for="o-tel">Telefon</label><input id="o-tel" type="tel" autocomplete="tel"></div>
+              <div class="field"><label for="o-mail">E-Mail</label><input id="o-mail" type="email" autocomplete="email"></div>
+              <div class="field"><label for="o-ort">PLZ / Ort</label><input id="o-ort" autocomplete="address-level2"></div>
+            </div>
+            <div class="field" style="margin-top:10px"><label for="o-date">Wunschdatum</label><input id="o-date" placeholder="z.B. Weihnachten oder 15. März" autocomplete="off"></div>
+            <div class="field" style="margin-top:10px"><label for="o-note">Bemerkungen</label><textarea id="o-note"></textarea></div>
+            <div class="summary">
+              <div class="sample"><img id="sampleImg" alt="Musterbild Ihrer Wortuhr"><p>Musterbild mit Ihrem Buchstabenraster. Der Zeitfuchs orientiert sich daran, die genaue Anordnung kann noch abweichen. Gedrückt halten zum Speichern und der Nachricht anhängen.</p></div>
+              <pre id="orderText"></pre>
+            </div>
+            <div class="actions">
+              <a class="btn" id="waBtn" href="https://wa.me/41795611453" target="_blank" rel="noopener">Anfrage per WhatsApp</a>
+              <a class="btn ghost" id="mailBtn" href="mailto:kontakt@zeitfuchs.ch">Anfrage per E-Mail</a>
+              <button class="btn ghost" id="copyBtn" type="button">Kopieren</button>
+            </div>
+            <p class="hint" style="margin-top:12px">Während Sie gestalten, wird nichts übertragen. Erst wenn Sie auf WhatsApp oder E-Mail tippen, geht Ihre Anfrage zusätzlich verschlüsselt an die Werkstatt in Fideris, damit nichts verloren geht. Das Musterbild enthält einen Zeitfuchs-Code mit Ihrem Wortlaut. Mehr dazu in der <a href="#datenschutz">Datenschutzerklärung</a>.</p>
+            <div class="note"><strong>Musterbild, keine Endfassung.</strong> Die Anordnung der Buchstaben ist ein Vorschlag. Der Zeitfuchs orientiert sich daran und kann die Buchstaben für Ihre Front noch anders kombinieren.</div>
+            <div class="note"><strong>Farben am Bildschirm.</strong> Bildschirme und Drucker zeigen Farben unterschiedlich. Massgebend ist der RAL- oder NCS-Code: RAL 7016 bleibt RAL 7016, auch wenn er hier heller oder dunkler wirkt. Handveredelte Fronten sind Unikate.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="light" id="licht">
     <div class="w">
       <div class="sec-head">
@@ -401,6 +513,7 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
         <figure data-cat="patina detail"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · gewachsene Struktur"><img src="bilder/galerie/patina-detail-2.jpg" alt="Kupferpatina mit Kupferadern" loading="lazy" width="750" height="1000"></button><figcaption>Kupferpatina · gewachsene Struktur</figcaption></figure>
         <figure data-cat="patina"><button type="button" class="g-open" aria-label="Gross anzeigen: Kupferpatina · «As isch viartel vor achti»"><img src="bilder/galerie/patina-front.jpg" alt="Kupferpatina, blau leuchtend" loading="lazy" width="780" height="780"></button><figcaption>Kupferpatina · «As isch viartel vor achti»</figcaption></figure>
       </div>
+      <div class="g-nav" aria-hidden="false"><button type="button" id="gPrev" aria-label="Vorherige Bilder">‹</button><span id="gCount">Wischen für mehr Bilder</span><button type="button" id="gNext" aria-label="Weitere Bilder">›</button></div>
     </div>
   </section>
   <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Bild gross">
@@ -409,109 +522,6 @@ footer .w{display:flex;gap:12px 24px;flex-wrap:wrap;justify-content:space-betwee
     <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
     <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Nächstes Bild">›</button>
   </div>
-
-  <section class="cfgsec" id="gestalten" style="background:#fff">
-    <div class="w">
-      <div class="sec-head">
-        <div class="eyebrow">Gestalten</div>
-        <h2>Simulieren Sie Ihre eigene Wortuhr.</h2>
-        <p class="lead">Wählen Sie Front und Licht, tippen Sie Ihren Wortlaut ein und schauen Sie Ihrer Uhr beim Zeitanzeigen zu. Die Buchstaben verteilen sich live auf das Raster von 11 × 10 Feldern.</p>
-      </div>
-      <div class="cfg">
-        <div class="preview">
-          <div class="stage">
-            <div class="clock" id="clock">
-              <canvas id="cv" width="1000" height="1000" role="img" aria-label="Musterbild Ihrer Wortuhr"></canvas>
-              <img id="photoFront" alt="" hidden>
-              <div class="cable"></div><div class="foot"></div>
-            </div>
-            <div class="photo-note" id="photoNote" hidden></div>
-          </div>
-          <div class="price" id="price" aria-live="polite"></div>
-          <div class="readout">
-            <div class="phrase" id="phrase"></div>
-          </div>
-          <div class="simbar" role="group" aria-label="Uhrzeit simulieren">
-            <button class="btn small" id="playBtn" type="button" aria-pressed="false">▶ Zeitraffer</button>
-            <div class="speed" role="group" aria-label="Tempo">
-              <button class="btn ghost small" type="button" data-speed="1500" aria-pressed="false">Langsam</button>
-              <button class="btn ghost small" type="button" data-speed="600" aria-pressed="true">Normal</button>
-              <button class="btn ghost small" type="button" data-speed="180" aria-pressed="false">Schnell</button>
-            </div>
-            <button class="btn ghost small" id="minusBtn" type="button" aria-label="Eine Minute zurück">−1 Min</button>
-            <button class="btn ghost small" id="plusBtn" type="button" aria-label="Eine Minute vor">+1 Min</button>
-            <button class="btn ghost small" id="nowBtn" type="button">Jetzt</button>
-            <label class="timebox" for="time">Uhrzeit <input type="time" id="time" value="07:45"></label>
-            <button class="btn ghost small" id="shuffle" type="button">Neu verteilen</button>
-          </div>
-          <div class="raster" id="raster" aria-label="Ihr Buchstabenraster"></div>
-          <div class="status" id="status" role="status"></div>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <h3><span class="n">1</span>Uhr und Front</h3>
-            <div class="group" style="margin-top:0"><h4>Wanduhr oder Tischuhr</h4><div class="chips" id="types"></div></div>
-            <div class="group"><h4>Front</h4><div class="chips" id="surfaces"></div></div>
-            <div id="ralBox" class="group">
-              <h4>Farbton</h4>
-              <div class="swatches" id="swatches"></div>
-              <div class="ralpick">
-                <div class="field"><label for="ralIn">Eigener Farbton, RAL oder NCS</label><input id="ralIn" placeholder="z.B. RAL 7016 oder NCS S 2010-Y30R" maxlength="24" autocomplete="off"></div>
-                <button class="btn ghost small" id="ralApply" type="button">Übernehmen</button>
-              </div>
-              <p class="hint" id="ralHint"></p>
-            </div>
-            <p class="hint" id="surfHint"></p>
-          </div>
-
-          <div class="step">
-            <h3><span class="n">2</span>Licht und Details</h3>
-            <p class="sub">Lichtfarbe und Helligkeit ändern Sie jederzeit per Handy. Hier wählen Sie die Einstellung ab Werkstatt.</p>
-            <div class="group"><h4>Lichtfarbe</h4><div class="ledsw" id="leds" role="group" aria-label="Lichtfarbe"></div></div>
-            <div class="group"><h4>Helligkeit</h4><div class="chips" id="brights"></div></div>
-            <div class="group"><h4>Rahmen (Holzkorpus)</h4><div class="chips" id="frames"></div></div>
-            <div class="group"><h4>USB-C-Kabel 2 m mit Stecker</h4><div class="chips" id="cables"></div></div>
-          </div>
-
-          <div class="step">
-            <h3><span class="n">3</span>Wortlaut</h3>
-            <p class="sub">Starten Sie mit einem Dialekt und passen Sie jedes Wort an.</p>
-            <div class="chips" id="presets"></div>
-            <div class="group"><h4>So beginnt der Satz</h4>
-              <div class="field word"><label for="w-intro">«Es ist»</label><input id="w-intro" maxlength="23" autocomplete="off"></div></div>
-            <div class="group"><h4>Minuten</h4><div class="grid2" id="minutes"></div></div>
-            <div class="group"><h4>Stunden</h4><div class="grid3" id="hours"></div></div>
-          </div>
-
-          <div class="step">
-            <h3><span class="n">4</span>Anfrage</h3>
-            <p class="sub">Unverbindlich. Verbindlich wird die Bestellung erst mit Ihrer Unterschrift und der Anzahlung.</p>
-            <div class="grid2">
-              <div class="field"><label for="o-name">Name</label><input id="o-name" autocomplete="name"></div>
-              <div class="field"><label for="o-tel">Telefon</label><input id="o-tel" type="tel" autocomplete="tel"></div>
-              <div class="field"><label for="o-mail">E-Mail</label><input id="o-mail" type="email" autocomplete="email"></div>
-              <div class="field"><label for="o-ort">PLZ / Ort</label><input id="o-ort" autocomplete="address-level2"></div>
-            </div>
-            <div class="field" style="margin-top:10px"><label for="o-date">Wunschdatum</label><input id="o-date" placeholder="z.B. Weihnachten oder 15. März" autocomplete="off"></div>
-            <div class="field" style="margin-top:10px"><label for="o-note">Bemerkungen</label><textarea id="o-note"></textarea></div>
-            <div class="summary">
-              <div class="sample"><img id="sampleImg" alt="Musterbild Ihrer Wortuhr"><p>Musterbild mit Ihrem Buchstabenraster. Der Zeitfuchs orientiert sich daran, die genaue Anordnung kann noch abweichen. Gedrückt halten zum Speichern und der Nachricht anhängen.</p></div>
-              <pre id="orderText"></pre>
-            </div>
-            <div class="actions">
-              <a class="btn" id="waBtn" href="https://wa.me/41795611453" target="_blank" rel="noopener">Anfrage per WhatsApp</a>
-              <a class="btn ghost" id="mailBtn" href="mailto:kontakt@zeitfuchs.ch">Anfrage per E-Mail</a>
-              <button class="btn ghost" id="copyBtn" type="button">Kopieren</button>
-            </div>
-            <p class="hint" style="margin-top:12px">Während Sie gestalten, wird nichts übertragen. Erst wenn Sie auf WhatsApp oder E-Mail tippen, geht Ihre Anfrage zusätzlich verschlüsselt an die Werkstatt in Fideris, damit nichts verloren geht. Das Musterbild enthält einen Zeitfuchs-Code mit Ihrem Wortlaut. Mehr dazu in der <a href="#datenschutz">Datenschutzerklärung</a>.</p>
-            <div class="note"><strong>Musterbild, keine Endfassung.</strong> Die Anordnung der Buchstaben ist ein Vorschlag. Der Zeitfuchs orientiert sich daran und kann die Buchstaben für Ihre Front noch anders kombinieren.</div>
-            <div class="note"><strong>Farben am Bildschirm.</strong> Bildschirme und Drucker zeigen Farben unterschiedlich. Massgebend ist der RAL- oder NCS-Code: RAL 7016 bleibt RAL 7016, auch wenn er hier heller oder dunkler wirkt. Handveredelte Fronten sind Unikate.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="unique" id="ablauf">
     <div class="w" style="display:block">
@@ -863,6 +873,14 @@ ZF.onTexture=()=>update();
 const start=()=>{speak("Bündnertüütsch");update()};
 if(document.fonts&&document.fonts.load)document.fonts.load("500 40px Barlow").then(start,start);else start();
 })();
+
+/* Galerie auf dem Handy: Wisch-Leiste mit Pfeilen */
+{const $=id=>document.getElementById(id);const g=$("gallery"),cnt=$("gCount");const vis=()=>[...g.querySelectorAll("figure")].filter(f=>!f.hidden);
+ const upd=()=>{const l=vis();if(!l.length)return;const w=l[0].offsetWidth+12;const i=Math.min(l.length,Math.round(g.scrollLeft/w)+1);cnt.textContent=`Bild ${i} von ${l.length} · wischen`};
+ const go=d=>{const l=vis();if(!l.length)return;g.scrollBy({left:d*(l[0].offsetWidth+12),behavior:"smooth"})};
+ $("gPrev").addEventListener("click",()=>go(-1));$("gNext").addEventListener("click",()=>go(1));
+ g.addEventListener("scroll",()=>requestAnimationFrame(upd),{passive:true});
+ $("gFilter").addEventListener("click",()=>setTimeout(()=>{g.scrollLeft=0;upd()},50));upd();}
 </script>
 </body>
 </html>
